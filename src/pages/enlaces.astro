@@ -1,0 +1,477 @@
+---
+import BlogLayout from '../layouts/BlogLayout.astro';
+
+const linkCategories = [
+	{
+		category: "Inteligencia Artificial",
+		description: "Recursos y herramientas para el desarrollo con IA",
+		icon: "🤖",
+		links: [
+			{
+				title: "OpenAI Platform",
+				description: "API oficial de OpenAI para GPT-4, DALL-E y más",
+				url: "https://platform.openai.com",
+				type: "API"
+			},
+			{
+				title: "Hugging Face",
+				description: "Hub de modelos de ML y IA, datasets y aplicaciones",
+				url: "https://huggingface.co",
+				type: "Plataforma"
+			},
+			{
+				title: "Anthropic Claude",
+				description: "Asistente de IA conversacional avanzado",
+				url: "https://claude.ai",
+				type: "Herramienta"
+			},
+			{
+				title: "Papers With Code",
+				description: "Investigación en ML con implementaciones de código",
+				url: "https://paperswithcode.com",
+				type: "Investigación"
+			},
+			{
+				title: "Replicate",
+				description: "Ejecuta modelos de ML con una API simple",
+				url: "https://replicate.com",
+				type: "API"
+			}
+		]
+	},
+	{
+		category: "Desarrollo Web",
+		description: "Frameworks, herramientas y recursos para desarrollo web moderno",
+		icon: "🌐",
+		links: [
+			{
+				title: "MDN Web Docs",
+				description: "Documentación completa sobre tecnologías web",
+				url: "https://developer.mozilla.org",
+				type: "Documentación"
+			},
+			{
+				title: "Can I Use",
+				description: "Compatibilidad de características web en navegadores",
+				url: "https://caniuse.com",
+				type: "Herramienta"
+			},
+			{
+				title: "React Documentation",
+				description: "Documentación oficial de React",
+				url: "https://react.dev",
+				type: "Documentación"
+			},
+			{
+				title: "Tailwind CSS",
+				description: "Framework CSS utility-first",
+				url: "https://tailwindcss.com",
+				type: "Framework"
+			},
+			{
+				title: "Next.js",
+				description: "Framework de React para producción",
+				url: "https://nextjs.org",
+				type: "Framework"
+			},
+			{
+				title: "Astro",
+				description: "Framework web moderno para sitios rápidos",
+				url: "https://astro.build",
+				type: "Framework"
+			}
+		]
+	},
+	{
+		category: "Herramientas de Desarrollo",
+		description: "IDEs, editores y herramientas que mejoran la productividad",
+		icon: "🛠️",
+		links: [
+			{
+				title: "Visual Studio Code",
+				description: "Editor de código gratuito y potente",
+				url: "https://code.visualstudio.com",
+				type: "Editor"
+			},
+			{
+				title: "GitHub",
+				description: "Plataforma de desarrollo colaborativo",
+				url: "https://github.com",
+				type: "Plataforma"
+			},
+			{
+				title: "Figma",
+				description: "Herramienta de diseño colaborativo",
+				url: "https://figma.com",
+				type: "Diseño"
+			},
+			{
+				title: "Postman",
+				description: "Plataforma para desarrollo y testing de APIs",
+				url: "https://postman.com",
+				type: "API Testing"
+			},
+			{
+				title: "Vercel",
+				description: "Plataforma de deployment para aplicaciones web",
+				url: "https://vercel.com",
+				type: "Deployment"
+			}
+		]
+	},
+	{
+		category: "Aprendizaje y Comunidades",
+		description: "Recursos para aprender y conectar con otros desarrolladores",
+		icon: "📚",
+		links: [
+			{
+				title: "freeCodeCamp",
+				description: "Plataforma gratuita para aprender programación",
+				url: "https://freecodecamp.org",
+				type: "Educación"
+			},
+			{
+				title: "Stack Overflow",
+				description: "Comunidad de preguntas y respuestas para programadores",
+				url: "https://stackoverflow.com",
+				type: "Comunidad"
+			},
+			{
+				title: "Dev.to",
+				description: "Comunidad de desarrolladores y artículos técnicos",
+				url: "https://dev.to",
+				type: "Comunidad"
+			},
+			{
+				title: "Codecademy",
+				description: "Cursos interactivos de programación",
+				url: "https://codecademy.com",
+				type: "Educación"
+			},
+			{
+				title: "YouTube - Coding Channels",
+				description: "Canales educativos de programación",
+				url: "https://youtube.com",
+				type: "Video"
+			}
+		]
+	}
+];
+---
+
+<BlogLayout title="Enlaces Útiles - DevIA Blog" description="Colección curada de enlaces y recursos útiles para programadores y desarrolladores de IA">
+	<div class="page-header">
+		<h1 class="page-title">Enlaces Útiles</h1>
+		<p class="page-subtitle">
+			Una colección curada de recursos, herramientas y plataformas esenciales para desarrolladores.
+			Desde APIs de IA hasta frameworks de desarrollo web.
+		</p>
+	</div>
+
+	<div class="links-container">
+		{linkCategories.map((category) => (
+			<section class="category-section">
+				<div class="category-header">
+					<div class="category-icon">{category.icon}</div>
+					<div class="category-info">
+						<h2 class="category-title">{category.category}</h2>
+						<p class="category-description">{category.description}</p>
+					</div>
+				</div>
+				
+				<div class="links-grid">
+					{category.links.map((link) => (
+						<a href={link.url} class="link-card" target="_blank" rel="noopener noreferrer">
+							<div class="link-content">
+								<div class="link-header">
+									<h3 class="link-title">{link.title}</h3>
+									<span class="link-type">{link.type}</span>
+								</div>
+								<p class="link-description">{link.description}</p>
+								<div class="link-url">{link.url}</div>
+							</div>
+							<div class="link-arrow">→</div>
+						</a>
+					))}
+				</div>
+			</section>
+		))}
+	</div>
+
+	<section class="suggest-section">
+		<div class="suggest-card">
+			<h3 class="suggest-title">¿Conoces algún recurso útil?</h3>
+			<p class="suggest-description">
+				Si tienes alguna herramienta, plataforma o recurso que crees que debería estar en esta lista,
+				no dudes en sugerirlo. ¡La comunidad de desarrolladores crece compartiendo conocimiento!
+			</p>
+			<a href="mailto:contacto@deviablog.com" class="suggest-btn">Sugerir recurso</a>
+		</div>
+	</section>
+</BlogLayout>
+
+<style>
+	.page-header {
+		text-align: center;
+		margin-bottom: 64px;
+	}
+
+	.page-title {
+		font-size: 48px;
+		font-weight: 800;
+		color: #1f2937;
+		margin-bottom: 16px;
+	}
+
+	.page-subtitle {
+		font-size: 20px;
+		color: #6b7280;
+		line-height: 1.6;
+		max-width: 800px;
+		margin: 0 auto;
+	}
+
+	.links-container {
+		display: flex;
+		flex-direction: column;
+		gap: 64px;
+		margin-bottom: 80px;
+	}
+
+	.category-section {
+		background: white;
+		border-radius: 24px;
+		padding: 48px;
+		box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+		border: 1px solid #f3f4f6;
+	}
+
+	.category-header {
+		display: flex;
+		align-items: center;
+		gap: 24px;
+		margin-bottom: 32px;
+	}
+
+	.category-icon {
+		font-size: 48px;
+		background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+		width: 80px;
+		height: 80px;
+		border-radius: 20px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.category-title {
+		font-size: 28px;
+		font-weight: 700;
+		color: #1f2937;
+		margin-bottom: 8px;
+	}
+
+	.category-description {
+		font-size: 16px;
+		color: #6b7280;
+		line-height: 1.5;
+	}
+
+	.links-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+		gap: 24px;
+	}
+
+	.link-card {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 24px;
+		background: #f8fafc;
+		border: 1px solid #e2e8f0;
+		border-radius: 16px;
+		text-decoration: none;
+		transition: all 0.3s ease;
+		position: relative;
+		overflow: hidden;
+	}
+
+	.link-card::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		height: 3px;
+		background: linear-gradient(90deg, #3b82f6, #10b981);
+		transform: scaleX(0);
+		transition: transform 0.3s ease;
+	}
+
+	.link-card:hover {
+		background: white;
+		transform: translateY(-4px);
+		box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+		border-color: #cbd5e1;
+	}
+
+	.link-card:hover::before {
+		transform: scaleX(1);
+	}
+
+	.link-content {
+		flex: 1;
+	}
+
+	.link-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin-bottom: 8px;
+	}
+
+	.link-title {
+		font-size: 18px;
+		font-weight: 600;
+		color: #1f2937;
+		margin: 0;
+	}
+
+	.link-type {
+		background: #e0e7ff;
+		color: #3730a3;
+		padding: 4px 8px;
+		border-radius: 6px;
+		font-size: 12px;
+		font-weight: 500;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+	}
+
+	.link-description {
+		color: #4b5563;
+		font-size: 14px;
+		line-height: 1.5;
+		margin: 0 0 8px 0;
+	}
+
+	.link-url {
+		color: #6b7280;
+		font-size: 12px;
+		font-family: monospace;
+	}
+
+	.link-arrow {
+		font-size: 20px;
+		color: #9ca3af;
+		transition: all 0.3s ease;
+		margin-left: 16px;
+	}
+
+	.link-card:hover .link-arrow {
+		color: #3b82f6;
+		transform: translateX(4px);
+	}
+
+	.suggest-section {
+		margin-bottom: 80px;
+	}
+
+	.suggest-card {
+		background: linear-gradient(135deg, #fbbf24, #f59e0b);
+		border-radius: 20px;
+		padding: 48px;
+		text-align: center;
+		color: white;
+	}
+
+	.suggest-title {
+		font-size: 32px;
+		font-weight: 700;
+		margin-bottom: 16px;
+	}
+
+	.suggest-description {
+		font-size: 18px;
+		line-height: 1.6;
+		margin-bottom: 32px;
+		opacity: 0.9;
+		max-width: 600px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.suggest-btn {
+		display: inline-block;
+		background: white;
+		color: #f59e0b;
+		text-decoration: none;
+		padding: 16px 32px;
+		border-radius: 12px;
+		font-weight: 600;
+		font-size: 16px;
+		transition: all 0.3s ease;
+	}
+
+	.suggest-btn:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+	}
+
+	@media (max-width: 768px) {
+		.page-title {
+			font-size: 36px;
+		}
+
+		.page-subtitle {
+			font-size: 18px;
+		}
+
+		.category-section {
+			padding: 32px 24px;
+		}
+
+		.category-header {
+			flex-direction: column;
+			text-align: center;
+			gap: 16px;
+		}
+
+		.category-icon {
+			width: 60px;
+			height: 60px;
+			font-size: 32px;
+		}
+
+		.category-title {
+			font-size: 24px;
+		}
+
+		.links-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.link-card {
+			padding: 20px;
+		}
+
+		.link-header {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 8px;
+		}
+
+		.suggest-card {
+			padding: 32px 24px;
+		}
+
+		.suggest-title {
+			font-size: 24px;
+		}
+
+		.suggest-description {
+			font-size: 16px;
+		}
+	}
+</style>

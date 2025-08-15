@@ -1,0 +1,175 @@
+---
+interface Props {
+	title: string;
+	excerpt: string;
+	date: string;
+	category: string;
+	slug: string;
+	readTime?: string;
+}
+
+const { title, excerpt, date, category, slug, readTime = "3 min" } = Astro.props;
+
+const categoryColors = {
+	'ia': 'bg-green-500',
+	'web': 'bg-blue-500',
+	'noticias': 'bg-purple-500',
+	'herramientas': 'bg-orange-500'
+};
+
+const categoryColor = categoryColors[category.toLowerCase()] || 'bg-gray-500';
+---
+
+<article class="post-card">
+	<div class="post-category">
+		<span class={`category-tag ${categoryColor}`}>{category}</span>
+		<span class="post-date">{date}</span>
+	</div>
+	
+	<h2 class="post-title">
+		<a href={`/posts/${slug}`} class="post-link">{title}</a>
+	</h2>
+	
+	<p class="post-excerpt">{excerpt}</p>
+	
+	<div class="post-meta">
+		<span class="read-time">📖 {readTime} de lectura</span>
+		<a href={`/posts/${slug}`} class="read-more">Leer más →</a>
+	</div>
+</article>
+
+<style>
+	.post-card {
+		background: white;
+		border-radius: 16px;
+		padding: 32px;
+		box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+		transition: all 0.3s ease;
+		border: 1px solid #f3f4f6;
+		position: relative;
+		overflow: hidden;
+	}
+
+	.post-card::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		height: 4px;
+		background: linear-gradient(90deg, #3b82f6, #10b981, #8b5cf6);
+		opacity: 0;
+		transition: opacity 0.3s ease;
+	}
+
+	.post-card:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+	}
+
+	.post-card:hover::before {
+		opacity: 1;
+	}
+
+	.post-category {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin-bottom: 16px;
+	}
+
+	.category-tag {
+		display: inline-block;
+		padding: 4px 12px;
+		border-radius: 20px;
+		font-size: 12px;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		color: white;
+	}
+
+	.bg-green-500 { background-color: #10b981; }
+	.bg-blue-500 { background-color: #3b82f6; }
+	.bg-purple-500 { background-color: #8b5cf6; }
+	.bg-orange-500 { background-color: #f59e0b; }
+	.bg-gray-500 { background-color: #6b7280; }
+
+	.post-date {
+		font-size: 14px;
+		color: #6b7280;
+		font-weight: 500;
+	}
+
+	.post-title {
+		font-size: 24px;
+		font-weight: 700;
+		line-height: 1.3;
+		margin-bottom: 16px;
+	}
+
+	.post-link {
+		color: #1f2937;
+		text-decoration: none;
+		transition: color 0.2s ease;
+	}
+
+	.post-link:hover {
+		color: #2563eb;
+	}
+
+	.post-excerpt {
+		color: #4b5563;
+		font-size: 16px;
+		line-height: 1.6;
+		margin-bottom: 24px;
+	}
+
+	.post-meta {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding-top: 16px;
+		border-top: 1px solid #f3f4f6;
+	}
+
+	.read-time {
+		font-size: 14px;
+		color: #6b7280;
+		display: flex;
+		align-items: center;
+		gap: 8px;
+	}
+
+	.read-more {
+		color: #2563eb;
+		font-weight: 600;
+		text-decoration: none;
+		font-size: 14px;
+		transition: all 0.2s ease;
+		padding: 8px 16px;
+		border-radius: 8px;
+		background: rgba(37, 99, 235, 0.1);
+	}
+
+	.read-more:hover {
+		background: rgba(37, 99, 235, 0.2);
+		transform: translateX(4px);
+	}
+
+	@media (max-width: 768px) {
+		.post-card {
+			padding: 24px;
+		}
+
+		.post-title {
+			font-size: 20px;
+		}
+
+		.post-meta {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 12px;
+		}
+	}
+</style>
