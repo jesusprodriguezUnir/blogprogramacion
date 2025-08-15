@@ -1,0 +1,92 @@
+
+---
+import BlogLayout from '../layouts/BlogLayout.astro';
+---
+
+<BlogLayout title="Sobre mí" description="Conoce al autor de DevIA Blog y accede a su blog personal.">
+  <section class="about-section">
+    <div class="about-content">
+      <div class="about-avatar">
+        <img src="/assets/astro.svg" alt="Avatar del autor" class="avatar-img" />
+      </div>
+      <div class="about-text">
+        <h1 class="about-title">Sobre mí</h1>
+        <p class="about-description">
+          ¡Hola! Soy el autor de este blog. Apasionado por la programación, la inteligencia artificial y la divulgación tecnológica. Aquí comparto noticias, recursos y reflexiones para la comunidad dev.
+        </p>
+        <a href="https://blogpersonal-eta.vercel.app/" class="about-link" target="_blank" rel="noopener noreferrer">
+          Visita mi blog personal
+        </a>
+      </div>
+    </div>
+  </section>
+</BlogLayout>
+
+<style>
+.about-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  background: white;
+  border-radius: 24px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+  margin: 48px auto;
+  max-width: 900px;
+  padding: 48px 32px;
+}
+.about-content {
+  display: flex;
+  align-items: center;
+  gap: 48px;
+}
+.about-avatar {
+  flex-shrink: 0;
+}
+.avatar-img {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(59,130,246,0.10);
+  border: 4px solid #f3f4f6;
+  background: #f8fafc;
+}
+.about-text {
+  max-width: 500px;
+}
+.about-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #3b82f6;
+  margin-bottom: 18px;
+}
+.about-description {
+  font-size: 1.2rem;
+  color: #374151;
+  margin-bottom: 32px;
+}
+.about-link {
+  display: inline-block;
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+  color: #fff;
+  padding: 16px 32px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.about-link:hover {
+  background: linear-gradient(90deg, #8b5cf6, #3b82f6);
+}
+@media (max-width: 900px) {
+  .about-content {
+    flex-direction: column;
+    gap: 32px;
+    text-align: center;
+  }
+  .about-section {
+    padding: 32px 8px;
+  }
+}
+</style>
