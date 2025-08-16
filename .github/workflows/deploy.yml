@@ -32,8 +32,14 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Add .nojekyll to dist
+        run: echo "" > ./dist/.nojekyll
+
+      - name: Show dist contents
+        run: ls -la ./dist
+
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
 
@@ -42,4 +48,4 @@ jobs:
     needs: build
     steps:
       - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v1
+        uses: actions/deploy-pages@v4
