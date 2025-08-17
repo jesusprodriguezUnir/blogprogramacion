@@ -1,0 +1,14 @@
+---
+title: "React 19: Nuevas características y mejoras de rendimiento"
+excerpt: "La nueva versión de React introduce Server Components estables, mejoras en Suspense y nuevas APIs que simplifican el desarrollo de aplicaciones modernas."
+date: "2025-01-12"
+category: "Web"
+slug: "react-19-nuevas-caracteristicas"
+readTime: "6 min"
+author: "Jesús P."
+ogImage: "/assets/background.svg"
+tags: ["Web", "React"]
+layout: "../../layouts/BlogLayout.astro"
+---
+
+La nueva versión de React introduce Server Components estables, mejoras en Suspense y nuevas APIs que simplifican el desarrollo de aplicaciones modernas.

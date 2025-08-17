@@ -1,56 +1,26 @@
 ---
 import BlogLayout from '../../layouts/BlogLayout.astro';
 
-const posts = [
-  {
-    title: "GPT-4 Turbo: La nueva revolución de OpenAI en modelos de lenguaje",
-    excerpt: "OpenAI presenta GPT-4 Turbo con mejoras significativas en velocidad, precisión y capacidad de contexto. Descubre las nuevas características y cómo puede transformar el desarrollo de aplicaciones.",
-    date: "15 Enero 2025",
-    category: "IA",
-    slug: "gpt-4-turbo-openai-revolucion",
-    readTime: "5 min"
-  },
-  {
-    title: "Astro 5.0: La nueva era del desarrollo web estático",
-    excerpt: "Astro 5.0 llega con server islands, content layers y mejoras de rendimiento que revolucionan la creación de sitios web. Una mirada completa a las nuevas características.",
-    date: "14 Enero 2025",
-    category: "Web",
-    slug: "astro-5-desarrollo-web-estatico",
-    readTime: "4 min"
-  },
-  {
-    title: "GitHub Copilot Chat integra nuevas funciones de IA para 2025",
-    excerpt: "Microsoft y GitHub anuncian importantes actualizaciones para Copilot Chat, incluyendo mejor comprensión de contexto y integración con más IDEs populares.",
-    date: "13 Enero 2025",
-    category: "Herramientas",
-    slug: "github-copilot-chat-nuevas-funciones",
-    readTime: "3 min"
-  },
-  {
-    title: "React 19: Nuevas características y mejoras de rendimiento",
-    excerpt: "La nueva versión de React introduce Server Components estables, mejoras en Suspense y nuevas APIs que simplifican el desarrollo de aplicaciones modernas.",
-    date: "12 Enero 2025",
-    category: "Web",
-    slug: "react-19-nuevas-caracteristicas",
-    readTime: "6 min"
-  },
-  {
-    title: "Claude 3.5 Sonnet vs GPT-4: Comparativa completa 2025",
-    excerpt: "Análisis detallado de las capacidades, rendimiento y casos de uso de los modelos de IA más avanzados del mercado. ¿Cuál elegir para tu proyecto?",
-    date: "11 Enero 2025",
-    category: "IA",
-    slug: "claude-3-5-vs-gpt-4-comparativa",
-    readTime: "8 min"
-  },
-  {
-    title: "Tendencias de desarrollo web que marcarán 2025",
-    excerpt: "Desde WebAssembly hasta edge computing, repasamos las tecnologías y tendencias que definirán el futuro del desarrollo web en este año.",
-    date: "10 Enero 2025",
-    category: "Noticias",
-    slug: "tendencias-desarrollo-web-2025",
-    readTime: "7 min"
-  }
-];
+// Carga todos los archivos .md en este directorio (excepto index.astro)
+const postFiles = import.meta.glob('./*.md', { eager: true });
+
+const files = Object.values(postFiles) as any[];
+
+const posts = files
+  .map((m) => (m && m.frontmatter ? m.frontmatter : null))
+  .filter(Boolean)
+  .map((fm) => ({
+    title: fm.title || 'Sin título',
+    excerpt: fm.excerpt || '',
+    date: fm.date || '1970-01-01',
+    category: fm.category || 'General',
+    slug: fm.slug || fm.title?.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+    readTime: fm.readTime || '1 min',
+    author: fm.author || 'Autor',
+    ogImage: fm.ogImage || '/favicon.svg',
+    tags: fm.tags || []
+  }))
+  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 ---
 
 <BlogLayout title="Todos los posts" description="Listado de todas las noticias y artículos del blog">

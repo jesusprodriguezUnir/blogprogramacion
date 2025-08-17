@@ -7,9 +7,16 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "test": "vitest",
+    "test:watch": "vitest --watch",
     "astro": "astro"
   },
   "dependencies": {
     "astro": "^5.2.5"
+  }
+  ,"devDependencies": {
+    "vitest": "^1.0.0",
+    "@testing-library/dom": "^8.0.0",
+    "@testing-library/jest-dom": "^6.0.0"
   }
 }

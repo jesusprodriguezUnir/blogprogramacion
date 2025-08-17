@@ -1,5 +1,9 @@
 ---
-const base = '/blogprogramacion/';
+import { normalizeBase, postHref } from '../utils/url';
+import { getCategoryColor } from '../utils/category';
+
+const rawBase = (import.meta as any).env.BASE_URL;
+const base = normalizeBase(rawBase);
 
 interface Props {
 	title: string;
@@ -12,14 +16,7 @@ interface Props {
 
 const { title, excerpt, date, category, slug, readTime = "3 min" } = Astro.props;
 
-const categoryColors = {
-	'ia': 'bg-green-500',
-	'web': 'bg-blue-500',
-	'noticias': 'bg-purple-500',
-	'herramientas': 'bg-orange-500'
-};
-
-const categoryColor = categoryColors[category.toLowerCase()] || 'bg-gray-500';
+const categoryColor = getCategoryColor(category);
 ---
 
 <article class="post-card">
@@ -29,14 +26,14 @@ const categoryColor = categoryColors[category.toLowerCase()] || 'bg-gray-500';
 	</div>
 	
 	<h2 class="post-title">
-		<a href={`${base}posts/${slug}`} class="post-link">{title}</a>
+		<a href={postHref(rawBase, slug)} class="post-link">{title}</a>
 	</h2>
 	
 	<p class="post-excerpt">{excerpt}</p>
 	
 	<div class="post-meta">
 		<span class="read-time">📖 {readTime} de lectura</span>
-	<a href={`${base}posts/${slug}`} class="read-more">Leer más →</a>
+	<a href={postHref(rawBase, slug)} class="read-more">Leer más →</a>
 	</div>
 </article>
 

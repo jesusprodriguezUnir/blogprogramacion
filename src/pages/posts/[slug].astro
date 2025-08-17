@@ -1,24 +1,11 @@
 ---
-import BlogLayout from '../../layouts/BlogLayout.astro';
-import posts from '../../data/posts.js';
-
-export const getStaticPaths = async () => posts.map((p) => ({ params: { slug: p.slug } }));
-
-// Obtiene el slug de la URL
-const { slug } = Astro.params;
-
-const post = posts.find((p) => p.slug === slug);
-
-if (!post) {
-  throw new Error('Post no encontrado');
-}
+// Placeholder: la plataforma ahora sirve posts desde archivos Markdown en `src/pages/posts/*.md`
+const note = true;
+export const prerender = true;
+export const getStaticPaths = async () => [];
 ---
 
-<BlogLayout title={post.title} description={post.excerpt}>
-  <div class="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg my-8">
-    <h1 class="text-3xl font-bold text-gray-800 mb-4">{post.title}</h1>
-    <p class="text-gray-600 italic mb-6">Publicado el {post.date} | {post.readTime} | Categoría: {post.category}</p>
-    <div class="prose prose-lg max-w-none" set:html={post.content}></div>
-    <a href="/" class="text-blue-500 hover:underline mt-8 inline-block">← Volver al inicio</a>
-  </div>
-</BlogLayout>
+<div class="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg my-8">
+	<h1 class="text-2xl font-semibold">Nota</h1>
+	<p class="text-gray-600 mt-2">Los posts ahora se sirven desde archivos Markdown en <code>src/pages/posts/</code>.</p>
+</div>

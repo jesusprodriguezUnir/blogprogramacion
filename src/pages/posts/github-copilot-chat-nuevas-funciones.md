@@ -1,0 +1,14 @@
+---
+title: "GitHub Copilot Chat integra nuevas funciones de IA para 2025"
+excerpt: "Microsoft y GitHub anuncian importantes actualizaciones para Copilot Chat, incluyendo mejor comprensión de contexto y integración con más IDEs populares."
+date: "2025-01-13"
+category: "Herramientas"
+slug: "github-copilot-chat-nuevas-funciones"
+readTime: "3 min"
+author: "Jesús P."
+ogImage: "/assets/astro.svg"
+tags: ["Herramientas", "GitHub"]
+layout: "../../layouts/BlogLayout.astro"
+---
+
+Microsoft y GitHub anuncian importantes actualizaciones para Copilot Chat, incluyendo mejor comprensión de contexto y integración con más IDEs populares.
