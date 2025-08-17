@@ -3,291 +3,55 @@ import BlogLayout from '../layouts/BlogLayout.astro';
 import Hero from '../components/Hero.astro';
 import PostCard from '../components/PostCard.astro';
 
+const base = (import.meta as any).env.BASE_URL || '/';
+
 const recentPosts = [
 	{
-		title: "GPT-4 Turbo: La nueva revolución de OpenAI en modelos de lenguaje",
-		excerpt: "OpenAI presenta GPT-4 Turbo con mejoras significativas en velocidad, precisión y capacidad de contexto. Descubre las nuevas características y cómo puede transformar el desarrollo de aplicaciones.",
-		date: "15 Enero 2025",
-		category: "IA",
-		slug: "gpt-4-turbo-openai-revolucion",
-		readTime: "5 min"
+		title: 'GPT-4 Turbo: La nueva revolución de OpenAI',
+		excerpt: 'OpenAI presenta GPT-4 Turbo con mejoras en velocidad y precisión.',
+		date: '15 Enero 2025',
+		category: 'IA',
+		slug: 'gpt-4-turbo-openai-revolucion',
+		readTime: '5 min'
 	},
 	{
-		title: "Astro 5.0: La nueva era del desarrollo web estático",
-		excerpt: "Astro 5.0 llega con server islands, content layers y mejoras de rendimiento que revolucionan la creación de sitios web. Una mirada completa a las nuevas características.",
-		date: "14 Enero 2025",
-		category: "Web",
-		slug: "astro-5-desarrollo-web-estatico",
-		readTime: "4 min"
-	},
-	{
-		title: "GitHub Copilot Chat integra nuevas funciones de IA para 2025",
-		excerpt: "Microsoft y GitHub anuncian importantes actualizaciones para Copilot Chat, incluyendo mejor comprensión de contexto y integración con más IDEs populares.",
-		date: "13 Enero 2025",
-		category: "Herramientas",
-		slug: "github-copilot-chat-nuevas-funciones",
-		readTime: "3 min"
-	},
-	{
-		title: "React 19: Nuevas características y mejoras de rendimiento",
-		excerpt: "La nueva versión de React introduce Server Components estables, mejoras en Suspense y nuevas APIs que simplifican el desarrollo de aplicaciones modernas.",
-		date: "12 Enero 2025",
-		category: "Web",
-		slug: "react-19-nuevas-caracteristicas",
-		readTime: "6 min"
-	},
-	{
-		title: "Claude 3.5 Sonnet vs GPT-4: Comparativa completa 2025",
-		excerpt: "Análisis detallado de las capacidades, rendimiento y casos de uso de los modelos de IA más avanzados del mercado. ¿Cuál elegir para tu proyecto?",
-		date: "11 Enero 2025",
-		category: "IA",
-		slug: "claude-3-5-vs-gpt-4-comparativa",
-		readTime: "8 min"
-	},
-	{
-		title: "Tendencias de desarrollo web que marcarán 2025",
-		excerpt: "Desde WebAssembly hasta edge computing, repasamos las tecnologías y tendencias que definirán el futuro del desarrollo web en este año.",
-		date: "10 Enero 2025",
-		category: "Noticias",
-		slug: "tendencias-desarrollo-web-2025",
-		readTime: "7 min"
+		title: 'Astro 5.0: La nueva era del desarrollo web',
+		excerpt: 'Astro 5.0 introduce mejoras para sitios estáticos.',
+		date: '14 Enero 2025',
+		category: 'Web',
+		slug: 'astro-5-desarrollo-web-estatico',
+		readTime: '4 min'
 	}
 ];
+
 ---
 
-<BlogLayout title="DevIA Blog - Noticias de Programación e IA" description="Blog personal con noticias diarias sobre programación, inteligencia artificial y desarrollo de software en español">
+<BlogLayout title="DevIA Blog" description="Noticias de programación e IA">
 	<Hero />
-	
+
 	<section class="featured-section">
 		<div class="section-header">
 			<h2 class="section-title">Últimas Noticias</h2>
 			<p class="section-subtitle">Mantente al día con lo más reciente en programación e IA</p>
 		</div>
-		
+
 		<div class="posts-grid">
-			{recentPosts.map((post) => (
-				<PostCard {...post} />
-			))}
+			{recentPosts.map(post => <PostCard {...post} />)}
 		</div>
-		
+
 		<div class="view-all">
-			<a href="/posts" class="view-all-btn">Ver todos los posts →</a>
+			<a href={`${base}posts`} class="view-all-btn">Ver todos los posts →</a>
 		</div>
 	</section>
 
-	<section class="newsletter-section">
-		<div class="newsletter-card">
-			<div class="newsletter-content">
-				<h3 class="newsletter-title">¿No te quieres perder nada?</h3>
-				<p class="newsletter-description">
-					Suscríbete a nuestro boletín semanal y recibe un resumen de las noticias más importantes sobre programación e IA directamente en tu bandeja de entrada.
-				</p>
-				<form class="newsletter-form">
-					<input type="email" placeholder="tu@email.com" class="newsletter-input" required>
-					<button type="submit" class="newsletter-btn">Suscribirse</button>
-				</form>
-				<p class="newsletter-note">📧 Sin spam, solo contenido de calidad. Puedes cancelar cuando quieras.</p>
-			</div>
-			<div class="newsletter-visual">
-				<div class="email-icon">📬</div>
-			</div>
-		</div>
-	</section>
 </BlogLayout>
 
 <style>
-	.featured-section {
-		margin-bottom: 80px;
-	}
-
-	.section-header {
-		text-align: center;
-		margin-bottom: 48px;
-	}
-
-	.section-title {
-		font-size: 36px;
-		font-weight: 700;
-		color: #1f2937;
-		margin-bottom: 16px;
-	}
-
-	.section-subtitle {
-		font-size: 18px;
-		color: #6b7280;
-		max-width: 600px;
-		margin: 0 auto;
-		line-height: 1.6;
-	}
-
-	.posts-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-		gap: 32px;
-		margin-bottom: 48px;
-	}
-
-	.view-all {
-		text-align: center;
-	}
-
-	.view-all-btn {
-		display: inline-block;
-		background: linear-gradient(135deg, #3b82f6, #2563eb);
-		color: white;
-		text-decoration: none;
-		padding: 16px 32px;
-		border-radius: 12px;
-		font-weight: 600;
-		font-size: 16px;
-		transition: all 0.3s ease;
-		box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-	}
-
-	.view-all-btn:hover {
-		transform: translateY(-2px);
-		box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-	}
-
-	.newsletter-section {
-		margin-bottom: 80px;
-	}
-
-	.newsletter-card {
-		background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-		border-radius: 24px;
-		padding: 48px;
-		display: grid;
-		grid-template-columns: 2fr 1fr;
-		gap: 48px;
-		align-items: center;
-		color: white;
-		overflow: hidden;
-		position: relative;
-	}
-
-	.newsletter-card::before {
-		content: '';
-		position: absolute;
-		top: -50%;
-		right: -50%;
-		width: 100%;
-		height: 100%;
-		background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-		border-radius: 50%;
-	}
-
-	.newsletter-content {
-		position: relative;
-		z-index: 2;
-	}
-
-	.newsletter-title {
-		font-size: 32px;
-		font-weight: 700;
-		margin-bottom: 16px;
-	}
-
-	.newsletter-description {
-		font-size: 18px;
-		line-height: 1.6;
-		margin-bottom: 32px;
-		opacity: 0.9;
-	}
-
-	.newsletter-form {
-		display: flex;
-		gap: 16px;
-		margin-bottom: 16px;
-	}
-
-	.newsletter-input {
-		flex: 1;
-		padding: 16px 20px;
-		border: none;
-		border-radius: 12px;
-		font-size: 16px;
-		background: rgba(255, 255, 255, 0.2);
-		color: white;
-		placeholder-color: rgba(255, 255, 255, 0.7);
-		backdrop-filter: blur(10px);
-	}
-
-	.newsletter-input::placeholder {
-		color: rgba(255, 255, 255, 0.7);
-	}
-
-	.newsletter-btn {
-		padding: 16px 32px;
-		background: white;
-		color: #667eea;
-		border: none;
-		border-radius: 12px;
-		font-weight: 600;
-		font-size: 16px;
-		cursor: pointer;
-		transition: all 0.2s ease;
-	}
-
-	.newsletter-btn:hover {
-		transform: translateY(-2px);
-		box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-	}
-
-	.newsletter-note {
-		font-size: 14px;
-		opacity: 0.8;
-	}
-
-	.newsletter-visual {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		position: relative;
-		z-index: 2;
-	}
-
-	.email-icon {
-		font-size: 120px;
-		opacity: 0.3;
-		animation: bounce 2s infinite;
-	}
-
-	@keyframes bounce {
-		0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-		40% { transform: translateY(-10px); }
-		60% { transform: translateY(-5px); }
-	}
-
-	@media (max-width: 768px) {
-		.posts-grid {
-			grid-template-columns: 1fr;
-		}
-
-		.newsletter-card {
-			grid-template-columns: 1fr;
-			padding: 32px 24px;
-			text-align: center;
-		}
-
-		.newsletter-form {
-			flex-direction: column;
-		}
-
-		.section-title {
-			font-size: 28px;
-		}
-
-		.newsletter-title {
-			font-size: 24px;
-		}
-
-		.newsletter-description {
-			font-size: 16px;
-		}
-
-		.email-icon {
-			font-size: 80px;
-		}
-	}
+	.featured-section { margin-bottom: 48px; }
+	.section-header { text-align: center; margin-bottom: 24px; }
+	.section-title { font-size: 28px; font-weight: 700; }
+	.section-subtitle { color: #6b7280; }
+	.posts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+	.view-all { text-align: center; margin-top: 24px; }
+	.view-all-btn { color: white; background: #2563eb; padding: 10px 16px; border-radius: 8px; text-decoration: none; }
 </style>
