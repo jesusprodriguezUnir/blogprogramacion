@@ -10,12 +10,13 @@ export default defineConfig({
   use: {
     actionTimeout: 10_000,
     trace: 'on-first-retry',
-    // Por defecto el dev server de Astro corre en 4321 para este proyecto
-    baseURL: process.env.PLAYWRIGHT_BASE_URL || 'http://localhost:4321'
+    // Ajustado para el puerto en el que suele arrancar el dev server en este entorno
+    baseURL: process.env.PLAYWRIGHT_BASE_URL || 'http://localhost:4322'
   },
   webServer: {
-    command: 'npm run dev',
-    url: process.env.PLAYWRIGHT_BASE_URL || 'http://localhost:4321',
+    // Forzar puerto 4322 al iniciar el servidor para evitar colisiones de puerto
+    command: 'npm run dev -- --port 4322',
+    url: process.env.PLAYWRIGHT_BASE_URL || 'http://localhost:4322',
     reuseExistingServer: true,
     timeout: 120_000
   },

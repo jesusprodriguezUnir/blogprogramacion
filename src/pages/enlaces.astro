@@ -11,56 +11,65 @@ const linkCategories = [
 				title: "OpenAI Platform",
 				description: "API oficial de OpenAI para GPT-4, DALL-E y más",
 				url: "https://platform.openai.com",
-				type: "API"
+				type: "API",
+				icon: "🧠"
 			},
 			{
 				title: "Hugging Face",
 				description: "Hub de modelos de ML y IA, datasets y aplicaciones",
 				url: "https://huggingface.co",
-				type: "Plataforma"
+				type: "Plataforma",
+				icon: "🐻"
 			},
 			{
 				title: "Anthropic Claude",
 				description: "Asistente de IA conversacional avanzado",
 				url: "https://claude.ai",
-				type: "Herramienta"
+				type: "Herramienta",
+				icon: "🤖"
 			},
 			{
 				title: "Grok",
 				description: "IA conversacional desarrollada por xAI (Elon Musk)",
 				url: "https://grok.x.ai",
-				type: "Herramienta"
+				type: "Herramienta",
+				icon: "🛰️"
 			},
 			{
 				title: "ChatGPT",
 				description: "El chatbot de IA más popular de OpenAI",
 				url: "https://chat.openai.com",
-				type: "Herramienta"
+				type: "Herramienta",
+				icon: "💬"
 			},
 			{
 				title: "Gemini",
 				description: "IA generativa multimodal de Google (antes Bard)",
 				url: "https://gemini.google.com",
-				type: "Herramienta"
+				type: "Herramienta",
+				icon: "🔮"
 			},
 			{
 				title: "DeepSeek",
 				description: "IA avanzada para búsqueda y generación de código, orientada a desarrolladores",
 				url: "https://deepseek.com",
-				type: "Herramienta"
+				type: "Herramienta",
+				icon: "🔎"
 			},
-			{
-				title: "Papers With Code",
-				description: "Investigación en ML con implementaciones de código",
-				url: "https://paperswithcode.com",
-				type: "Investigación"
-			},
-			{
-				title: "Replicate",
-				description: "Ejecuta modelos de ML con una API simple",
-				url: "https://replicate.com",
-				type: "API"
-			}
+					{
+						title: "Replicate",
+						description: "Ejecuta modelos de ML con una API simple",
+						url: "https://replicate.com",
+						type: "API",
+						icon: "🧪"
+					},
+					{
+						title: "Bolt",
+						description: "Plataforma para desplegar y orquestar modelos de IA",
+						url: "https://bolt.new/",
+						type: "Plataforma",
+						icon: "⚡"
+					}
 		]
 	},
 	{
@@ -72,49 +81,64 @@ const linkCategories = [
 				title: "MDN Web Docs",
 				description: "Documentación completa sobre tecnologías web",
 				url: "https://developer.mozilla.org",
-				type: "Documentación"
+				type: "Documentación",
+				icon: "📚"
 			},
 			{
 				title: "Can I Use",
 				description: "Compatibilidad de características web en navegadores",
 				url: "https://caniuse.com",
-				type: "Herramienta"
+				type: "Herramienta",
+				icon: "✅"
 			},
 			{
 				title: "React Documentation",
 				description: "Documentación oficial de React",
 				url: "https://react.dev",
-				type: "Documentación"
+				type: "Documentación",
+				icon: "⚛️"
 			},
 			{
 				title: "Tailwind CSS",
 				description: "Framework CSS utility-first",
 				url: "https://tailwindcss.com",
-				type: "Framework"
+				type: "Framework",
+				icon: "🎨"
 			},
 			{
 				title: "Next.js",
 				description: "Framework de React para producción",
 				url: "https://nextjs.org",
-				type: "Framework"
+				type: "Framework",
+				icon: "⬆️"
 			},
 			{
 				title: "Astro",
 				description: "Framework web moderno para sitios rápidos",
 				url: "https://astro.build",
-				type: "Framework"
+				type: "Framework",
+				icon: "☄️"
+			},
+			{
+				title: "Astro — Documentación",
+				description: "Guía oficial de inicio rápido y documentación de Astro",
+				url: "https://docs.astro.build/en/getting-started/",
+				type: "Documentación",
+				icon: "📘"
 			},
 			{
 				title: "Angular",
 				description: "Framework oficial de Google para aplicaciones web modernas",
 				url: "https://angular.io",
-				type: "Framework"
+				type: "Framework",
+				icon: "🅰️"
 			},
 			{
 				title: "PrimeNG",
 				description: "Biblioteca de componentes UI para Angular con diseño profesional y personalizable",
 				url: "https://primeng.org",
-				type: "Componentes UI"
+				type: "Componentes UI",
+				icon: "🔷"
 			}
 		]
 	},
@@ -127,31 +151,36 @@ const linkCategories = [
 				title: "Visual Studio Code",
 				description: "Editor de código gratuito y potente",
 				url: "https://code.visualstudio.com",
-				type: "Editor"
+				type: "Editor",
+				icon: "🧑‍💻"
 			},
 			{
 				title: "GitHub",
 				description: "Plataforma de desarrollo colaborativo",
 				url: "https://github.com",
-				type: "Plataforma"
+				type: "Plataforma",
+				icon: "🐙"
 			},
 			{
 				title: "Figma",
 				description: "Herramienta de diseño colaborativo",
 				url: "https://figma.com",
-				type: "Diseño"
+				type: "Diseño",
+				icon: "🎨"
 			},
 			{
 				title: "Postman",
 				description: "Plataforma para desarrollo y testing de APIs",
 				url: "https://postman.com",
-				type: "API Testing"
+				type: "API Testing",
+				icon: "📬"
 			},
 			{
 				title: "Vercel",
 				description: "Plataforma de deployment para aplicaciones web",
 				url: "https://vercel.com",
-				type: "Deployment"
+				type: "Deployment",
+				icon: "🚀"
 			}
 		]
 	},
@@ -164,31 +193,36 @@ const linkCategories = [
 				title: "freeCodeCamp",
 				description: "Plataforma gratuita para aprender programación",
 				url: "https://freecodecamp.org",
-				type: "Educación"
+				type: "Educación",
+				icon: "🎓"
 			},
 			{
 				title: "Stack Overflow",
 				description: "Comunidad de preguntas y respuestas para programadores",
 				url: "https://stackoverflow.com",
-				type: "Comunidad"
+				type: "Comunidad",
+				icon: "💡"
 			},
 			{
 				title: "Dev.to",
 				description: "Comunidad de desarrolladores y artículos técnicos",
 				url: "https://dev.to",
-				type: "Comunidad"
+				type: "Comunidad",
+				icon: "✍️"
 			},
 			{
 				title: "Codecademy",
 				description: "Cursos interactivos de programación",
 				url: "https://codecademy.com",
-				type: "Educación"
+				type: "Educación",
+				icon: "🧑‍🎓"
 			},
 			{
 				title: "YouTube - Coding Channels",
 				description: "Canales educativos de programación",
 				url: "https://youtube.com",
-				type: "Video"
+				type: "Video",
+				icon: "▶️"
 			}
 		]
 	}
@@ -218,6 +252,7 @@ const linkCategories = [
 				<div class="links-grid">
 					{category.links.map((link) => (
 						<a href={link.url} class="link-card" target="_blank" rel="noopener noreferrer">
+							<div class="link-icon">{link.icon ?? ''}</div>
 							<div class="link-content">
 								<div class="link-header">
 									<h3 class="link-title">{link.title}</h3>
@@ -332,6 +367,18 @@ const linkCategories = [
 		transition: all 0.3s ease;
 		position: relative;
 		overflow: hidden;
+	}
+
+	.link-icon {
+		flex: 0 0 64px;
+		height: 64px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 28px;
+		background: linear-gradient(135deg, #ffffff, #f3f4f6);
+		border-radius: 12px;
+		margin-right: 16px;
 	}
 
 	.link-card::before {
