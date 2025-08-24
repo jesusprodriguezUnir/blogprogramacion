@@ -1,0 +1,443 @@
+---
+import BlogLayout from '../layouts/BlogLayout.astro';
+
+// Categorías de ejemplo con prompts listos para editar
+const promptCategories: any[] = [
+	{
+		category: "Angular",
+		description: "Prompts para generar componentes, servicios, tests y migraciones en Angular.",
+		icon: "📐",
+		prompts: [
+			{
+				title: "Generar componente con formulario reactivo",
+				prompt: "Genera un componente Angular llamado 'user-form' que use ReactiveFormsModule para capturar nombre, email y teléfono; valida email y muestra errores.",
+				tags: ["angular","forms","typescript"]
+			},
+			{
+				title: "Crear servicio HTTP con manejo de errores",
+				prompt: "Escribe un servicio Angular que consuma '/api/users' con HttpClient, incluya manejo de errores y retries con RxJS.",
+				tags: ["angular","http","rxjs"]
+			}
+		]
+	},
+	{
+		category: "Git / Jira / Flujos",
+		description: "Prompts para crear mensajes de commit claros, vincular ramas a tickets y generar PR descriptions.",
+		icon: "🔗",
+		prompts: [
+			{
+				title: "Generar mensaje de commit para tarea Jira",
+				prompt: "Dada la rama 'feature/PROJ-123-add-login' y los cambios en auth.service.ts, genera un mensaje de commit claro y conciso que incluya la referencia PROJ-123.",
+				tags: ["git","jira","workflow"]
+			},
+			{
+				title: "Crear descripción de PR desde el ticket",
+				prompt: "Toma la historia de usuario: 'Como usuario quiero iniciar sesión para acceder a mi perfil' y genera una descripción de PR con resumen, pasos para probar y notas de despliegue.",
+				tags: ["github","pr","jira"]
+			}
+		]
+	},
+	{
+		category: ".NET Core",
+		description: "Prompts para generar controladores, endpoints y manejo de autenticación en .NET Core.",
+		icon: "🧩",
+		prompts: [
+			{
+				title: "Crear controlador API para usuarios",
+				prompt: "Genera un controlador .NET Core 'UsersController' con endpoints GET /users, GET /users/{id}, POST /users incluyendo validación y DTOs.",
+				tags: ["dotnet","c#","api"]
+			},
+			{
+				title: "Integrar JWT Auth",
+				prompt: "Añade autenticación JWT a un proyecto .NET Core, explica los pasos para configurar el middleware y generar tokens seguros.",
+				tags: ["security","jwt","dotnet"]
+			}
+		]
+	},
+	{
+		category: "Ingeniería de Prompts",
+		description: "Templates y patrones para redactar prompts efectivos con contexto, rol y ejemplos.",
+		icon: "🧠",
+		prompts: [
+			{
+				title: "Prompt para generar tests unitarios",
+				prompt: "Eres un generador de tests. Dado este fragmento de código (incluir código), escribe tests unitarios en el framework indicado y explica cada aserción.",
+				tags: ["testing","prompts","best-practices"]
+			},
+			{
+				title: "Prompt maestro para tareas de Jira",
+				prompt: "Toma la historia de usuario y genera pasos concretos de implementación, pruebas necesarias y casos de borde.",
+				tags: ["jira","planning","copilot"]
+			}
+		]
+	}
+];
+
+---
+
+<BlogLayout title="Resumen del informe: Prompts para Desarrollo Web" description="Un resumen de los hallazgos clave sobre cómo los desarrolladores modernos pueden usar la IA de manera efectiva, enfocándose en la integración de herramientas en lugar de en catálogos de prompts.">
+	<div class="page-header">
+		<h1 class="page-title">Prompts</h1>
+		<p class="page-subtitle">
+			Colección de prompts curados para uso con modelos de IA: generación de código, escritura, diseño y más.
+			Aporta los tuyos y compártelos con la comunidad.
+		</p>
+	</div>
+
+	
+
+	<section class="resources-section">
+		<div class="resources-card">
+			<h2>Los Mejores Recursos de Prompts para Desarrollo Web</h2>
+			<div class="hero-wrap">
+				<img src="/images/ai-prompts-web-dev.jpg" alt="AI Prompts Web Dev" />
+			</div>
+			<p>
+				Si eres un desarrollador que trabaja con <strong>Angular</strong>, <strong>Git</strong>, <strong>Jira</strong>, <strong>GitHub Copilot</strong> y <strong>.NET Core</strong>, los prompts de IA pueden ser un gran aliado para optimizar tu día a día. Aquí te presento una lista de sitios especializados con colecciones de prompts que te ayudarán a generar código, gestionar flujos de trabajo y mejorar tu productividad.
+			</p>
+
+			<h3>1. PromptingGuide.ai</h3>
+			<p>Una guía completa de ingeniería de prompts con técnicas y ejemplos para optimizar interacciones con modelos de IA. Ideal para aprender a crear prompts efectivos para tu stack tecnológico, desde Angular hasta .NET Core.</p>
+			<p><strong>Enlace:</strong> <a href="https://www.promptingguide.ai/">PromptingGuide.ai</a></p>
+
+			<h3>2. Fabric (GitHub)</h3>
+			<p>Un framework open-source con una biblioteca de "patterns" (prompts modulares) para tareas de desarrollo. Puedes adaptar estos prompts a Angular o .NET Core.</p>
+			<p><strong>Enlace:</strong> <a href="https://github.com/danielmiessler/fabric">Fabric en GitHub</a></p>
+
+			<h3>3. FlowGPT</h3>
+			<p>Plataforma comunitaria con miles de prompts para ChatGPT y otras IA, con categorías específicas para programación y desarrollo web.</p>
+			<p><strong>Enlace:</strong> <a href="https://flowgpt.com/">FlowGPT.com</a></p>
+
+			<h3>4. PromptBase</h3>
+			<p>Un marketplace con prompts expertos, tanto gratuitos como de pago, para programación. Incluye prompts para debugging y refactoring.</p>
+			<p><strong>Enlace:</strong> <a href="https://promptbase.com/">PromptBase.com</a></p>
+
+			<h3>5. AIPRM</h3>
+			<p>Una extensión para ChatGPT con una vasta biblioteca de prompts curados para desarrollo de software.</p>
+			<p><strong>Enlace:</strong> <a href="https://www.aiprm.com/">AIPRM.com</a></p>
+
+			<h3>6. DocsBot.ai</h3>
+			<p>Una colección de prompts para programación, con ejemplos para ChatGPT, Anthropic y Gemini.</p>
+			<p><strong>Enlace:</strong> <a href="https://docsbot.ai/prompts/programming">DocsBot.ai Prompts</a></p>
+
+			<h3>7. Documentación de GitHub Copilot</h3>
+			<p>La guía oficial de GitHub Copilot en Visual Studio Code ofrece tips para crear prompts efectivos.</p>
+			<p><strong>Enlace:</strong> <a href="https://docs.github.com/en/copilot">GitHub Copilot Docs</a></p>
+
+			<p>Plataformas como <strong>FlowGPT</strong> y <strong>AIPRM</strong> son ideales para empezar. ¿Quieres ejemplos de prompts para tu stack? ¡Dime y los creo!</p>
+		</div>
+	</section>
+
+	<div class="page-top-actions" style="display:flex; justify-content:center; margin-bottom:20px;">
+		<div class="cta-banner">
+			<span>¿Tienes prompts útiles para compartir?</span>
+			<a class="cta-btn" href="mailto:contacto@deviablog.com">Enviar prompt</a>
+		</div>
+	</div>
+
+	<div class="links-container">
+		{promptCategories.map((category) => (
+			<section class="category-section">
+				<div class="category-header">
+					<div class="category-icon">{category.icon}</div>
+					<div class="category-info">
+						<h2 class="category-title">{category.category}</h2>
+						<p class="category-description">{category.description}</p>
+					</div>
+				</div>
+
+				<div class="links-grid">
+					{category.prompts?.map((p: any) => (
+						<article class="link-card">
+							<div class="link-icon">📝</div>
+							<div class="link-content">
+								<div class="link-header">
+									<h3 class="link-title">{p.title}</h3>
+									<span class="link-type">{(p.tags || []).join(', ')}</span>
+								</div>
+								<p class="link-description">{p.prompt}</p>
+							</div>
+							<div class="link-arrow">→</div>
+						</article>
+					))}
+				</div>
+			</section>
+		))}
+	</div>
+
+	<section class="suggest-section">
+		<div class="suggest-card">
+			<h3 class="suggest-title">¿Tienes prompts para compartir?</h3>
+			<p class="suggest-description">
+				Envía tus prompts y una breve descripción para que pueda añadirlos aquí con tu crédito.
+			</p>
+			<a href="mailto:contacto@deviablog.com" class="suggest-btn">Enviar prompt</a>
+		</div>
+	</section>
+</BlogLayout>
+
+<style>
+	/* Reutiliza estilos idénticos a `enlaces.astro` para mantener consistencia visual */
+	.page-header {
+		text-align: center;
+		margin-bottom: 64px;
+	}
+
+	.page-title {
+		font-size: 48px;
+		font-weight: 800;
+		color: #1f2937;
+		margin-bottom: 16px;
+	}
+
+	.page-subtitle {
+		font-size: 20px;
+		color: #6b7280;
+		line-height: 1.6;
+		max-width: 800px;
+		margin: 0 auto;
+	}
+
+	.links-container {
+		display: flex;
+		flex-direction: column;
+		gap: 64px;
+		margin-bottom: 80px;
+	}
+
+	.category-section {
+		background: white;
+		border-radius: 24px;
+		padding: 48px;
+		box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+		border: 1px solid #f3f4f6;
+	}
+
+	.category-header {
+		display: flex;
+		align-items: center;
+		gap: 24px;
+		margin-bottom: 32px;
+	}
+
+	.category-icon {
+		font-size: 48px;
+		background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+		width: 80px;
+		height: 80px;
+		border-radius: 20px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.category-title {
+		font-size: 28px;
+		font-weight: 700;
+		color: #1f2937;
+		margin-bottom: 8px;
+	}
+
+	.category-description {
+		font-size: 16px;
+		color: #6b7280;
+		line-height: 1.5;
+	}
+
+	.links-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+		gap: 24px;
+	}
+
+	.link-card {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 28px;
+		background: linear-gradient(180deg, #ffffff, #fbfdff);
+		border: 1px solid rgba(34,36,38,0.06);
+		border-radius: 18px;
+		text-decoration: none;
+		transition: transform 0.28s cubic-bezier(.2,.9,.3,1), box-shadow 0.28s;
+		position: relative;
+		overflow: hidden;
+		backdrop-filter: blur(2px);
+	}
+
+	.link-icon {
+		flex: 0 0 64px;
+		height: 64px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 28px;
+		background: linear-gradient(135deg, #ffffff, #f3f4f6);
+		border-radius: 12px;
+		margin-right: 16px;
+	}
+
+	.link-card::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		height: 3px;
+		background: linear-gradient(90deg, #3b82f6, #10b981);
+		transform: scaleX(0);
+		transition: transform 0.3s ease;
+	}
+
+	.link-card:hover {
+		transform: translateY(-6px) scale(1.01);
+		box-shadow: 0 18px 40px -12px rgba(16,24,40,0.2);
+		border-color: rgba(34,36,38,0.08);
+	}
+
+	.link-card:hover::before {
+		transform: scaleX(1);
+	}
+
+	.link-content {
+		flex: 1;
+	}
+
+	.link-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin-bottom: 8px;
+	}
+
+	.link-title {
+		font-size: 18px;
+		font-weight: 600;
+		color: #1f2937;
+		margin: 0;
+	}
+
+	.link-type {
+		background: #e0e7ff;
+		color: #3730a3;
+		padding: 4px 8px;
+		border-radius: 6px;
+		font-size: 12px;
+		font-weight: 500;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+	}
+
+	.link-description {
+		color: #4b5563;
+		font-size: 14px;
+		line-height: 1.5;
+		margin: 0 0 8px 0;
+	}
+
+	.link-url {
+		color: #6b7280;
+		font-size: 12px;
+		font-family: monospace;
+	}
+
+	.link-arrow {
+		font-size: 20px;
+		color: #9ca3af;
+		transition: all 0.3s ease;
+		margin-left: 16px;
+	}
+
+	.link-card:hover .link-arrow {
+		color: #3b82f6;
+		transform: translateX(4px);
+	}
+
+	.suggest-section {
+		margin-bottom: 80px;
+	}
+
+	/* CTA banner */
+	.cta-banner {
+		position: sticky;
+		top: 80px;
+		background: linear-gradient(90deg,#06b6d4,#3b82f6);
+		color: white;
+		padding: 14px 20px;
+		border-radius: 12px;
+		display: inline-flex;
+		align-items: center;
+		gap: 12px;
+		box-shadow: 0 8px 30px rgba(59,130,246,0.12);
+		font-weight: 600;
+	}
+
+	.cta-btn { background: white; color: #0f172a; padding: 10px 16px; border-radius: 10px; text-decoration: none; font-weight:700 }
+
+	.suggest-card {
+		background: linear-gradient(135deg, #fbbf24, #f59e0b);
+		border-radius: 20px;
+		padding: 48px;
+		text-align: center;
+		color: white;
+	}
+
+	.suggest-title {
+		font-size: 32px;
+		font-weight: 700;
+		margin-bottom: 16px;
+	}
+
+	.suggest-description {
+		font-size: 18px;
+		line-height: 1.6;
+		margin-bottom: 32px;
+		opacity: 0.9;
+		max-width: 600px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.suggest-btn {
+		display: inline-block;
+		background: white;
+		color: #f59e0b;
+		text-decoration: none;
+		padding: 16px 32px;
+		border-radius: 12px;
+		font-weight: 600;
+		font-size: 16px;
+		transition: all 0.3s ease;
+	}
+
+	.suggest-btn:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+	}
+
+	.empty-section { margin-bottom: 80px; }
+	.empty-card { background: white; padding: 48px; border-radius: 20px; text-align: center; border: 1px solid #f3f4f6; }
+	.empty-title { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+	.empty-desc { color: #6b7280; }
+
+	.resources-section { margin-bottom: 80px; }
+	.resources-card { background: white; padding: 32px; border-radius: 20px; border: 1px solid #f3f4f6; }
+	.resources-card .meta { color: #6b7280; margin-bottom: 12px; }
+	.hero-wrap { margin: 16px 0 24px 0; }
+	.hero-wrap img { width: 100%; border-radius: 12px; display: block; }
+
+	@media (max-width: 768px) {
+		.page-title { font-size: 36px; }
+		.page-subtitle { font-size: 18px; }
+		.category-section { padding: 32px 24px; }
+		.category-header { flex-direction: column; text-align: center; gap: 16px; }
+		.category-icon { width: 60px; height: 60px; font-size: 32px; }
+		.category-title { font-size: 24px; }
+		.links-grid { grid-template-columns: 1fr; }
+		.link-card { padding: 20px; }
+		.link-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+		.suggest-card { padding: 32px 24px; }
+		.suggest-title { font-size: 24px; }
+		.suggest-description { font-size: 16px; }
+	}
+</style>
