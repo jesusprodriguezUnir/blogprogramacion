@@ -6,37 +6,229 @@ const postFiles = import.meta.glob('./*.md', { eager: true });
 
 const files = Object.values(postFiles) as any[];
 
+const categoryIcons: Record<string, string> = {
+  'IA': '🤖',
+  'Inteligencia Artificial': '🤖',
+  'Desarrollo': '💻',
+  'Web': '🌐',
+  'Noticias': '📰',
+  'General': '📄',
+  'OpenAI': '🧠',
+  'Google': '🔎',
+  'React': '⚛️',
+  'Astro': '☄️',
+  'Tendencias': '📈',
+  'Comparativa': '⚖️',
+  'Resumen': '📝',
+  'Prompts': '💡',
+  'Por defecto': '📄'
+};
+
 const posts = files
   .map((m) => (m && m.frontmatter ? m.frontmatter : null))
   .filter(Boolean)
-  .map((fm) => ({
-    title: fm.title || 'Sin título',
-    excerpt: fm.excerpt || '',
-    date: fm.date || '1970-01-01',
-    category: fm.category || 'General',
-    slug: fm.slug || fm.title?.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
-    readTime: fm.readTime || '1 min',
-    author: fm.author || 'Autor',
-    ogImage: fm.ogImage || '/favicon.svg',
-    tags: fm.tags || []
-  }))
+  .map((fm) => {
+    const category: string = fm.category || 'General';
+    const slug = fm.slug || fm.title?.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+    let icon = categoryIcons[category] ?? categoryIcons['Por defecto'];
+    // Icono especial para el post "made by google"
+    if (slug && slug.includes('made-by-google')) {
+      icon = '🔎';
+    }
+    return {
+      title: fm.title || 'Sin título',
+      excerpt: fm.excerpt || '',
+      date: fm.date || '1970-01-01',
+      category,
+      slug,
+      readTime: fm.readTime || '1 min',
+      author: fm.author || 'Autor',
+      ogImage: fm.ogImage || '/favicon.svg',
+      tags: fm.tags || [],
+      icon
+    };
+  })
   .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 ---
 
 <BlogLayout title="Todos los posts" description="Listado de todas las noticias y artículos del blog">
-  <div class="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg my-8">
-    <h1 class="text-3xl font-bold text-gray-800 mb-8">Todas las noticias</h1>
-    <ul class="space-y-6">
-      {posts.map((post) => (
-        <li>
-          <a href={`/posts/${post.slug}`} class="block hover:bg-gray-50 p-4 rounded transition">
-            <h2 class="text-xl font-semibold text-blue-700 mb-1">{post.title}</h2>
-            <p class="text-gray-600 mb-1">{post.excerpt}</p>
-            <span class="text-gray-400 text-sm">{post.date} | {post.category} | {post.readTime}</span>
-          </a>
-        </li>
-      ))}
-    </ul>
-    <a href="/" class="text-blue-500 hover:underline mt-8 inline-block">← Volver al inicio</a>
+  <div class="page-header">
+    <h1 class="page-title">Todas las noticias</h1>
+    <p class="page-subtitle">Explora los últimos artículos y novedades del blog.</p>
   </div>
+
+  <div class="links-container">
+    <section class="category-section">
+      <div class="links-grid">
+        {posts.map((post) => (
+          <a href={`/posts/${post.slug}`} class="link-card" title={post.title}>
+            <div class="link-icon">{post.icon}</div>
+            <div class="link-content">
+              <div class="link-header">
+                <h3 class="link-title">{post.title}</h3>
+                <span class="link-type">{post.category}</span>
+              </div>
+              <p class="link-description">{post.excerpt}</p>
+              <div class="link-url">{post.date} · {post.readTime}</div>
+            </div>
+            <div class="link-arrow">→</div>
+          </a>
+        ))}
+      </div>
+    </section>
+  </div>
+
+  <div class="max-w-3xl mx-auto mt-8 text-center">
+    <a href="/" class="text-blue-500 hover:underline">← Volver al inicio</a>
+  </div>
+
+  <style>
+    .page-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    .page-title {
+      font-size: 48px;
+      font-weight: 800;
+      color: #1f2937;
+      margin-bottom: 16px;
+    }
+    .page-subtitle {
+      font-size: 20px;
+      color: #6b7280;
+      line-height: 1.6;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .links-container {
+      display: flex;
+      flex-direction: column;
+      gap: 64px;
+      margin-bottom: 80px;
+    }
+    .category-section {
+      background: white;
+      border-radius: 24px;
+      padding: 48px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      border: 1px solid #f3f4f6;
+    }
+    .links-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 24px;
+    }
+    .link-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .link-icon {
+      flex: 0 0 64px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      background: linear-gradient(135deg, #ffffff, #f3f4f6);
+      border-radius: 12px;
+      margin-right: 16px;
+    }
+    .link-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #3b82f6, #10b981);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+    .link-card:hover {
+      background: white;
+      transform: translateY(-4px);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+      border-color: #cbd5e1;
+    }
+    .link-card:hover::before {
+      transform: scaleX(1);
+    }
+    .link-content {
+      flex: 1;
+    }
+    .link-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    .link-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1f2937;
+      margin: 0;
+    }
+    .link-type {
+      background: #e0e7ff;
+      color: #3730a3;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .link-description {
+      color: #4b5563;
+      font-size: 14px;
+      line-height: 1.5;
+      margin: 0 0 8px 0;
+    }
+    .link-url {
+      color: #6b7280;
+      font-size: 12px;
+      font-family: monospace;
+    }
+    .link-arrow {
+      font-size: 20px;
+      color: #9ca3af;
+      transition: all 0.3s ease;
+      margin-left: 16px;
+    }
+    .link-card:hover .link-arrow {
+      color: #3b82f6;
+      transform: translateX(4px);
+    }
+    @media (max-width: 768px) {
+      .page-title {
+        font-size: 36px;
+      }
+      .page-subtitle {
+        font-size: 18px;
+      }
+      .category-section {
+        padding: 32px 24px;
+      }
+      .links-grid {
+        grid-template-columns: 1fr;
+      }
+      .link-card {
+        padding: 20px;
+      }
+      .link-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+    }
+  </style>
 </BlogLayout>
