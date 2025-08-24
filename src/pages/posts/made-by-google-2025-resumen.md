@@ -79,14 +79,6 @@ Si quieres que convierta este resumen en un artículo más detallado, puedo:
 
 ¿Te lo dejo así en el post o quieres que añada detalles técnicos y enlaces oficiales antes de publicarlo?
 
-## Enlaces y recursos
-
-- Video de la presentación (YouTube): si quieres enlazar el vídeo oficial completo, pega aquí la URL y la incrustaré en el post. Mientras tanto, puedes usar este enlace de búsqueda en YouTube que normalmente muestra la grabación oficial:
-
-	- [Buscar "Made By Google 2025" en YouTube](https://www.youtube.com/results?search_query=made+by+google+2025)
-
-- Para incrustar directamente el vídeo en el artículo pega la URL del vídeo (por ejemplo `https://www.youtube.com/watch?v=VIDEO_ID`) y reemplazaré este enlace por un reproductor embebido.
-
 ### Vídeo oficial de la presentación
 
 Aquí tienes el vídeo completo de la presentación de Made By Google 2025:

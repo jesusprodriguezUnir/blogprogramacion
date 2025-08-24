@@ -12,7 +12,61 @@ npm create astro@latest -- --template basics
 
 ![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
 
-## 🚀 Project Structure
+
+## �️ Estructura de la aplicación
+
+```text
+/ (raíz del proyecto)
+├── public/                # Archivos públicos (imágenes, favicon, etc.)
+├── src/
+│   ├── assets/            # Recursos gráficos (SVG, imágenes)
+│   ├── components/        # Componentes Astro reutilizables
+│   │   └── __tests__/     # Tests de componentes
+│   ├── data/              # Datos estáticos (posts.js)
+│   ├── layouts/           # Plantillas de layout para páginas
+│   ├── pages/             # Páginas del sitio (enlaces, index, prompts, sobre-mi, posts)
+│   │   ├── posts/         # Páginas y posts individuales (MDX/MD)
+│   │   └── __tests__/     # Tests de páginas
+│   └── utils/             # Utilidades y helpers
+│       └── __tests__/     # Tests de utilidades
+├── tests/
+│   └── e2e/               # Tests end-to-end con Playwright
+├── playwright.config.ts   # Configuración de Playwright
+├── vitest.config.ts       # Configuración de Vitest
+├── tsconfig.json          # Configuración de TypeScript
+├── package.json           # Dependencias y scripts
+├── astro.config.mjs       # Configuración de Astro
+└── README.md              # Documentación
+```
+
+
+### Diagrama visual (Mermaid)
+
+> **Tip:** Puedes exportar el diagrama como imagen (PNG o SVG) desde la vista previa Mermaid en VS Code y guardarlo como `public/estructura-app-diagrama.png`.
+
+#### Vista previa como imagen
+
+![Estructura visual de la app](public/estructura-app-diagrama.png)
+
+Puedes visualizar el diagrama con soporte Mermaid en VS Code o usando [Mermaid Live Editor](https://mermaid.live/):
+
+```mermaid
+graph TD
+	A[public/] -->|Imágenes, favicon| B((App))
+	C[src/assets/] -->|SVG, imágenes| B
+	D[src/components/] -->|Componentes Astro| B
+	E[src/layouts/] -->|Layouts| B
+	F[src/pages/] -->|Páginas y posts| B
+	G[src/data/] -->|Datos estáticos| B
+	H[src/utils/] -->|Utilidades| B
+	I[tests/e2e/] -->|Tests E2E| B
+	J[src/**/__tests__/] -->|Tests unitarios| B
+	B --> K[Usuario]
+	style B fill:#f9f,stroke:#333,stroke-width:2px
+	style K fill:#bbf,stroke:#333,stroke-width:2px
+```
+
+El archivo fuente del diagrama está en `estructura-app-diagrama.mmd`.
 
 Inside of your Astro project, you'll see the following folders and files:
 

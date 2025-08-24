@@ -13,24 +13,30 @@ layout: "../../layouts/BlogLayout.astro"
 
 La inteligencia artificial (IA) está transformando el panorama laboral a un ritmo sin precedentes. En los últimos días, se ha destacado una tendencia clara: la IA está impulsando un resurgimiento de los trabajos manuales mientras amenaza los empleos de oficina. Este cambio está reconfigurando las prioridades de las empresas, las habilidades demandadas y las oportunidades para los trabajadores. A continuación, exploramos esta tendencia y sus implicaciones, respaldados por investigaciones recientes y visualizaciones que ilustran el impacto.
 
-## El Auge de los Trabajos Manuales en la Era de la IA
 
-Históricamente, la automatización ha reemplazado tareas repetitivas, desde las líneas de ensamblaje hasta los cajeros automáticos. Sin embargo, la IA moderna, especialmente los modelos de lenguaje generativo como ChatGPT, está impactando roles que requieren habilidades cognitivas. Según un estudio del Fondo Monetario Internacional, aproximadamente el 40% de los empleos globales están expuestos a la IA, con un impacto más pronunciado en economías avanzadas. Roles administrativos y de ventas, como los de entrada de datos o representantes de ventas, son particularmente vulnerables, ya que la IA puede automatizar hasta el 67% de las tareas de estos últimos.
+## ¿Qué sectores son más automatizables por la IA?
 
-En contraste, los trabajos manuales, como los oficios calificados (carpinteros, electricistas, mecánicos), están experimentando una relativa estabilidad. Estas profesiones requieren habilidades prácticas y adaptabilidad que la IA aún no puede replicar de manera costo-efectiva. El siguiente gráfico ilustra la exposición a la IA de diferentes sectores laborales, destacando cómo los trabajos manuales tienen una menor proporción de tareas automatizables en comparación con los roles administrativos y de ventas.
+Históricamente, la automatización ha reemplazado tareas repetitivas, pero la IA moderna está impactando también roles cognitivos. Según el FMI, el 40% de los empleos globales están expuestos a la IA, con mayor impacto en economías avanzadas. Los trabajos manuales, como oficios calificados, muestran mayor estabilidad frente a la automatización.
 
-<div class="chart-wrapper" style="max-width:720px;margin:24px auto;">
-  <canvas id="iaExposureChart" width="720" height="360" aria-label="Gráfico de barras: porcentaje de tareas automatizables por IA" role="img"></canvas>
-  <p style="text-align:center;margin-top:8px;color:#6b7280;font-size:14px;">Datos ilustrativos basados en estudios del FMI y WEF (2024-2025).</p>
+<div class="chart-block">
+  <h3 class="chart-title">Exposición a la automatización por IA (2025)</h3>
+  <canvas id="iaPieChart" width="400" height="400" aria-label="Gráfico de tarta: exposición a la IA por sector" role="img"></canvas>
+  <ul class="chart-legend">
+    <li><span style="background:#10b981"></span> Trabajos manuales</li>
+    <li><span style="background:#3b82f6"></span> Administración</li>
+    <li><span style="background:#f59e0b"></span> Ventas</li>
+    <li><span style="background:#8b5cf6"></span> STEM</li>
+    <li><span style="background:#6b7280"></span> Servicios baja cualificación</li>
+  </ul>
+  <p class="chart-caption">Datos ilustrativos basados en estudios del FMI y WEF (2024-2025).</p>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
   (function(){
     if (typeof Chart === 'undefined') return;
-    const canvas = document.getElementById('iaExposureChart');
+    const canvas = document.getElementById('iaPieChart');
     if (!canvas) return;
-
     const ctx = canvas.getContext('2d');
     const data = {
       labels: ['Trabajos manuales', 'Administración', 'Ventas', 'STEM', 'Servicios baja cualificación'],
@@ -38,22 +44,64 @@ En contraste, los trabajos manuales, como los oficios calificados (carpinteros, 
         label: 'Porcentaje de tareas automatizables (%)',
         data: [15, 67, 60, 30, 55],
         backgroundColor: ['#10b981', '#3b82f6', '#f59e0b', '#8b5cf6', '#6b7280'],
-        borderColor: ['#0b815a', '#1e40af', '#b45309', '#6d28d9', '#374151'],
-        borderWidth: 1
+        borderColor: '#fff',
+        borderWidth: 2
       }]
     };
-
     const options = {
-      responsive: true,
-      maintainAspectRatio: false,
-      scales: { y: { beginAtZero: true, max: 100, ticks: { stepSize: 10 } } },
-      plugins: { legend: { display: false }, tooltip: { mode: 'index', intersect: false } }
+      responsive: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: ctx => `${ctx.label}: ${ctx.parsed}%` } }
+      }
     };
-
-    try { new Chart(ctx, { type: 'bar', data, options }); }
+    try { new Chart(ctx, { type: 'pie', data, options }); }
     catch (e) { console.warn('Chart render failed', e); }
   })();
 </script>
+
+<style>
+.chart-block {
+  max-width: 480px;
+  margin: 32px auto 40px auto;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 4px 24px -4px #0001;
+  padding: 32px 24px 24px 24px;
+  text-align: center;
+}
+.chart-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 18px;
+}
+.chart-legend {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  list-style: none;
+  margin: 18px 0 0 0;
+  padding: 0;
+  font-size: 15px;
+}
+.chart-legend li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.chart-legend span {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+}
+.chart-caption {
+  color: #6b7280;
+  font-size: 13px;
+  margin-top: 12px;
+}
+</style>
 
 Un informe del World Economic Forum señala que, mientras la IA amenaza con automatizar roles de nivel inicial, los trabajos manuales están viendo un resurgimiento, ya que las empresas valoran habilidades humanas que complementan la tecnología.
 

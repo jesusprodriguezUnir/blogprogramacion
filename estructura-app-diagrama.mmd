@@ -1,0 +1,13 @@
+graph TD
+    A[public/] -->|Imágenes, favicon| B((App))
+    C[src/assets/] -->|SVG, imágenes| B
+    D[src/components/] -->|Componentes Astro| B
+    E[src/layouts/] -->|Layouts| B
+    F[src/pages/] -->|Páginas y posts| B
+    G[src/data/] -->|Datos estáticos| B
+    H[src/utils/] -->|Utilidades| B
+    I[tests/e2e/] -->|Tests E2E| B
+    J[src/**/__tests__/] -->|Tests unitarios| B
+    B --> K[Usuario]
+    style B fill:#f9f,stroke:#333,stroke-width:2px
+    style K fill:#bbf,stroke:#333,stroke-width:2px
