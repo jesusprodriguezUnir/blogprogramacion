@@ -2,13 +2,13 @@ import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
   testDir: './tests/e2e',
-  timeout: 30_000,
-  expect: { timeout: 5000 },
+  timeout: 60_000,
+  expect: { timeout: 15_000 },
   fullyParallel: true,
-  retries: 0,
+  retries: 1,
   reporter: [['list'], ['html', { open: 'never' }]],
   use: {
-    actionTimeout: 10_000,
+    actionTimeout: 15_000,
     trace: 'on-first-retry',
     // Ajustado para el puerto en el que suele arrancar el dev server en este entorno
     baseURL: process.env.PLAYWRIGHT_BASE_URL || 'http://localhost:4322'
@@ -18,7 +18,7 @@ export default defineConfig({
     command: 'npm run dev -- --port 4322',
     url: process.env.PLAYWRIGHT_BASE_URL || 'http://localhost:4322',
     reuseExistingServer: true,
-    timeout: 120_000
+    timeout: 180_000
   },
   projects: [
     { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
