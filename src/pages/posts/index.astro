@@ -1,10 +1,11 @@
 ---
 import BlogLayout from '../../layouts/BlogLayout.astro';
 
-// Carga todos los archivos .md en este directorio (excepto index.astro)
-const postFiles = import.meta.glob('./*.md', { eager: true });
+// Carga todos los archivos .md y .mdx en este directorio (excepto index.astro)
+const postFilesMD = import.meta.glob('./*.md', { eager: true });
+const postFilesMDX = import.meta.glob('./*.mdx', { eager: true });
 
-const files = Object.values(postFiles) as any[];
+const files = [...Object.values(postFilesMD), ...Object.values(postFilesMDX)] as any[];
 
 const categoryIcons: Record<string, string> = {
   'IA': '🤖',

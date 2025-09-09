@@ -1,0 +1,142 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - navigation [ref=e3]:
+      - link "DevIA Blog" [ref=e4] [cursor=pointer]:
+        - /url: /
+      - generic [ref=e5]:
+        - link "Inicio" [ref=e6] [cursor=pointer]:
+          - /url: /
+        - link "Posts" [ref=e7] [cursor=pointer]:
+          - /url: /posts
+        - link "Enlaces" [ref=e8] [cursor=pointer]:
+          - /url: /enlaces
+        - link "Prompts" [ref=e9] [cursor=pointer]:
+          - /url: /prompts
+        - link "Sobre mí" [ref=e10] [cursor=pointer]:
+          - /url: /sobre-mi
+  - main [ref=e11]:
+    - generic [ref=e12]:
+      - heading "Todas las noticias" [level=1] [ref=e13]
+      - paragraph [ref=e14]: Explora los últimos artículos y novedades del blog.
+    - generic [ref=e17]:
+      - 'link "🤖 Notebook LM: El futuro de los cuadernos inteligentes IA Notebook LM combina cuadernos digitales con modelos de lenguaje para organizar información, generar resúmenes y colaborar. 2025-09-09 · 4 min →" [ref=e18] [cursor=pointer]':
+        - /url: /posts/notebook-lm
+        - generic [ref=e19] [cursor=pointer]: 🤖
+        - generic [ref=e20] [cursor=pointer]:
+          - generic [ref=e21] [cursor=pointer]:
+            - 'heading "Notebook LM: El futuro de los cuadernos inteligentes" [level=3] [ref=e22] [cursor=pointer]'
+            - generic [ref=e23] [cursor=pointer]: IA
+          - paragraph [ref=e24] [cursor=pointer]: Notebook LM combina cuadernos digitales con modelos de lenguaje para organizar información, generar resúmenes y colaborar.
+          - generic [ref=e25] [cursor=pointer]: 2025-09-09 · 4 min
+        - generic [ref=e26] [cursor=pointer]: →
+      - 'link "🔎 Made By Google 2025 — Resumen y novedades clave Hardware y IA Resumen de lo más importante anunciado en Made By Google 2025: hardware, software, avances en IA y sostenibilidad. 2025-08-22 · 5 min →" [ref=e27] [cursor=pointer]':
+        - /url: /posts/made-by-google-2025-resumen
+        - generic [ref=e28] [cursor=pointer]: 🔎
+        - generic [ref=e29] [cursor=pointer]:
+          - generic [ref=e30] [cursor=pointer]:
+            - heading "Made By Google 2025 — Resumen y novedades clave" [level=3] [ref=e31] [cursor=pointer]
+            - generic [ref=e32] [cursor=pointer]: Hardware y IA
+          - paragraph [ref=e33] [cursor=pointer]: "Resumen de lo más importante anunciado en Made By Google 2025: hardware, software, avances en IA y sostenibilidad."
+          - generic [ref=e34] [cursor=pointer]: 2025-08-22 · 5 min
+        - generic [ref=e35] [cursor=pointer]: →
+      - link "🤖 Cómo la Inteligencia Artificial Está Redefiniendo el Futuro del Trabajo IA La IA está transformando roles, impulsando trabajos manuales y presionando empleos de oficina; analizamos causas, riesgos y oportunidades. 2025-08-18 · 5 min →" [ref=e36] [cursor=pointer]:
+        - /url: /posts/como-ia-redefiniendo-futuro-del-trabajo
+        - generic [ref=e37] [cursor=pointer]: 🤖
+        - generic [ref=e38] [cursor=pointer]:
+          - generic [ref=e39] [cursor=pointer]:
+            - heading "Cómo la Inteligencia Artificial Está Redefiniendo el Futuro del Trabajo" [level=3] [ref=e40] [cursor=pointer]
+            - generic [ref=e41] [cursor=pointer]: IA
+          - paragraph [ref=e42] [cursor=pointer]: La IA está transformando roles, impulsando trabajos manuales y presionando empleos de oficina; analizamos causas, riesgos y oportunidades.
+          - generic [ref=e43] [cursor=pointer]: 2025-08-18 · 5 min
+        - generic [ref=e44] [cursor=pointer]: →
+      - 'link "🤖 Resumen del Lanzamiento de GPT-5 por OpenAI IA OpenAI presentó GPT-5 el 7 de agosto de 2025: mejoras en razonamiento, codificación, multimodalidad y seguridad, junto a reacciones mixtas y controversias. 2025-08-07 · 6 min →" [ref=e45] [cursor=pointer]':
+        - /url: /posts/resumen-lanzamiento-gpt-5-openai-agosto-2025
+        - generic [ref=e46] [cursor=pointer]: 🤖
+        - generic [ref=e47] [cursor=pointer]:
+          - generic [ref=e48] [cursor=pointer]:
+            - heading "Resumen del Lanzamiento de GPT-5 por OpenAI" [level=3] [ref=e49] [cursor=pointer]
+            - generic [ref=e50] [cursor=pointer]: IA
+          - paragraph [ref=e51] [cursor=pointer]: "OpenAI presentó GPT-5 el 7 de agosto de 2025: mejoras en razonamiento, codificación, multimodalidad y seguridad, junto a reacciones mixtas y controversias."
+          - generic [ref=e52] [cursor=pointer]: 2025-08-07 · 6 min
+        - generic [ref=e53] [cursor=pointer]: →
+      - 'link "🤖 GPT-4 Turbo: La nueva revolución de OpenAI en modelos de lenguaje IA OpenAI presenta GPT-4 Turbo con mejoras significativas en velocidad, precisión y capacidad de contexto. Descubre las nuevas características y cómo puede transformar el desarrollo de aplicaciones. 2025-01-15 · 5 min →" [ref=e54] [cursor=pointer]':
+        - /url: /posts/gpt-4-turbo-openai-revolucion
+        - generic [ref=e55] [cursor=pointer]: 🤖
+        - generic [ref=e56] [cursor=pointer]:
+          - generic [ref=e57] [cursor=pointer]:
+            - 'heading "GPT-4 Turbo: La nueva revolución de OpenAI en modelos de lenguaje" [level=3] [ref=e58] [cursor=pointer]'
+            - generic [ref=e59] [cursor=pointer]: IA
+          - paragraph [ref=e60] [cursor=pointer]: OpenAI presenta GPT-4 Turbo con mejoras significativas en velocidad, precisión y capacidad de contexto. Descubre las nuevas características y cómo puede transformar el desarrollo de aplicaciones.
+          - generic [ref=e61] [cursor=pointer]: 2025-01-15 · 5 min
+        - generic [ref=e62] [cursor=pointer]: →
+      - 'link "🌐 Astro 5.0: La nueva era del desarrollo web estático Web Astro 5.0 llega con server islands, content layers y mejoras de rendimiento que revolucionan la creación de sitios web. Una mirada completa a las nuevas características. 2025-01-14 · 4 min →" [ref=e63] [cursor=pointer]':
+        - /url: /posts/astro-5-desarrollo-web-estatico
+        - generic [ref=e64] [cursor=pointer]: 🌐
+        - generic [ref=e65] [cursor=pointer]:
+          - generic [ref=e66] [cursor=pointer]:
+            - 'heading "Astro 5.0: La nueva era del desarrollo web estático" [level=3] [ref=e67] [cursor=pointer]'
+            - generic [ref=e68] [cursor=pointer]: Web
+          - paragraph [ref=e69] [cursor=pointer]: Astro 5.0 llega con server islands, content layers y mejoras de rendimiento que revolucionan la creación de sitios web. Una mirada completa a las nuevas características.
+          - generic [ref=e70] [cursor=pointer]: 2025-01-14 · 4 min
+        - generic [ref=e71] [cursor=pointer]: →
+      - link "📄 GitHub Copilot Chat integra nuevas funciones de IA para 2025 Herramientas Microsoft y GitHub anuncian importantes actualizaciones para Copilot Chat, incluyendo mejor comprensión de contexto y integración con más IDEs populares. 2025-01-13 · 3 min →" [ref=e72] [cursor=pointer]:
+        - /url: /posts/github-copilot-chat-nuevas-funciones
+        - generic [ref=e73] [cursor=pointer]: 📄
+        - generic [ref=e74] [cursor=pointer]:
+          - generic [ref=e75] [cursor=pointer]:
+            - heading "GitHub Copilot Chat integra nuevas funciones de IA para 2025" [level=3] [ref=e76] [cursor=pointer]
+            - generic [ref=e77] [cursor=pointer]: Herramientas
+          - paragraph [ref=e78] [cursor=pointer]: Microsoft y GitHub anuncian importantes actualizaciones para Copilot Chat, incluyendo mejor comprensión de contexto y integración con más IDEs populares.
+          - generic [ref=e79] [cursor=pointer]: 2025-01-13 · 3 min
+        - generic [ref=e80] [cursor=pointer]: →
+      - 'link "🌐 React 19: Nuevas características y mejoras de rendimiento Web La nueva versión de React introduce Server Components estables, mejoras en Suspense y nuevas APIs que simplifican el desarrollo de aplicaciones modernas. 2025-01-12 · 6 min →" [ref=e81] [cursor=pointer]':
+        - /url: /posts/react-19-nuevas-caracteristicas
+        - generic [ref=e82] [cursor=pointer]: 🌐
+        - generic [ref=e83] [cursor=pointer]:
+          - generic [ref=e84] [cursor=pointer]:
+            - 'heading "React 19: Nuevas características y mejoras de rendimiento" [level=3] [ref=e85] [cursor=pointer]'
+            - generic [ref=e86] [cursor=pointer]: Web
+          - paragraph [ref=e87] [cursor=pointer]: La nueva versión de React introduce Server Components estables, mejoras en Suspense y nuevas APIs que simplifican el desarrollo de aplicaciones modernas.
+          - generic [ref=e88] [cursor=pointer]: 2025-01-12 · 6 min
+        - generic [ref=e89] [cursor=pointer]: →
+      - 'link "🤖 Claude 3.5 Sonnet vs GPT-4: Comparativa completa 2025 IA Análisis detallado de las capacidades, rendimiento y casos de uso de los modelos de IA más avanzados del mercado. ¿Cuál elegir para tu proyecto? 2025-01-11 · 8 min →" [ref=e90] [cursor=pointer]':
+        - /url: /posts/claude-3-5-vs-gpt-4-comparativa
+        - generic [ref=e91] [cursor=pointer]: 🤖
+        - generic [ref=e92] [cursor=pointer]:
+          - generic [ref=e93] [cursor=pointer]:
+            - 'heading "Claude 3.5 Sonnet vs GPT-4: Comparativa completa 2025" [level=3] [ref=e94] [cursor=pointer]'
+            - generic [ref=e95] [cursor=pointer]: IA
+          - paragraph [ref=e96] [cursor=pointer]: Análisis detallado de las capacidades, rendimiento y casos de uso de los modelos de IA más avanzados del mercado. ¿Cuál elegir para tu proyecto?
+          - generic [ref=e97] [cursor=pointer]: 2025-01-11 · 8 min
+        - generic [ref=e98] [cursor=pointer]: →
+      - link "📰 Tendencias de desarrollo web que marcarán 2025 Noticias Desde WebAssembly hasta edge computing, repasamos las tecnologías y tendencias que definirán el futuro del desarrollo web en este año. 2025-01-10 · 7 min →" [ref=e99] [cursor=pointer]:
+        - /url: /posts/tendencias-desarrollo-web-2025
+        - generic [ref=e100] [cursor=pointer]: 📰
+        - generic [ref=e101] [cursor=pointer]:
+          - generic [ref=e102] [cursor=pointer]:
+            - heading "Tendencias de desarrollo web que marcarán 2025" [level=3] [ref=e103] [cursor=pointer]
+            - generic [ref=e104] [cursor=pointer]: Noticias
+          - paragraph [ref=e105] [cursor=pointer]: Desde WebAssembly hasta edge computing, repasamos las tecnologías y tendencias que definirán el futuro del desarrollo web en este año.
+          - generic [ref=e106] [cursor=pointer]: 2025-01-10 · 7 min
+        - generic [ref=e107] [cursor=pointer]: →
+    - link "← Volver al inicio" [ref=e109] [cursor=pointer]:
+      - /url: /
+  - contentinfo [ref=e110]:
+    - paragraph [ref=e111]: © 2025 DevIA Blog
+  - generic [ref=e114]:
+    - button "Menu" [ref=e115]:
+      - img [ref=e117]
+      - generic: Menu
+    - button "Inspect" [ref=e121]:
+      - img [ref=e123]
+      - generic: Inspect
+    - button "Audit" [ref=e125]:
+      - img [ref=e127]
+      - generic: Audit
+    - button "Settings" [ref=e130]:
+      - img [ref=e132]
+      - generic: Settings
+```

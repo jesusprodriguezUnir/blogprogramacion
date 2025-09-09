@@ -20,4 +20,9 @@ describe('Listado de blogs', () => {
     const slugs = getBlogSlugs();
     expect(slugs).toContain('made-by-google-2025-resumen');
   });
+
+  it('debería incluir el post "notebook-lm"', () => {
+    const slugs = getBlogSlugs();
+    expect(slugs).toContain('notebook-lm');
+  });
 });

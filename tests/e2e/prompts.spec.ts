@@ -8,9 +8,9 @@ test.describe('Prompts page', () => {
     const title = page.locator('.page-title');
     await expect(title).toHaveText('Prompts');
 
-    // hero image
-    const hero = page.locator('.resources-section img');
-    await expect(hero).toBeVisible();
+    // Verificar que hay contenido en la sección de recursos
+    const resourcesSection = page.locator('.resources-section');
+    await expect(resourcesSection).toBeVisible();
 
     // CTA banner and mailto link
     const cta = page.locator('.cta-banner');

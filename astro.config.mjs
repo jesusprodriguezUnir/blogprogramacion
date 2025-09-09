@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import mdx from '@astrojs/mdx';
 
 // https://astro.build/config
 // Ajusta 'site' y 'base' para GitHub Pages
@@ -20,6 +21,7 @@ const isDev = (() => {
 })();
 
 export default defineConfig({
+	integrations: [mdx()],
 	site: 'https://jesusprodriguezUnir.github.io/',
 	base: isDev ? '/' : '/blogprogramacion/',
 });

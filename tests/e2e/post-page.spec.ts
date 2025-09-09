@@ -2,7 +2,8 @@ import { test, expect } from '@playwright/test';
 
 const slugs = [
   'resumen-lanzamiento-gpt-5-openai-agosto-2025',
-  'como-ia-redefiniendo-futuro-del-trabajo'
+  'como-ia-redefiniendo-futuro-del-trabajo',
+  'notebook-lm'
 ];
 
 for (const slug of slugs) {

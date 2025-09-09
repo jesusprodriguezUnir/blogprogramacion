@@ -6,8 +6,8 @@ test('Posts list shows items and links to individual posts', async ({ page }) =>
   // El encabezado de la página de posts
   await expect(page.locator('h1')).toHaveText('Todas las noticias');
 
-  // Debe existir al menos un enlace a un post
-  const postLinks = page.locator('ul li a');
+  // Debe existir al menos un enlace a un post (usando la clase link-card)
+  const postLinks = page.locator('.link-card');
   const count = await postLinks.count();
   expect(count).toBeGreaterThan(0);
 
