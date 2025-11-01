@@ -44,6 +44,7 @@ test.describe('Sobre mí page', () => {
     await expect(navLink).toBeVisible();
     
     await navLink.click();
+    await page.waitForURL(/\/sobre-mi$/);
     await expect(page).toHaveURL(/\/sobre-mi$/);
     
     // Verify we're on the right page

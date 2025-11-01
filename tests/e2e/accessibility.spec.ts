@@ -93,8 +93,9 @@ test.describe('Accessibility and Responsiveness', () => {
     const count = await links.count();
 
     for (let i = 0; i < Math.min(count, 10); i++) {
-      const text = await links.nth(i).innerText();
-      const href = await links.nth(i).getAttribute('href');
+      const link = links.nth(i);
+      const text = await link.innerText();
+      const href = await link.getAttribute('href');
       
       // Skip if it's just an icon or empty (some links might have images)
       if (text && text.trim().length > 0) {

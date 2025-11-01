@@ -29,7 +29,7 @@ test.describe('Navigation', () => {
 
     // Navigate back to home via brand link
     await page.click('.brand');
-    await expect(page).toHaveURL(/^[^\/]*\/$|^[^\/]*$/); // Root URL
+    await page.waitForURL(/^\/$/);
     await expect(page.locator('.hero-title')).toBeVisible();
   });
 
