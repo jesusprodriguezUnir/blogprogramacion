@@ -1,73 +1,153 @@
 ---
 import BlogLayout from '../layouts/BlogLayout.astro';
 
-// Categorías de ejemplo con prompts listos para editar
+// Skills organizados por categoría tecnológica
 const promptCategories: any[] = [
 	{
-		category: "Angular",
-		description: "Prompts para generar componentes, servicios, tests y migraciones en Angular.",
-		icon: "📐",
-		prompts: [
-			{
-				title: "Generar componente con formulario reactivo",
-				prompt: "Genera un componente Angular llamado 'user-form' que use ReactiveFormsModule para capturar nombre, email y teléfono; valida email y muestra errores.",
-				tags: ["angular","forms","typescript"]
-			},
-			{
-				title: "Crear servicio HTTP con manejo de errores",
-				prompt: "Escribe un servicio Angular que consuma '/api/users' con HttpClient, incluya manejo de errores y retries con RxJS.",
-				tags: ["angular","http","rxjs"]
-			}
-		]
-	},
-	{
-		category: "Git / Jira / Flujos",
-		description: "Prompts para crear mensajes de commit claros, vincular ramas a tickets y generar PR descriptions.",
-		icon: "🔗",
-		prompts: [
-			{
-				title: "Generar mensaje de commit para tarea Jira",
-				prompt: "Dada la rama 'feature/PROJ-123-add-login' y los cambios en auth.service.ts, genera un mensaje de commit claro y conciso que incluya la referencia PROJ-123.",
-				tags: ["git","jira","workflow"]
-			},
-			{
-				title: "Crear descripción de PR desde el ticket",
-				prompt: "Toma la historia de usuario: 'Como usuario quiero iniciar sesión para acceder a mi perfil' y genera una descripción de PR con resumen, pasos para probar y notas de despliegue.",
-				tags: ["github","pr","jira"]
-			}
-		]
-	},
-	{
 		category: ".NET Core",
-		description: "Prompts para generar controladores, endpoints y manejo de autenticación en .NET Core.",
+		description: "Skills para desarrollar APIs, servicios y aplicaciones robustas con .NET 8 y herramientas relacionadas.",
 		icon: "🧩",
 		prompts: [
 			{
-				title: "Crear controlador API para usuarios",
-				prompt: "Genera un controlador .NET Core 'UsersController' con endpoints GET /users, GET /users/{id}, POST /users incluyendo validación y DTOs.",
-				tags: ["dotnet","c#","api"]
+				title: "Crear API REST con ASP.NET Core",
+				prompt: "Genera una API REST completa con ASP.NET Core 8 que exponga endpoints CRUD para una entidad 'Product' con validación de datos, manejo de errores centralizado, logging con Serilog y documentación Swagger. Incluye DTOs, mapeo con AutoMapper y tests unitarios con xUnit.",
+				tags: ["dotnet", "webapi", "rest"]
 			},
 			{
-				title: "Integrar JWT Auth",
-				prompt: "Añade autenticación JWT a un proyecto .NET Core, explica los pasos para configurar el middleware y generar tokens seguros.",
-				tags: ["security","jwt","dotnet"]
+				title: "Configurar Entity Framework Core",
+				prompt: "Genera un contexto de EF Core para SQL Server con entidades User, Order y Product. Configura relaciones uno-a-muchos y muchos-a-muchos,用了 Fluent API para mapeo, migrations con 'dotnet ef' y consultas optimizadas con AsNoTracking().",
+				tags: ["efcore", "database", "sql"]
+			},
+			{
+				title: "Implementar autenticación JWT",
+				prompt: "Añade autenticación JWT a un proyecto ASP.NET Core: configura Identity, genera tokens con JwtBearer, crea endpoint de login/refresh, implementa authorization policies y guarda claves en appsettings.json.",
+				tags: ["jwt", "security", "identity"]
+			},
+			{
+				title: "Crear Minimal API",
+				prompt: "Desarrolla una Minimal API con .NET 6+ que exponga endpoints para gestión de tareas: GET /tasks, POST /tasks, PUT /tasks/{id}, DELETE /tasks/{id}. Usa registros para DTOs, validaciones con FluentValidation y OpenAPI.",
+				tags: ["minimal-api", "endpoint", "openapi"]
+			},
+			{
+				title: "Inyección de dependencias y servicios",
+				prompt: "Configura un sistema de DI en .NET Core con scoped services para repositorios, transient para servicios de aplicación y singleton para configuración. Implementa el patrón Repository con Unit of Work.",
+				tags: ["di", "ioc", "patterns"]
+			},
+			{
+				title: "Tests unitarios con xUnit y Moq",
+				prompt: "Escribe tests unitarios para un servicio de órdenes usando xUnit y Moq. Crea mocks de repositorio, verifica llamadas a DB, testa casos de éxito y error, usa teoría para casos de borde y configura coverage.",
+				tags: ["testing", "xunit", "moq"]
 			}
 		]
 	},
 	{
-		category: "Ingeniería de Prompts",
-		description: "Templates y patrones para redactar prompts efectivos con contexto, rol y ejemplos.",
-		icon: "🧠",
+		category: "Python",
+		description: "Skills para scripting, automatización, análisis de datos y desarrollo de APIs con Python.",
+		icon: "🐍",
 		prompts: [
 			{
-				title: "Prompt para generar tests unitarios",
-				prompt: "Eres un generador de tests. Dado este fragmento de código (incluir código), escribe tests unitarios en el framework indicado y explica cada aserción.",
-				tags: ["testing","prompts","best-practices"]
+				title: "Script de automatización",
+				prompt: "Crea un script en Python que automatice la organización de archivos en una carpeta: mueve archivos por extensión a subcarpetas, renombra con timestamp, genera log de operaciones y maneja errores con try-except.",
+				tags: ["automation", "script", "files"]
 			},
 			{
-				title: "Prompt maestro para tareas de Jira",
-				prompt: "Toma la historia de usuario y genera pasos concretos de implementación, pruebas necesarias y casos de borde.",
-				tags: ["jira","planning","copilot"]
+				title: "API REST con FastAPI",
+				prompt: "Desarrolla una API REST con FastAPI que exponga endpoints CRUD para una entidad 'Task' usando Pydantic para validación, SQLAlchemy para DB, PostgreSQL, JWT auth, documentación automática Swagger y tests con pytest.",
+				tags: ["fastapi", "rest", "api"]
+			},
+			{
+				title: "Análisis de datos con Pandas",
+				prompt: "Crea un script de análisis de datos: carga CSV/Excel con Pandas, limpia datos (nulls, duplicados), calcula estadísticas descriptivas, agrupa por categorías, genera gráficos con matplotlib y exporta resultados a Excel.",
+				tags: ["pandas", "analytics", "data"]
+			},
+			{
+				title: "Configurar entorno virtual",
+				prompt: "Explica cómo crear y gestionar entornos virtuales con venv y poetry. Incluye: crear entorno, instalar dependencias desde requirements.txt o pyproject.toml, activar/desactivar, freeze y mejores prácticas para proyectos.",
+				tags: ["venv", "poetry", "environment"]
+			},
+			{
+				title: "API con Flask",
+				prompt: "Desarrolla una API REST básica con Flask: endpoints GET/POST/PUT/DELETE, validación con Marshmallow, SQLite con SQLAlchemy, autenticación básica, logging y deployment con Gunicorn.",
+				tags: ["flask", "rest", "api"]
+			},
+			{
+				title: "Testing con pytest",
+				prompt: "Configura pytest para un proyecto Python: crea tests para funciones, mocking con unittest.mock, fixtures, parametrized tests, coverage con pytest-cov y configura pytest.ini.",
+				tags: ["pytest", "testing", "coverage"]
+			}
+		]
+	},
+	{
+		category: "Buenas Prácticas",
+		description: "Skills para escribir código limpio, mantenible y de calidad siguiendo principios fundamentales.",
+		icon: "📘",
+		prompts: [
+			{
+				title: "Aplicar principios SOLID",
+				prompt: "Analiza este código y refactorízalo aplicando los 5 principios SOLID: Single Responsibility (una clase = una responsabilidad), Open/Closed (extensible sin modificar), Liskov Substitution (sustitutible por herencia), Interface Segregation (interfaces pequeñas) y Dependency Inversion (depender de abstracciones).",
+				tags: ["solid", "refactoring", "patterns"]
+			},
+			{
+				title: "Refactoring de código spaghetti",
+				prompt: "Toma este método largo y aplica refactoring: extrae métodos small, identificaY renombra variables confusas, elimina código duplicado, aplica DRY, reduce complejidad ciclomática y mejora nombres de funciones.",
+				tags: ["refactoring", "clean-code", "maintenance"]
+			},
+			{
+				title: "Code Review efectivo",
+				prompt: "Realiza una code review de este código: identifica code smells, sugiere mejoras de diseño, verifica manejo de errores, evalúa naming, revisa tests y proporciona feedback constructivo con ejemplos específicos.",
+				tags: ["code-review", "quality", "feedback"]
+			},
+			{
+				title: "Patrones de diseño",
+				prompt: "Implementa el patrón de diseño adecuado (Factory, Strategy, Observer, Decorator, Singleton) para este escenario: [describir caso]. Incluye diagrama UML, código con ejemplo práctico y explica cuándo usarlo y cuándo evitarlo.",
+				tags: ["patterns", "design", "architecture"]
+			},
+			{
+				title: "Clean Code en funciones",
+				prompt: "Refactoriza estas funciones aplicando clean code: máximo 20 líneas por función, nombres descriptivos (verb + sustantivo), parámetros mínimos (máximo 3), sin efectos secundarios, comentarios solo cuando aportan 'por qué' no 'qué'.",
+				tags: ["clean-code", "functions", "readability"]
+			},
+			{
+				title: "Documentación y comentarios",
+				prompt: "Genera documentación para este código: docstrings en formato Google/Sphinx para clases y funciones, comentarios en bloque para decisiones complejas, API docs con OpenAPI/Swagger, README con setup y ejemplos de uso.",
+				tags: ["documentation", "docs", "api"]
+			}
+		]
+	},
+	{
+		category: "Jira",
+		description: "Skills para trabajar eficientemente con Jira: creación de tickets, automatización y búsquedas avanzadas.",
+		icon: "📋",
+		prompts: [
+			{
+				title: "Crear ticket de historia de usuario",
+				prompt: "Genera una historia de usuario en formato Jira: título claro, descripción con template 'Como... quiero... para...', criterios de aceptación en Gherkin (Given-When-Then), estimación en story points, labels y componentes.",
+				tags: ["jira", "user-story", "agile"]
+			},
+			{
+				title: "Crear ticket de tarea técnica",
+				prompt: "Crea una tarea técnica para Jira con: título descriptivo, descripción detallada incluyendo contexto técnico, pasos de implementación, dependencias con otros tickets, criterios de aceptación y checklist de testing.",
+				tags: ["jira", "technical", "task"]
+			},
+			{
+				title: "Queries JQL avanzadas",
+				prompt: "Escribe queries JQL para: 1) tickets asignados a mí con prioridad High sin resolver hace +7 días, 2) todos los bugs del sprint actual con label 'regression', 3) tickets por componente y status, 4) backlog priorizado sin asignar.",
+				tags: ["jql", "queries", "search"]
+			},
+			{
+				title: "Configurar workflow",
+				prompt: "Diseña un workflow para Jira: estados (To Do, In Progress, In Review, Done), transiciones con condiciones (solo el assignee puede mover a In Progress), validaciones y automatizaciones (notificaciones, sincronización de campos).",
+				tags: ["workflow", "automation", "transitions"]
+			},
+			{
+				title: "Automatizaciones con Jira Automation",
+				prompt: "Crea reglas de automatización en Jira: 1) auto-asignar tickets según label a un equipo, 2) enviar notificación cuando se cambia a Done, 3) crear tarea de review al mergear PR, 4) actualizar estado hijo cuando padre cambia.",
+				tags: ["automation", "rules", "workflow"]
+			},
+			{
+				title: "Gestión de sprints y backlog",
+				prompt: "Explica proceso de grooming: cómo priorizar backlog con WSJF, estimar con planning poker, criar tareas daughters, definir Definition of Ready y Definition of Done, y gestionar impedimentos.",
+				tags: ["sprint", "backlog", "agile"]
 			}
 		]
 	}
@@ -75,11 +155,11 @@ const promptCategories: any[] = [
 
 ---
 
-<BlogLayout title="Resumen del informe: Prompts para Desarrollo Web" description="Un resumen de los hallazgos clave sobre cómo los desarrolladores modernos pueden usar la IA de manera efectiva, enfocándose en la integración de herramientas en lugar de en catálogos de prompts.">
+<BlogLayout title="Resumen del informe: Skills para Desarrollo" description="Colección de skills curados para usar con modelos de IA: .NET Core, Python, Buenas prácticas y Jira.">
 	<div class="page-header">
-		<h1 class="page-title">Prompts</h1>
+		<h1 class="page-title">Skills</h1>
 		<p class="page-subtitle">
-			Colección de prompts curados para uso con modelos de IA: generación de código, escritura, diseño y más.
+			Colección de skills curados para usar con modelos de IA: .NET Core, Python, Buenas prácticas y Jira.
 			Aporta los tuyos y compártelos con la comunidad.
 		</p>
 	</div>
@@ -91,7 +171,13 @@ const promptCategories: any[] = [
 			   <h2>Recursos destacados</h2>
 			   <ul>
 				   <li>
-					   <strong>Documentación de GitHub Copilot:</strong> <a href="https://docs.github.com/en/copilot" target="_blank" rel="noopener">Guía oficial para crear prompts efectivos en Visual Studio Code</a>
+					   <strong>Documentación de Anthropic Claude:</strong> <a href="https://docs.anthropic.com/en/docs/claude-code/overview" target="_blank" rel="noopener">Guía oficial de Claude para developers</a>
+				   </li>
+				   <li>
+					   <strong>Documentación de .NET:</strong> <a href="https://learn.microsoft.com/es-es/dotnet/" target="_blank" rel="noopener">Microsoft Learn - .NET</a>
+				   </li>
+				   <li>
+					   <strong>Python Docs:</strong> <a href="https://docs.python.org/3/" target="_blank" rel="noopener">Documentación oficial de Python</a>
 				   </li>
 			   </ul>
 		   </div>
@@ -99,8 +185,8 @@ const promptCategories: any[] = [
 
 	<div class="page-top-actions" style="display:flex; justify-content:center; margin-bottom:20px;">
 		<div class="cta-banner">
-			<span>¿Tienes prompts útiles para compartir?</span>
-			<a class="cta-btn" href="mailto:contacto@deviablog.com">Enviar prompt</a>
+			<span>¿Tienes skills útiles para compartir?</span>
+			<a class="cta-btn" href="mailto:contacto@deviablog.com">Enviar skill</a>
 		</div>
 	</div>
 
@@ -116,8 +202,10 @@ const promptCategories: any[] = [
 				</div>
 
 				<div class="links-grid">
-					{category.prompts?.map((p: any) => (
-						<article class="link-card">
+					{category.prompts?.map((p: any) => {
+						const skillSlug = p.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+						return (
+						<a href={`/skills/${skillSlug}`} class="link-card">
 							<div class="link-icon">📝</div>
 							<div class="link-content">
 								<div class="link-header">
@@ -127,8 +215,8 @@ const promptCategories: any[] = [
 								<p class="link-description">{p.prompt}</p>
 							</div>
 							<div class="link-arrow">→</div>
-						</article>
-					))}
+						</a>
+					)})}
 				</div>
 			</section>
 		))}
@@ -136,11 +224,11 @@ const promptCategories: any[] = [
 
 	<section class="suggest-section">
 		<div class="suggest-card">
-			<h3 class="suggest-title">¿Tienes prompts para compartir?</h3>
+			<h3 class="suggest-title">¿Tienes skills para compartir?</h3>
 			<p class="suggest-description">
-				Envía tus prompts y una breve descripción para que pueda añadirlos aquí con tu crédito.
+				Envía tus skills y una breve descripción para que pueda añadirlos aquí con tu crédito.
 			</p>
-			<a href="mailto:contacto@deviablog.com" class="suggest-btn">Enviar prompt</a>
+			<a href="mailto:contacto@deviablog.com" class="suggest-btn">Enviar skill</a>
 		</div>
 	</section>
 </BlogLayout>

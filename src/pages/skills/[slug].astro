@@ -1,0 +1,337 @@
+---
+import BlogLayout from '../../layouts/BlogLayout.astro';
+
+export async function getStaticPaths() {
+	const promptCategories: any[] = [
+		{
+			category: ".NET Core",
+			description: "Skills para desarrollar APIs, servicios y aplicaciones robustas con .NET 8 y herramientas relacionadas.",
+			icon: "🧩",
+			prompts: [
+				{
+					title: "Crear API REST con ASP.NET Core",
+					prompt: "Genera una API REST completa con ASP.NET Core 8 que exponga endpoints CRUD para una entidad 'Product' con validación de datos, manejo de errores centralizado, logging con Serilog y documentación Swagger. Incluye DTOs, mapeo con AutoMapper y tests unitarios con xUnit.",
+					tags: ["dotnet", "webapi", "rest"]
+				},
+				{
+					title: "Configurar Entity Framework Core",
+					prompt: "Genera un contexto de EF Core para SQL Server con entidades User, Order y Product. Configura relaciones uno-a-muchos y muchos-a-muchos,用了 Fluent API para mapeo, migrations con 'dotnet ef' y consultas optimizadas con AsNoTracking().",
+					tags: ["efcore", "database", "sql"]
+				},
+				{
+					title: "Implementar autenticación JWT",
+					prompt: "Añade autenticación JWT a un proyecto ASP.NET Core: configura Identity, genera tokens con JwtBearer, crea endpoint de login/refresh, implementa authorization policies y guarda claves en appsettings.json.",
+					tags: ["jwt", "security", "identity"]
+				},
+				{
+					title: "Crear Minimal API",
+					prompt: "Desarrolla una Minimal API con .NET 6+ que exponga endpoints para gestión de tareas: GET /tasks, POST /tasks, PUT /tasks/{id}, DELETE /tasks/{id}. Usa registros para DTOs, validaciones con FluentValidation y OpenAPI.",
+					tags: ["minimal-api", "endpoint", "openapi"]
+				},
+				{
+					title: "Inyección de dependencias y servicios",
+					prompt: "Configura un sistema de DI en .NET Core con scoped services para repositorios, transient para servicios de aplicación y singleton para configuración. Implementa el patrón Repository con Unit of Work.",
+					tags: ["di", "ioc", "patterns"]
+				},
+				{
+					title: "Tests unitarios con xUnit y Moq",
+					prompt: "Escribe tests unitarios para un servicio de órdenes usando xUnit y Moq. Crea mocks de repositorio, verifica llamadas a DB, testa casos de éxito y error, usa teoría para casos de borde y configura coverage.",
+					tags: ["testing", "xunit", "moq"]
+				}
+			]
+		},
+		{
+			category: "Python",
+			description: "Skills para scripting, automatización, análisis de datos y desarrollo de APIs con Python.",
+			icon: "🐍",
+			prompts: [
+				{
+					title: "Script de automatización",
+					prompt: "Crea un script en Python que automatice la organización de archivos en una carpeta: mueve archivos por extensión a subcarpetas, renombra con timestamp, genera log de operaciones y maneja errores con try-except.",
+					tags: ["automation", "script", "files"]
+				},
+				{
+					title: "API REST con FastAPI",
+					prompt: "Desarrolla una API REST con FastAPI que exponga endpoints CRUD para una entidad 'Task' usando Pydantic para validación, SQLAlchemy para DB, PostgreSQL, JWT auth, documentación automática Swagger y tests con pytest.",
+					tags: ["fastapi", "rest", "api"]
+				},
+				{
+					title: "Análisis de datos con Pandas",
+					prompt: "Crea un script de análisis de datos: carga CSV/Excel con Pandas, limpia datos (nulls, duplicados), calcula estadísticas descriptivas, agrupa por categorías, genera gráficos con matplotlib y exporta resultados a Excel.",
+					tags: ["pandas", "analytics", "data"]
+				},
+				{
+					title: "Configurar entorno virtual",
+					prompt: "Explica cómo crear y gestionar entornos virtuales con venv y poetry. Incluye: crear entorno, instalar dependencias desde requirements.txt o pyproject.toml, activar/desactivar, freeze y mejores prácticas para proyectos.",
+					tags: ["venv", "poetry", "environment"]
+				},
+				{
+					title: "API con Flask",
+					prompt: "Desarrolla una API REST básica con Flask: endpoints GET/POST/PUT/DELETE, validación con Marshmallow, SQLite con SQLAlchemy, autenticación básica, logging y deployment con Gunicorn.",
+					tags: ["flask", "rest", "api"]
+				},
+				{
+					title: "Testing con pytest",
+					prompt: "Configura pytest para un proyecto Python: crea tests para funciones, mocking con unittest.mock, fixtures, parametrized tests, coverage con pytest-cov y configura pytest.ini.",
+					tags: ["pytest", "testing", "coverage"]
+				}
+			]
+		},
+		{
+			category: "Buenas Prácticas",
+			description: "Skills para escribir código limpio, mantenible y de calidad siguiendo principios fundamentales.",
+			icon: "📘",
+			prompts: [
+				{
+					title: "Aplicar principios SOLID",
+					prompt: "Analiza este código y refactorízalo aplicando los 5 principios SOLID: Single Responsibility (una clase = una responsabilidad), Open/Closed (extensible sin modificar), Liskov Substitution (sustitutible por herencia), Interface Segregation (interfaces pequeñas) y Dependency Inversion (depender de abstracciones).",
+					tags: ["solid", "refactoring", "patterns"]
+				},
+				{
+					title: "Refactoring de código spaghetti",
+					prompt: "Toma este método largo y aplica refactoring: extrae métodos small, identificaY renombra variables confusas, elimina código duplicado, aplica DRY, reduce complejidad ciclomática y mejora nombres de funciones.",
+					tags: ["refactoring", "clean-code", "maintenance"]
+				},
+				{
+					title: "Code Review efectivo",
+					prompt: "Realiza una code review de este código: identifica code smells, sugiere mejoras de diseño, verifica manejo de errores, evalúa naming, revisa tests y proporciona feedback constructivo con ejemplos específicos.",
+					tags: ["code-review", "quality", "feedback"]
+				},
+				{
+					title: "Patrones de diseño",
+					prompt: "Implementa el patrón de diseño adecuado (Factory, Strategy, Observer, Decorator, Singleton) para este escenario: [describir caso]. Incluye diagrama UML, código con ejemplo práctico y explica cuándo usarlo y cuándo evitarlo.",
+					tags: ["patterns", "design", "architecture"]
+				},
+				{
+					title: "Clean Code en funciones",
+					prompt: "Refactoriza estas funciones aplicando clean code: máximo 20 líneas por función, nombres descriptivos (verb + sustantivo), parámetros mínimos (máximo 3), sin efectos secundarios, comentarios solo cuando aportan 'por qué' no 'qué'.",
+					tags: ["clean-code", "functions", "readability"]
+				},
+				{
+					title: "Documentación y comentarios",
+					prompt: "Genera documentación para este código: docstrings en formato Google/Sphinx para clases y funciones, comentarios en bloque para decisiones complejas, API docs con OpenAPI/Swagger, README con setup y ejemplos de uso.",
+					tags: ["documentation", "docs", "api"]
+				}
+			]
+		},
+		{
+			category: "Jira",
+			description: "Skills para trabajar eficientemente con Jira: creación de tickets, automatización y búsquedas avanzadas.",
+			icon: "📋",
+			prompts: [
+				{
+					title: "Crear ticket de historia de usuario",
+					prompt: "Genera una historia de usuario en formato Jira: título claro, descripción con template 'Como... quiero... para...', criterios de aceptación en Gherkin (Given-When-Then), estimación en story points, labels y componentes.",
+					tags: ["jira", "user-story", "agile"]
+				},
+				{
+					title: "Crear ticket de tarea técnica",
+					prompt: "Crea una tarea técnica para Jira con: título descriptivo, descripción detallada incluyendo contexto técnico, pasos de implementación, dependencias con otros tickets, criterios de aceptación y checklist de testing.",
+					tags: ["jira", "technical", "task"]
+				},
+				{
+					title: "Queries JQL avanzadas",
+					prompt: "Escribe queries JQL para: 1) tickets asignados a mí con prioridad High sin resolver hace +7 días, 2) todos los bugs del sprint actual con label 'regression', 3) tickets por componente y status, 4) backlog priorizado sin asignar.",
+					tags: ["jql", "queries", "search"]
+				},
+				{
+					title: "Configurar workflow",
+					prompt: "Diseña un workflow para Jira: estados (To Do, In Progress, In Review, Done), transiciones con condiciones (solo el assignee puede mover a In Progress), validaciones y automatizaciones (notificaciones, sincronización de campos).",
+					tags: ["workflow", "automation", "transitions"]
+				},
+				{
+					title: "Automatizaciones con Jira Automation",
+					prompt: "Crea reglas de automatización en Jira: 1) auto-asignar tickets según label a un equipo, 2) enviar notificación cuando se cambia a Done, 3) crear tarea de review al mergear PR, 4) actualizar estado hijo cuando padre cambia.",
+					tags: ["automation", "rules", "workflow"]
+				},
+				{
+					title: "Gestión de sprints y backlog",
+					prompt: "Explica proceso de grooming: cómo priorizar backlog con WSJF, estimar con planning poker, criar tareas daughters, definir Definition of Ready y Definition of Done, y gestionar impedimentos.",
+					tags: ["sprint", "backlog", "agile"]
+				}
+			]
+		}
+	];
+
+	const paths = [];
+	for (const category of promptCategories) {
+		for (const prompt of category.prompts) {
+			const slug = prompt.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+			paths.push({
+				params: { slug },
+				props: { prompt, category: category.category, categoryIcon: category.icon }
+			});
+		}
+	}
+	return paths;
+}
+
+const { prompt, category, categoryIcon } = Astro.props;
+
+const skillContent = `TÍTULO: ${prompt.title}
+CATEGORÍA: ${category}
+TAGS: ${prompt.tags.join(', ')}
+
+---
+
+PROMPT:
+${prompt.prompt}`;
+
+---
+
+<BlogLayout title={`Skill: ${prompt.title}`} description={`Skill de ${category} - ${prompt.title}`}>
+	<div class="skill-detail">
+		<a href="/prompts" class="back-link">← Volver a Skills</a>
+		
+		<div class="skill-header">
+			<span class="category-badge">{categoryIcon} {category}</span>
+			<h1 class="skill-title">{prompt.title}</h1>
+		</div>
+
+		<div class="skill-content">
+			<h2>Prompt</h2>
+			<div class="prompt-box">{prompt.prompt}</div>
+			
+			<div class="tags">
+				{prompt.tags.map((tag: string) => (
+					<span class="tag">{tag}</span>
+				))}
+			</div>
+
+			<button id="downloadBtn" class="download-btn" data-content={skillContent} data-filename={`skill-${prompt.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}.txt`}>
+				⬇ Descargar Skill
+			</button>
+		</div>
+	</div>
+</BlogLayout>
+
+<script>
+	const downloadBtn = document.getElementById('downloadBtn');
+	if (downloadBtn) {
+		downloadBtn.addEventListener('click', () => {
+			const content = downloadBtn.getAttribute('data-content') || '';
+			const filename = downloadBtn.getAttribute('data-filename') || 'skill.txt';
+			const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+			const url = URL.createObjectURL(blob);
+			const a = document.createElement('a');
+			a.href = url;
+			a.download = filename;
+			document.body.appendChild(a);
+			a.click();
+			document.body.removeChild(a);
+			URL.revokeObjectURL(url);
+		});
+	}
+</script>
+
+<style>
+	.skill-detail {
+		max-width: 800px;
+		margin: 0 auto;
+		padding: 40px 20px;
+	}
+
+	.back-link {
+		display: inline-block;
+		color: #3b82f6;
+		text-decoration: none;
+		font-weight: 500;
+		margin-bottom: 24px;
+		transition: color 0.2s;
+	}
+
+	.back-link:hover {
+		color: #1d4ed8;
+	}
+
+	.skill-header {
+		margin-bottom: 32px;
+	}
+
+	.category-badge {
+		display: inline-block;
+		background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+		color: #3730a3;
+		padding: 8px 16px;
+		border-radius: 20px;
+		font-size: 14px;
+		font-weight: 600;
+		margin-bottom: 16px;
+	}
+
+	.skill-title {
+		font-size: 36px;
+		font-weight: 800;
+		color: #1f2937;
+		line-height: 1.2;
+	}
+
+	.skill-content {
+		background: white;
+		border-radius: 20px;
+		padding: 40px;
+		box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+		border: 1px solid #f3f4f6;
+	}
+
+	.skill-content h2 {
+		font-size: 20px;
+		font-weight: 700;
+		color: #1f2937;
+		margin-bottom: 16px;
+	}
+
+	.prompt-box {
+		background: #f9fafb;
+		border: 1px solid #e5e7eb;
+		border-radius: 12px;
+		padding: 24px;
+		font-size: 16px;
+		line-height: 1.7;
+		color: #374151;
+		margin-bottom: 24px;
+		white-space: pre-wrap;
+	}
+
+	.tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+		margin-bottom: 32px;
+	}
+
+	.tag {
+		background: #e0e7ff;
+		color: #3730a3;
+		padding: 6px 12px;
+		border-radius: 6px;
+		font-size: 12px;
+		font-weight: 500;
+		text-transform: uppercase;
+	}
+
+	.download-btn {
+		background: linear-gradient(135deg, #3b82f6, #2563eb);
+		color: white;
+		border: none;
+		padding: 16px 32px;
+		border-radius: 12px;
+		font-size: 16px;
+		font-weight: 600;
+		cursor: pointer;
+		transition: all 0.3s ease;
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+	}
+
+	.download-btn:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+	}
+
+	@media (max-width: 768px) {
+		.skill-title { font-size: 28px; }
+		.skill-content { padding: 24px; }
+	}
+</style>
