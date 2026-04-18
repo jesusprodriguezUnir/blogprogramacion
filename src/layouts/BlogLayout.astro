@@ -12,18 +12,25 @@ const base = (import.meta as any).env.BASE_URL || '/';
 <html lang="es">
   <head>
     <meta charset="utf-8" />
+    <script is:inline>
+      (function() {
+        var stored = localStorage.getItem('theme');
+        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.setAttribute('data-theme', stored || (prefersDark ? 'dark' : 'light'));
+      })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-  <meta property="og:title" content={title} />
-  <meta property="og:description" content={description} />
-  <meta property="og:image" content={ogImage} />
-  <meta property="og:url" content={url} />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content={title} />
-  <meta name="twitter:description" content={description} />
-  <meta name="twitter:image" content={ogImage} />
-  <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:url" content={url} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
   </head>
   <body>
     <header class="site-header">
@@ -36,6 +43,18 @@ const base = (import.meta as any).env.BASE_URL || '/';
           <a href={`${base}prompts`}>Prompts</a>
           <a href={`${base}sobre-mi`}>Sobre mí</a>
         </div>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema">
+          <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/>
+            <line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/>
+            <line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+          <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
       </nav>
     </header>
 
@@ -46,18 +65,143 @@ const base = (import.meta as any).env.BASE_URL || '/';
     <footer class="site-footer">
       <p>© {new Date().getFullYear()} DevIA Blog</p>
     </footer>
+
+    <script is:inline>
+      document.getElementById('theme-toggle').addEventListener('click', function() {
+        var current = document.documentElement.getAttribute('data-theme');
+        var next = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+      });
+    </script>
   </body>
 </html>
 
-<style>
-  :root { color-scheme: light dark; }
-  html, body { margin: 0; padding: 0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; background: #f6f7fb; }
-  .site-header { background: white; border-bottom: 1px solid #e5e7eb; position: sticky; top: 0; z-index: 10; }
-  .nav { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 16px; }
-  .brand { font-weight: 800; color: #1f2937; text-decoration: none; font-size: 18px; }
-  .links { display: flex; gap: 16px; }
-  .links a { color: #374151; text-decoration: none; font-weight: 600; }
-  .links a:hover { color: #2563eb; }
-  .container { max-width: 1100px; margin: 24px auto; padding: 0 16px; }
-  .site-footer { text-align: center; color: #6b7280; padding: 24px; }
+<style is:global>
+  :root {
+    --color-bg: #f6f7fb;
+    --color-bg-alt: #f8fafc;
+    --color-surface: #ffffff;
+    --color-surface-2: #f3f4f6;
+    --color-border: #e5e7eb;
+    --color-border-subtle: #f3f4f6;
+    --color-text-primary: #1f2937;
+    --color-text-secondary: #6b7280;
+    --color-text-tertiary: #4b5563;
+    --color-text-nav: #374151;
+    --color-accent: #2563eb;
+    --color-accent-hover: #1d4ed8;
+    --color-accent-light: #3b82f6;
+    --color-accent-green: #10b981;
+    --color-accent-purple: #8b5cf6;
+    --color-link-type-bg: #e0e7ff;
+    --color-link-type-text: #3730a3;
+    --color-shadow: rgba(0, 0, 0, 0.1);
+  }
+
+  [data-theme="dark"] {
+    --color-bg: #0f172a;
+    --color-bg-alt: #1e293b;
+    --color-surface: #1e293b;
+    --color-surface-2: #334155;
+    --color-border: #334155;
+    --color-border-subtle: #1e293b;
+    --color-text-primary: #f1f5f9;
+    --color-text-secondary: #94a3b8;
+    --color-text-tertiary: #cbd5e1;
+    --color-text-nav: #cbd5e1;
+    --color-accent: #60a5fa;
+    --color-accent-hover: #93c5fd;
+    --color-accent-light: #60a5fa;
+    --color-accent-green: #34d399;
+    --color-accent-purple: #a78bfa;
+    --color-link-type-bg: #1e3a5f;
+    --color-link-type-text: #93c5fd;
+    --color-shadow: rgba(0, 0, 0, 0.4);
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    background: var(--color-bg);
+    color: var(--color-text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .site-header {
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+  }
+
+  .nav {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+  }
+
+  .brand {
+    font-weight: 800;
+    color: var(--color-text-primary);
+    text-decoration: none;
+    font-size: 18px;
+  }
+
+  .links {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .links a {
+    color: var(--color-text-nav);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .links a:hover { color: var(--color-accent); }
+
+  .container {
+    max-width: 1100px;
+    margin: 24px auto;
+    padding: 0 16px;
+  }
+
+  .site-footer {
+    text-align: center;
+    color: var(--color-text-secondary);
+    padding: 24px;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .theme-toggle {
+    background: none;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 6px 8px;
+    cursor: pointer;
+    color: var(--color-text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+    margin-left: 8px;
+  }
+
+  .theme-toggle:hover {
+    background: var(--color-surface-2);
+    color: var(--color-text-primary);
+  }
+
+  [data-theme="dark"] .icon-moon { display: none; }
+  [data-theme="dark"] .icon-sun  { display: block; }
+  :root:not([data-theme="dark"]) .icon-sun  { display: none; }
+  :root:not([data-theme="dark"]) .icon-moon { display: block; }
 </style>

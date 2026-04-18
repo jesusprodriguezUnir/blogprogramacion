@@ -298,13 +298,13 @@ const linkCategories = [
 	.page-title {
 		font-size: 48px;
 		font-weight: 800;
-		color: #1f2937;
+		color: var(--color-text-primary);
 		margin-bottom: 16px;
 	}
 
 	.page-subtitle {
 		font-size: 20px;
-		color: #6b7280;
+		color: var(--color-text-secondary);
 		line-height: 1.6;
 		max-width: 800px;
 		margin: 0 auto;
@@ -318,11 +318,12 @@ const linkCategories = [
 	}
 
 	.category-section {
-		background: white;
+		background: var(--color-surface);
 		border-radius: 24px;
 		padding: 48px;
-		box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-		border: 1px solid #f3f4f6;
+		box-shadow: 0 4px 6px -1px var(--color-shadow), 0 2px 4px -1px var(--color-shadow);
+		border: 1px solid var(--color-border-subtle);
+		transition: background-color 0.3s ease;
 	}
 
 	.category-header {
@@ -334,7 +335,7 @@ const linkCategories = [
 
 	.category-icon {
 		font-size: 48px;
-		background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+		background: linear-gradient(135deg, var(--color-surface-2), var(--color-border));
 		width: 80px;
 		height: 80px;
 		border-radius: 20px;
@@ -346,13 +347,13 @@ const linkCategories = [
 	.category-title {
 		font-size: 28px;
 		font-weight: 700;
-		color: #1f2937;
+		color: var(--color-text-primary);
 		margin-bottom: 8px;
 	}
 
 	.category-description {
 		font-size: 16px;
-		color: #6b7280;
+		color: var(--color-text-secondary);
 		line-height: 1.5;
 	}
 
@@ -367,8 +368,8 @@ const linkCategories = [
 		align-items: center;
 		justify-content: space-between;
 		padding: 24px;
-		background: #f8fafc;
-		border: 1px solid #e2e8f0;
+		background: var(--color-bg-alt);
+		border: 1px solid var(--color-border);
 		border-radius: 16px;
 		text-decoration: none;
 		transition: all 0.3s ease;
@@ -383,7 +384,7 @@ const linkCategories = [
 		align-items: center;
 		justify-content: center;
 		font-size: 28px;
-		background: linear-gradient(135deg, #ffffff, #f3f4f6);
+		background: linear-gradient(135deg, var(--color-surface), var(--color-surface-2));
 		border-radius: 12px;
 		margin-right: 16px;
 	}
@@ -401,10 +402,10 @@ const linkCategories = [
 	}
 
 	.link-card:hover {
-		background: white;
+		background: var(--color-surface);
 		transform: translateY(-4px);
-		box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-		border-color: #cbd5e1;
+		box-shadow: 0 10px 25px -5px var(--color-shadow);
+		border-color: var(--color-border);
 	}
 
 	.link-card:hover::before {
@@ -425,13 +426,13 @@ const linkCategories = [
 	.link-title {
 		font-size: 18px;
 		font-weight: 600;
-		color: #1f2937;
+		color: var(--color-text-primary);
 		margin: 0;
 	}
 
 	.link-type {
-		background: #e0e7ff;
-		color: #3730a3;
+		background: var(--color-link-type-bg);
+		color: var(--color-link-type-text);
 		padding: 4px 8px;
 		border-radius: 6px;
 		font-size: 12px;
@@ -441,27 +442,27 @@ const linkCategories = [
 	}
 
 	.link-description {
-		color: #4b5563;
+		color: var(--color-text-tertiary);
 		font-size: 14px;
 		line-height: 1.5;
 		margin: 0 0 8px 0;
 	}
 
 	.link-url {
-		color: #6b7280;
+		color: var(--color-text-secondary);
 		font-size: 12px;
 		font-family: monospace;
 	}
 
 	.link-arrow {
 		font-size: 20px;
-		color: #9ca3af;
+		color: var(--color-text-secondary);
 		transition: all 0.3s ease;
 		margin-left: 16px;
 	}
 
 	.link-card:hover .link-arrow {
-		color: #3b82f6;
+		color: var(--color-accent);
 		transform: translateX(4px);
 	}
 

@@ -65,9 +65,10 @@ const recentPosts = [
 <style>
 	.featured-section { margin-bottom: 48px; }
 	.section-header { text-align: center; margin-bottom: 24px; }
-	.section-title { font-size: 28px; font-weight: 700; }
-	.section-subtitle { color: #6b7280; }
+	.section-title { font-size: 28px; font-weight: 700; color: var(--color-text-primary); }
+	.section-subtitle { color: var(--color-text-secondary); }
 	.posts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
 	.view-all { text-align: center; margin-top: 24px; }
-	.view-all-btn { color: white; background: #2563eb; padding: 10px 16px; border-radius: 8px; text-decoration: none; }
+	.view-all-btn { color: white; background: var(--color-accent); padding: 10px 16px; border-radius: 8px; text-decoration: none; transition: background 0.2s; }
+	.view-all-btn:hover { background: var(--color-accent-hover); }
 </style>

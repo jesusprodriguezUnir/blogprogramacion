@@ -39,14 +39,12 @@ const categoryColor = getCategoryColor(category);
 
 <style>
 	.post-card {
-		background: white;
+		background: var(--color-surface);
 		border-radius: 16px;
 		padding: 32px;
-		box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+		box-shadow: 0 4px 6px -1px var(--color-shadow), 0 2px 4px -1px var(--color-shadow);
 		transition: all 0.3s ease;
-		border: 1px solid #f3f4f6;
-		transition: all 0.3s ease;
-		border: 1px solid #f3f4f6;
+		border: 1px solid var(--color-border-subtle);
 		position: relative;
 		overflow: hidden;
 	}
@@ -65,7 +63,7 @@ const categoryColor = getCategoryColor(category);
 
 	.post-card:hover {
 		transform: translateY(-4px);
-		box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+		box-shadow: 0 20px 25px -5px var(--color-shadow), 0 10px 10px -5px var(--color-shadow);
 	}
 
 	.post-card:hover::before {
@@ -98,7 +96,7 @@ const categoryColor = getCategoryColor(category);
 
 	.post-date {
 		font-size: 14px;
-		color: #6b7280;
+		color: var(--color-text-secondary);
 		font-weight: 500;
 	}
 
@@ -110,17 +108,17 @@ const categoryColor = getCategoryColor(category);
 	}
 
 	.post-link {
-		color: #1f2937;
+		color: var(--color-text-primary);
 		text-decoration: none;
 		transition: color 0.2s ease;
 	}
 
 	.post-link:hover {
-		color: #2563eb;
+		color: var(--color-accent);
 	}
 
 	.post-excerpt {
-		color: #4b5563;
+		color: var(--color-text-tertiary);
 		font-size: 16px;
 		line-height: 1.6;
 		margin-bottom: 24px;
@@ -131,19 +129,19 @@ const categoryColor = getCategoryColor(category);
 		align-items: center;
 		justify-content: space-between;
 		padding-top: 16px;
-		border-top: 1px solid #f3f4f6;
+		border-top: 1px solid var(--color-border-subtle);
 	}
 
 	.read-time {
 		font-size: 14px;
-		color: #6b7280;
+		color: var(--color-text-secondary);
 		display: flex;
 		align-items: center;
 		gap: 8px;
 	}
 
 	.read-more {
-		color: #2563eb;
+		color: var(--color-accent);
 		font-weight: 600;
 		text-decoration: none;
 		font-size: 14px;
