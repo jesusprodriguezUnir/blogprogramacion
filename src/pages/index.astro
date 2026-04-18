@@ -5,40 +5,8 @@ import PostCard from '../components/PostCard.astro';
 
 const base = (import.meta as any).env.BASE_URL || '/';
 
-const recentPosts = [
-	{
-		title: 'Notebook LM: El futuro de los cuadernos inteligentes',
-		excerpt: 'Descubre cómo Notebook LM está revolucionando la forma de trabajar con IA y documentos en la web.',
-		date: '9 Septiembre 2025',
-		category: 'IA',
-		slug: 'notebook-lm',
-		readTime: '4 min'
-	},
-	{
-		title: 'Made By Google 2025 — Resumen y novedades clave',
-		excerpt: 'Resumen de lo más importante anunciado en Made By Google 2025: hardware, software, avances en IA y sostenibilidad.',
-		date: '22 Agosto 2025',
-		category: 'Hardware y IA',
-		slug: 'made-by-google-2025-resumen',
-		readTime: '5 min'
-	},
-	{
-		title: 'Resumen del Lanzamiento de GPT-5 por OpenAI',
-		excerpt: 'OpenAI presentó GPT-5 con mejoras en razonamiento, codificación, multimodalidad y seguridad; la recepción fue mixta.',
-		date: '7 Agosto 2025',
-		category: 'IA',
-		slug: 'resumen-lanzamiento-gpt-5-openai-agosto-2025',
-		readTime: '6 min'
-	},
-	{
-		title: 'Cómo la Inteligencia Artificial Está Redefiniendo el Futuro del Trabajo',
-		excerpt: 'La IA está transformando roles, automatizando tareas rutinarias y creando nuevas oportunidades; empresas y trabajadores deben adaptarse.',
-		date: '18 Agosto 2025',
-		category: 'IA',
-		slug: 'como-ia-redefiniendo-futuro-del-trabajo',
-		readTime: '5 min'
-	}
-];
+// Posts próximamente — por ahora sin publicaciones activas
+const recentPosts: any[] = [];
 
 ---
 
@@ -47,17 +15,25 @@ const recentPosts = [
 
 	<section class="featured-section">
 		<div class="section-header">
-			<h2 class="section-title">Últimas Noticias</h2>
-			<p class="section-subtitle">Mantente al día con lo más reciente en programación e IA</p>
+			<h2 class="section-title">Próximamente</h2>
+			<p class="section-subtitle">Nuevos artículos en camino — vuelve pronto</p>
 		</div>
 
-		<div class="posts-grid">
-			{recentPosts.map(post => <PostCard {...post} />)}
-		</div>
-
-		<div class="view-all">
-			<a href={`${base}posts`} class="view-all-btn">Ver todos los posts →</a>
-		</div>
+		{recentPosts.length > 0 ? (
+			<>
+				<div class="posts-grid">
+					{recentPosts.map(post => <PostCard {...post} />)}
+				</div>
+				<div class="view-all">
+					<a href={`${base}posts`} class="view-all-btn">Ver todos los posts →</a>
+				</div>
+			</>
+		) : (
+			<div class="empty-posts">
+				<span class="empty-icon">✍️</span>
+				<p>Estamos preparando contenido nuevo. Mientras tanto, explora los <a href={`${base}enlaces`}>recursos</a> y <a href={`${base}prompts`}>skills</a>.</p>
+			</div>
+		)}
 	</section>
 
 </BlogLayout>
@@ -71,4 +47,9 @@ const recentPosts = [
 	.view-all { text-align: center; margin-top: 24px; }
 	.view-all-btn { color: white; background: var(--color-accent); padding: 10px 16px; border-radius: 8px; text-decoration: none; transition: background 0.2s; }
 	.view-all-btn:hover { background: var(--color-accent-hover); }
+	.empty-posts { text-align: center; padding: 48px 24px; background: var(--color-surface); border-radius: 16px; border: 1px dashed var(--color-border); }
+	.empty-icon { font-size: 48px; display: block; margin-bottom: 16px; }
+	.empty-posts p { color: var(--color-text-secondary); font-size: 16px; line-height: 1.6; margin: 0; }
+	.empty-posts a { color: var(--color-accent); text-decoration: none; font-weight: 600; }
+	.empty-posts a:hover { text-decoration: underline; }
 </style>

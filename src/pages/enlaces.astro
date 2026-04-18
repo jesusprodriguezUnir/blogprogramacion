@@ -3,6 +3,97 @@ import BlogLayout from '../layouts/BlogLayout.astro';
 
 const linkCategories = [
 	{
+		category: "Claude & Anthropic",
+		description: "Documentación oficial, herramientas y recursos curados para estudiar y dominar Claude",
+		icon: "🧠",
+		links: [
+			{
+				title: "Documentación Claude",
+				description: "Guía oficial de Anthropic: API, modelos, prompt engineering y mejores prácticas",
+				url: "https://docs.anthropic.com/",
+				type: "Docs",
+				icon: "📖"
+			},
+			{
+				title: "Claude Code Docs",
+				description: "Documentación de Claude Code CLI: comandos, hooks, MCP servers y configuración",
+				url: "https://docs.anthropic.com/en/docs/claude-code/overview",
+				type: "Docs",
+				icon: "💻"
+			},
+			{
+				title: "Model Context Protocol",
+				description: "Especificación del protocolo MCP para conectar Claude con herramientas y datos externos",
+				url: "https://modelcontextprotocol.io/",
+				type: "Protocolo",
+				icon: "🔌"
+			},
+			{
+				title: "Awesome Claude",
+				description: "Lista curada de las mejores herramientas, integraciones y recursos de la comunidad para Claude",
+				url: "https://awesomeclaude.ai",
+				type: "Directorio",
+				icon: "⭐"
+			},
+			{
+				title: "Anthropic Cookbook",
+				description: "Ejemplos prácticos de código para las funciones más avanzadas de la API de Claude",
+				url: "https://github.com/anthropics/anthropic-cookbook",
+				type: "Ejemplos",
+				icon: "🍳"
+			},
+			{
+				title: "Claude Prompt Library",
+				description: "Biblioteca oficial de prompts de Anthropic para distintos casos de uso",
+				url: "https://docs.anthropic.com/en/prompt-library/library",
+				type: "Prompts",
+				icon: "💡"
+			},
+			{
+				title: "Anthropic API Console",
+				description: "Consola interactiva para probar la API de Claude directamente desde el navegador",
+				url: "https://console.anthropic.com/",
+				type: "Herramienta",
+				icon: "🛠️"
+			}
+		]
+	},
+	{
+		category: "Skills & Agentes IA",
+		description: "Plataformas y repositorios para encontrar y compartir skills reutilizables para agentes de IA",
+		icon: "🎯",
+		links: [
+			{
+				title: "Skills.sh",
+				description: "Directorio de skills reutilizables para agentes IA: Claude Code, Cursor, Copilot y más de 20 agentes. Más de 91k skills indexadas",
+				url: "https://skills.sh/",
+				type: "Directorio",
+				icon: "🚀"
+			},
+			{
+				title: "Awesome Copilot (GitHub)",
+				description: "Lista curada de prompts, instrucciones y recursos para GitHub Copilot y agentes de código",
+				url: "https://github.com/awesome-copilot/awesome-copilot",
+				type: "Repositorio",
+				icon: "🐙"
+			},
+			{
+				title: "Awesome MCP Servers",
+				description: "Colección de servidores MCP listos para usar con Claude: bases de datos, APIs, herramientas y más",
+				url: "https://github.com/punkpeye/awesome-mcp-servers",
+				type: "Repositorio",
+				icon: "🔧"
+			},
+			{
+				title: "Claude Code Skills (skills.sh)",
+				description: "Categoría específica de skills para Claude Code en el directorio skills.sh",
+				url: "https://skills.sh/agents/claude-code",
+				type: "Skills",
+				icon: "⚡"
+			}
+		]
+	},
+	{
 		category: "Inteligencia Artificial",
 		description: "Recursos y herramientas para el desarrollo con IA",
 		icon: "🤖",
@@ -276,17 +367,6 @@ const linkCategories = [
 		))}
 	</div>
 
-	<section class="suggest-section">
-		<div class="suggest-card">
-			<h3 class="suggest-title">¿Conoces algún recurso útil?</h3>
-			<p class="suggest-description">
-				Si tienes alguna herramienta, plataforma o recurso que crees que debería estar en esta lista,
-				no dudes en sugerirlo. ¡La comunidad de desarrolladores crece compartiendo conocimiento!
-			</p>
-			<a href="mailto:contacto@deviablog.com" class="suggest-btn">Sugerir recurso</a>
-			<a href="mailto:deviablogcastellano@gmail.com" class="suggest-btn">Sugerir recurso</a>
-		</div>
-	</section>
 </BlogLayout>
 
 <style>
