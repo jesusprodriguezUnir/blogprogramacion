@@ -1,9 +1,9 @@
 ---
 const {
   title = 'DevIA Blog',
-  description = 'Noticias de programación e IA',
+  description = 'Recursos de programación e IA',
   ogImage = '/favicon.svg',
-  author = 'DevIA',
+  author = 'Jesús P.',
   url = (import.meta as any).env.SITE_URL || ''
 } = Astro.props;
 const base = (import.meta as any).env.BASE_URL || '/';
@@ -20,6 +20,9 @@ const base = (import.meta as any).env.BASE_URL || '/';
       })();
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta property="og:title" content={title} />
@@ -27,31 +30,24 @@ const base = (import.meta as any).env.BASE_URL || '/';
     <meta property="og:image" content={ogImage} />
     <meta property="og:url" content={url} />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={ogImage} />
     <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
   </head>
   <body>
     <header class="site-header">
       <nav class="nav">
-        <a class="brand" href={base}>DevIA Blog</a>
-        <div class="links">
-          <a href={base}>Inicio</a>
-          <a href={`${base}posts`}>Posts</a>
-          <a href={`${base}enlaces`}>Enlaces</a>
-          <a href={`${base}prompts`}>Prompts</a>
-          <a href={`${base}sobre-mi`}>Sobre mí</a>
+        <a class="brand" href={base}>devIA</a>
+        <div class="nav-links">
+          <a href={`${base}enlaces`}>Recursos</a>
+          <a href={`${base}prompts`}>Skills</a>
         </div>
         <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema">
-          <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/>
-            <line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/>
-            <line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
           </svg>
-          <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
           </svg>
         </button>
@@ -63,13 +59,19 @@ const base = (import.meta as any).env.BASE_URL || '/';
     </main>
 
     <footer class="site-footer">
-      <p>© {new Date().getFullYear()} DevIA Blog</p>
+      <div class="footer-inner">
+        <span>© {new Date().getFullYear()} Jesús P.</span>
+        <div class="footer-links">
+          <a href={base}>Inicio</a>
+          <a href={`${base}enlaces`}>Recursos</a>
+          <a href={`${base}prompts`}>Skills</a>
+        </div>
+      </div>
     </footer>
 
     <script is:inline>
       document.getElementById('theme-toggle').addEventListener('click', function() {
-        var current = document.documentElement.getAttribute('data-theme');
-        var next = current === 'dark' ? 'light' : 'dark';
+        var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
         document.documentElement.setAttribute('data-theme', next);
         localStorage.setItem('theme', next);
       });
@@ -78,130 +80,229 @@ const base = (import.meta as any).env.BASE_URL || '/';
 </html>
 
 <style is:global>
+  /* ── Design tokens ─────────────────────────────────── */
   :root {
-    --color-bg: #f6f7fb;
-    --color-bg-alt: #f8fafc;
-    --color-surface: #ffffff;
-    --color-surface-2: #f3f4f6;
-    --color-border: #e5e7eb;
-    --color-border-subtle: #f3f4f6;
-    --color-text-primary: #1f2937;
-    --color-text-secondary: #6b7280;
-    --color-text-tertiary: #4b5563;
-    --color-text-nav: #374151;
-    --color-accent: #2563eb;
-    --color-accent-hover: #1d4ed8;
-    --color-accent-light: #3b82f6;
-    --color-accent-green: #10b981;
-    --color-accent-purple: #8b5cf6;
-    --color-link-type-bg: #e0e7ff;
-    --color-link-type-text: #3730a3;
-    --color-shadow: rgba(0, 0, 0, 0.1);
+    --bg:           #ffffff;
+    --bg-subtle:    #f8fafc;
+    --surface:      #ffffff;
+    --surface-2:    #f1f5f9;
+    --border:       #e2e8f0;
+    --border-faint: #f1f5f9;
+    --text:         #0f172a;
+    --text-2:       #475569;
+    --text-3:       #94a3b8;
+    --accent:       #2563eb;
+    --accent-2:     #1d4ed8;
+    --accent-green: #059669;
+    --accent-purple:#7c3aed;
+    --badge-bg:     #eff6ff;
+    --badge-text:   #1d4ed8;
+    --shadow-sm:    0 1px 3px rgba(0,0,0,.07), 0 1px 2px rgba(0,0,0,.04);
+    --shadow-md:    0 4px 12px rgba(0,0,0,.08);
+    --radius:       8px;
+    --radius-lg:    12px;
   }
 
   [data-theme="dark"] {
-    --color-bg: #0f172a;
-    --color-bg-alt: #1e293b;
-    --color-surface: #1e293b;
-    --color-surface-2: #334155;
-    --color-border: #334155;
-    --color-border-subtle: #1e293b;
-    --color-text-primary: #f1f5f9;
-    --color-text-secondary: #94a3b8;
-    --color-text-tertiary: #cbd5e1;
-    --color-text-nav: #cbd5e1;
-    --color-accent: #60a5fa;
-    --color-accent-hover: #93c5fd;
-    --color-accent-light: #60a5fa;
-    --color-accent-green: #34d399;
-    --color-accent-purple: #a78bfa;
-    --color-link-type-bg: #1e3a5f;
-    --color-link-type-text: #93c5fd;
-    --color-shadow: rgba(0, 0, 0, 0.4);
+    --bg:           #0d1117;
+    --bg-subtle:    #161b22;
+    --surface:      #161b22;
+    --surface-2:    #21262d;
+    --border:       #30363d;
+    --border-faint: #21262d;
+    --text:         #e6edf3;
+    --text-2:       #8b949e;
+    --text-3:       #6e7681;
+    --accent:       #58a6ff;
+    --accent-2:     #79c0ff;
+    --accent-green: #3fb950;
+    --accent-purple:#d2a8ff;
+    --badge-bg:     #1f3a5f;
+    --badge-text:   #79c0ff;
+    --shadow-sm:    0 1px 3px rgba(0,0,0,.3);
+    --shadow-md:    0 4px 12px rgba(0,0,0,.4);
   }
+
+  /* ── Compatibility aliases (legacy --color-* vars) ─── */
+  :root {
+    --color-bg: var(--bg);
+    --color-bg-alt: var(--bg-subtle);
+    --color-surface: var(--surface);
+    --color-surface-2: var(--surface-2);
+    --color-border: var(--border);
+    --color-border-subtle: var(--border-faint);
+    --color-text-primary: var(--text);
+    --color-text-secondary: var(--text-2);
+    --color-text-tertiary: var(--text-2);
+    --color-text-nav: var(--text-2);
+    --color-accent: var(--accent);
+    --color-accent-hover: var(--accent-2);
+    --color-accent-light: var(--accent);
+    --color-accent-green: var(--accent-green);
+    --color-accent-purple: var(--accent-purple);
+    --color-link-type-bg: var(--badge-bg);
+    --color-link-type-text: var(--badge-text);
+    --color-shadow: rgba(0,0,0,.08);
+  }
+
+  /* ── Reset & base ──────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; }
 
   html, body {
     margin: 0;
     padding: 0;
-    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-    background: var(--color-bg);
-    color: var(--color-text-primary);
-    transition: background-color 0.3s ease, color 0.3s ease;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    transition: background-color .25s, color .25s;
   }
 
+  /* ── Navigation ────────────────────────────────────── */
   .site-header {
-    background: var(--color-surface);
-    border-bottom: 1px solid var(--color-border);
     position: sticky;
     top: 0;
-    z-index: 10;
-    transition: background-color 0.3s ease, border-color 0.3s ease;
+    z-index: 50;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: background-color .25s, border-color .25s;
   }
 
   .nav {
-    max-width: 1100px;
+    max-width: 860px;
     margin: 0 auto;
+    padding: 0 24px;
+    height: 56px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 16px;
+    gap: 32px;
   }
 
   .brand {
-    font-weight: 800;
-    color: var(--color-text-primary);
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text);
     text-decoration: none;
-    font-size: 18px;
+    letter-spacing: -.3px;
+    flex-shrink: 0;
   }
 
-  .links {
+  .nav-links {
     display: flex;
-    gap: 16px;
-    align-items: center;
+    gap: 4px;
+    flex: 1;
   }
 
-  .links a {
-    color: var(--color-text-nav);
+  .nav-links a {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-2);
     text-decoration: none;
-    font-weight: 600;
+    padding: 6px 10px;
+    border-radius: 6px;
+    transition: color .15s, background .15s;
   }
 
-  .links a:hover { color: var(--color-accent); }
-
-  .container {
-    max-width: 1100px;
-    margin: 24px auto;
-    padding: 0 16px;
-  }
-
-  .site-footer {
-    text-align: center;
-    color: var(--color-text-secondary);
-    padding: 24px;
-    border-top: 1px solid var(--color-border);
+  .nav-links a:hover {
+    color: var(--text);
+    background: var(--surface-2);
   }
 
   .theme-toggle {
-    background: none;
-    border: 1px solid var(--color-border);
-    border-radius: 8px;
-    padding: 6px 8px;
-    cursor: pointer;
-    color: var(--color-text-secondary);
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background-color 0.2s, border-color 0.2s, color 0.2s;
-    margin-left: 8px;
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    color: var(--text-2);
+    transition: background .15s, color .15s;
   }
 
   .theme-toggle:hover {
-    background: var(--color-surface-2);
-    color: var(--color-text-primary);
+    background: var(--surface-2);
+    color: var(--text);
   }
 
   [data-theme="dark"] .icon-moon { display: none; }
   [data-theme="dark"] .icon-sun  { display: block; }
   :root:not([data-theme="dark"]) .icon-sun  { display: none; }
   :root:not([data-theme="dark"]) .icon-moon { display: block; }
+
+  /* ── Main container ────────────────────────────────── */
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+
+  /* ── Footer ────────────────────────────────────────── */
+  .site-footer {
+    border-top: 1px solid var(--border);
+    padding: 24px;
+  }
+
+  .footer-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 13px;
+    color: var(--text-3);
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 20px;
+  }
+
+  .footer-links a {
+    color: var(--text-3);
+    text-decoration: none;
+    transition: color .15s;
+  }
+
+  .footer-links a:hover {
+    color: var(--text-2);
+  }
+
+  /* ── Prose (blog posts) ────────────────────────────── */
+  .prose {
+    max-width: 680px;
+  }
+
+  .prose h1, .prose h2, .prose h3 {
+    color: var(--text);
+    font-weight: 600;
+    line-height: 1.3;
+    margin-top: 2em;
+    margin-bottom: .5em;
+  }
+
+  .prose p { color: var(--text-2); margin: 0 0 1.25em; }
+  .prose a { color: var(--accent); }
+  .prose code {
+    font-size: .875em;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1px 5px;
+  }
+
+  @media (max-width: 640px) {
+    .nav { padding: 0 16px; gap: 16px; }
+    .nav-links { gap: 0; }
+    .nav-links a { padding: 6px 8px; font-size: 13px; }
+    .container { padding: 32px 16px 64px; }
+    .footer-inner { flex-direction: column; gap: 12px; text-align: center; }
+  }
 </style>
