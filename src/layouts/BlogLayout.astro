@@ -7,6 +7,8 @@ interface Props {
 }
 
 const { title, description = "Mi rincón sobre programación y tecnología" } = Astro.props;
+const pathname = Astro.url.pathname;
+const currentPath = pathname.replace(base, "") || "";
 ---
 
 <!DOCTYPE html>
@@ -17,7 +19,7 @@ const { title, description = "Mi rincón sobre programación y tecnología" } = 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta property="og:title" content={title} />
@@ -42,8 +44,10 @@ const { title, description = "Mi rincón sobre programación y tecnología" } = 
       <nav class="nav">
         <a class="brand" href={base}>devIA</a>
         <div class="nav-links">
-          <a href={`${base}enlaces`}>Recursos</a>
-          <a href={`${base}prompts`}>Skills</a>
+          <a href={base} class={currentPath === "" ? "active" : ""}>Home</a>
+          <a href={`${base}enlaces`} class={currentPath.startsWith("enlaces") ? "active" : ""}>Recursos</a>
+          <a href={`${base}prompts`} class={currentPath.startsWith("prompts") ? "active" : ""}>Skills</a>
+          <a href={`${base}sobre-mi`} class={currentPath.startsWith("sobre-mi") ? "active" : ""}>Sobre mí</a>
         </div>
         <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema">
           <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -62,11 +66,16 @@ const { title, description = "Mi rincón sobre programación y tecnología" } = 
 
     <footer class="site-footer">
       <div class="footer-inner">
-        <span>© {new Date().getFullYear()} Jesús P.</span>
-        <div class="footer-links">
-          <a href={base}>Inicio</a>
-          <a href={`${base}enlaces`}>Recursos</a>
-          <a href={`${base}prompts`}>Skills</a>
+        <div class="footer-copy">
+          © {new Date().getFullYear()} Jesús P. <span class="separator">|</span> <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0 License</a>
+        </div>
+        <div class="footer-socials">
+          <a href="https://github.com/jesusprodriguezUnir" aria-label="GitHub" target="_blank" rel="noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          </a>
+          <a href="https://linkedin.com/" aria-label="LinkedIn" target="_blank" rel="noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
         </div>
       </div>
     </footer>
@@ -86,43 +95,43 @@ const { title, description = "Mi rincón sobre programación y tecnología" } = 
 <style is:global>
   /* ── Design tokens ─────────────────────────────────── */
   :root {
-    --bg:           #ffffff;
-    --bg-subtle:    #f8fafc;
-    --surface:      #ffffff;
-    --surface-2:    #f1f5f9;
-    --border:       #e2e8f0;
-    --border-faint: #f1f5f9;
-    --text:         #0f172a;
-    --text-2:       #475569;
-    --text-3:       #94a3b8;
-    --accent:       #2563eb;
-    --accent-2:     #1d4ed8;
-    --accent-green: #059669;
-    --accent-purple:#7c3aed;
-    --badge-bg:     #eff6ff;
-    --badge-text:   #1d4ed8;
-    --shadow-sm:    0 1px 3px rgba(0,0,0,.07), 0 1px 2px rgba(0,0,0,.04);
-    --shadow-md:    0 4px 12px rgba(0,0,0,.08);
+    --bg:           #e8edf4;
+    --bg-subtle:    #dfe5ee;
+    --surface:      #f0f3f8;
+    --surface-2:    #d8dee8;
+    --border:       #c8d0dc;
+    --border-faint: #d8dee8;
+    --text:         #1a2332;
+    --text-2:       #4a5568;
+    --text-3:       #718096;
+    --accent:       #4a90d9;
+    --accent-2:     #3182ce;
+    --accent-green: #38a169;
+    --accent-purple:#805ad5;
+    --badge-bg:     #e2e8f0;
+    --badge-text:   #2b6cb0;
+    --shadow-sm:    0 1px 3px rgba(0,0,0,.05), 0 1px 2px rgba(0,0,0,.03);
+    --shadow-md:    0 4px 12px rgba(0,0,0,.05);
     --radius:       8px;
     --radius-lg:    12px;
   }
 
   [data-theme="dark"] {
-    --bg:           #0d1117;
-    --bg-subtle:    #161b22;
-    --surface:      #161b22;
-    --surface-2:    #21262d;
-    --border:       #30363d;
-    --border-faint: #21262d;
-    --text:         #e6edf3;
-    --text-2:       #8b949e;
-    --text-3:       #6e7681;
-    --accent:       #58a6ff;
-    --accent-2:     #79c0ff;
-    --accent-green: #3fb950;
-    --accent-purple:#d2a8ff;
-    --badge-bg:     #1f3a5f;
-    --badge-text:   #79c0ff;
+    --bg:           #0a1628;
+    --bg-subtle:    #0f1d32;
+    --surface:      #132240;
+    --surface-2:    #1a2d4d;
+    --border:       #1e3a5f;
+    --border-faint: #1a2d4d;
+    --text:         #c8d6e5;
+    --text-2:       #8a9bb2;
+    --text-3:       #64748b;
+    --accent:       #4a9eff;
+    --accent-2:     #63b3ed;
+    --accent-green: #48bb78;
+    --accent-purple:#9f7aea;
+    --badge-bg:     #1a2d4d;
+    --badge-text:   #63b3ed;
     --shadow-sm:    0 1px 3px rgba(0,0,0,.3);
     --shadow-md:    0 4px 12px rgba(0,0,0,.4);
   }
@@ -162,6 +171,10 @@ const { title, description = "Mi rincón sobre programación y tecnología" } = 
     -webkit-font-smoothing: antialiased;
     transition: background-color .25s, color .25s;
   }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'IBM Plex Mono', monospace;
+  }
 
   /* ── Navigation ────────────────────────────────────── */
   .site-header {
@@ -183,18 +196,20 @@ const { title, description = "Mi rincón sobre programación y tecnología" } = 
   }
 
   .brand {
-    font-size: 17px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 18px;
     font-weight: 700;
     color: var(--text);
     text-decoration: none;
-    letter-spacing: -.3px;
+    letter-spacing: -0.5px;
     flex-shrink: 0;
   }
 
   .nav-links {
     display: flex;
-    gap: 8px;
+    gap: 16px;
     flex-grow: 1;
+    margin-left: 16px;
   }
 
   .nav-links a {
@@ -202,14 +217,29 @@ const { title, description = "Mi rincón sobre programación y tecnología" } = 
     font-weight: 500;
     color: var(--text-2);
     text-decoration: none;
-    padding: 6px 10px;
-    border-radius: 6px;
-    transition: color .15s, background .15s;
+    padding: 6px 4px;
+    transition: color .15s;
+    position: relative;
   }
 
-  .nav-links a:hover {
-    color: var(--text);
-    background: var(--surface-2);
+  .nav-links a:hover, .nav-links a.active {
+    color: var(--accent);
+  }
+  
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transition: transform .2s ease;
+  }
+
+  .nav-links a:hover::after, .nav-links a.active::after {
+    transform: scaleX(1);
   }
 
   .theme-toggle {
@@ -246,7 +276,7 @@ const { title, description = "Mi rincón sobre programación y tecnología" } = 
   /* ── Footer ────────────────────────────────────────── */
   .site-footer {
     border-top: 1px solid var(--border);
-    padding: 24px 0;
+    padding: 40px 0;
     margin-top: auto;
   }
 
@@ -254,25 +284,46 @@ const { title, description = "Mi rincón sobre programación y tecnología" } = 
     max-width: 860px;
     margin: 0 auto;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    font-size: 13px;
+    justify-content: center;
+    gap: 16px;
+    font-size: 14px;
     color: var(--text-3);
   }
 
-  .footer-links {
+  .footer-copy {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .footer-copy a {
+    color: var(--text-3);
+    text-decoration: none;
+    transition: color .2s;
+  }
+
+  .footer-copy a:hover {
+    color: var(--accent);
+  }
+  
+  .separator {
+    opacity: 0.5;
+  }
+
+  .footer-socials {
     display: flex;
     gap: 20px;
   }
 
-  .footer-links a {
+  .footer-socials a {
     color: var(--text-3);
-    text-decoration: none;
-    transition: color .15s;
+    transition: color .2s;
   }
 
-  .footer-links a:hover {
-    color: var(--text-2);
+  .footer-socials a:hover {
+    color: var(--accent);
   }
 
   /* ── Prose (blog posts) ────────────────────────────── */

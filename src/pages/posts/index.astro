@@ -89,10 +89,12 @@ const posts = files
       margin-bottom: 64px;
     }
     .page-title {
-      font-size: 48px;
-      font-weight: 800;
-      color: var(--text-primary);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 42px;
+      font-weight: 700;
+      color: var(--text);
       margin-bottom: 16px;
+      letter-spacing: -1px;
     }
     .page-subtitle {
       font-size: 20px;
@@ -108,12 +110,7 @@ const posts = files
       margin-bottom: 80px;
     }
     .category-section {
-      background: var(--surface);
-      border-radius: 24px;
-      padding: 48px;
-      box-shadow: 0 4px 6px -1px var(--color-shadow), 0 2px 4px -1px var(--color-shadow);
-      border: 1px solid var(--color-border-subtle);
-      transition: background-color 0.3s ease;
+      margin-bottom: 64px;
     }
     .links-grid {
       display: grid;
@@ -124,45 +121,28 @@ const posts = files
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 24px;
-      background: var(--bg-alt);
+      padding: 20px;
+      background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 16px;
+      border-radius: 12px;
       text-decoration: none;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
+      transition: all 0.2s ease;
     }
     .link-icon {
-      flex: 0 0 64px;
-      height: 64px;
+      flex: 0 0 48px;
+      height: 48px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 28px;
-      background: linear-gradient(135deg, var(--surface), var(--surface-2));
-      border-radius: 12px;
+      font-size: 24px;
+      background: var(--surface-2);
+      border-radius: 10px;
       margin-right: 16px;
     }
-    .link-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, #3b82f6, #10b981);
-      transform: scaleX(0);
-      transition: transform 0.3s ease;
-    }
     .link-card:hover {
-      background: var(--surface);
-      transform: translateY(-4px);
-      box-shadow: 0 10px 25px -5px var(--color-shadow);
-      border-color: var(--border);
-    }
-    .link-card:hover::before {
-      transform: scaleX(1);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+      border-color: var(--text-3);
     }
     .link-content {
       flex: 1;
