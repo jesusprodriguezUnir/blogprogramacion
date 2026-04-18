@@ -1,24 +1,19 @@
 ---
-const {
-  title = 'DevIA Blog',
-  description = 'Recursos de programación e IA',
-  ogImage = '/favicon.svg',
-  author = 'Jesús P.',
-  url = (import.meta as any).env.SITE_URL || ''
-} = Astro.props;
 const base = (import.meta as any).env.BASE_URL || '/';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "Mi rincón sobre programación y tecnología" } = Astro.props;
 ---
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="es">
   <head>
-    <meta charset="utf-8" />
-    <script is:inline>
-      (function() {
-        var stored = localStorage.getItem('theme');
-        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        document.documentElement.setAttribute('data-theme', stored || (prefersDark ? 'dark' : 'light'));
-      })();
-    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -27,10 +22,20 @@ const base = (import.meta as any).env.BASE_URL || '/';
     <meta name="description" content={description} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={ogImage} />
-    <meta property="og:url" content={url} />
+    <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
-    <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
+    <script is:inline>
+      const theme = (() => {
+        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+          return localStorage.getItem('theme');
+        }
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          return 'dark';
+        }
+        return 'light';
+      })();
+      document.documentElement.setAttribute('data-theme', theme);
+    </script>
   </head>
   <body>
     <header class="site-header">
@@ -42,13 +47,10 @@ const base = (import.meta as any).env.BASE_URL || '/';
         </div>
         <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema">
           <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-            <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            <circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="4.22" x2="19.78" y2="5.64"></line>
           </svg>
           <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
           </svg>
         </button>
       </nav>
@@ -70,10 +72,12 @@ const base = (import.meta as any).env.BASE_URL || '/';
     </footer>
 
     <script is:inline>
-      document.getElementById('theme-toggle').addEventListener('click', function() {
-        var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', next);
-        localStorage.setItem('theme', next);
+      const themeToggle = document.getElementById('theme-toggle');
+      themeToggle.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const nextTheme = currentTheme === 'light' ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', nextTheme);
+        localStorage.setItem('theme', nextTheme);
       });
     </script>
   </body>
@@ -125,28 +129,27 @@ const base = (import.meta as any).env.BASE_URL || '/';
 
   /* ── Compatibility aliases (legacy --color-* vars) ─── */
   :root {
-    --color-bg: var(--bg);
-    --color-bg-alt: var(--bg-subtle);
-    --color-surface: var(--surface);
-    --color-surface-2: var(--surface-2);
-    --color-border: var(--border);
-    --color-border-subtle: var(--border-faint);
-    --color-text-primary: var(--text);
-    --color-text-secondary: var(--text-2);
-    --color-text-tertiary: var(--text-2);
-    --color-text-nav: var(--text-2);
-    --color-accent: var(--accent);
-    --color-accent-hover: var(--accent-2);
-    --color-accent-light: var(--accent);
-    --color-accent-green: var(--accent-green);
-    --color-accent-purple: var(--accent-purple);
-    --color-link-type-bg: var(--badge-bg);
-    --color-link-type-text: var(--badge-text);
-    --color-shadow: rgba(0,0,0,.08);
+    --color-bg:                  var(--bg);
+    --color-surface:             var(--surface);
+    --color-surface-2:           var(--surface-2);
+    --color-border:              var(--border);
+    --color-border-subtle:       var(--border-faint);
+    --color-text-primary:        var(--text);
+    --color-text-secondary:      var(--text-2);
+    --color-text-tertiary:       var(--text-3);
+    --color-accent:              var(--accent);
+    --color-accent-light:        var(--accent-2);
+    --color-accent-green:        var(--accent-green);
+    --color-accent-purple:       var(--accent-purple);
+    --color-shadow:              var(--shadow-sm);
+    --color-bg-alt:              var(--bg-subtle);
+    --color-link-type-bg:        var(--badge-bg);
+    --color-link-type-text:      var(--badge-text);
+    --color-text-nav:            var(--text-2);
   }
 
-  /* ── Reset & base ──────────────────────────────────── */
-  *, *::before, *::after { box-sizing: border-box; }
+  /* ── Base ──────────────────────────────────────────── */
+  * { box-sizing: border-box; }
 
   html, body {
     margin: 0;
@@ -162,14 +165,11 @@ const base = (import.meta as any).env.BASE_URL || '/';
 
   /* ── Navigation ────────────────────────────────────── */
   .site-header {
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
     position: sticky;
     top: 0;
-    z-index: 50;
-    background: var(--bg);
-    border-bottom: 1px solid var(--border);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    transition: background-color .25s, border-color .25s;
+    z-index: 100;
   }
 
   .nav {
@@ -193,8 +193,8 @@ const base = (import.meta as any).env.BASE_URL || '/';
 
   .nav-links {
     display: flex;
-    gap: 4px;
-    flex: 1;
+    gap: 8px;
+    flex-grow: 1;
   }
 
   .nav-links a {
@@ -213,17 +213,16 @@ const base = (import.meta as any).env.BASE_URL || '/';
   }
 
   .theme-toggle {
-    flex-shrink: 0;
-    width: 34px;
-    height: 34px;
+    margin-left: auto;
+    background: none;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    color: var(--text-2);
+    border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: none;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    cursor: pointer;
-    color: var(--text-2);
     transition: background .15s, color .15s;
   }
 
@@ -232,10 +231,10 @@ const base = (import.meta as any).env.BASE_URL || '/';
     color: var(--text);
   }
 
-  [data-theme="dark"] .icon-moon { display: none; }
-  [data-theme="dark"] .icon-sun  { display: block; }
-  :root:not([data-theme="dark"]) .icon-sun  { display: none; }
-  :root:not([data-theme="dark"]) .icon-moon { display: block; }
+  .icon-sun { display: block; }
+  .icon-moon { display: none; }
+  [data-theme="dark"] .icon-sun { display: none; }
+  [data-theme="dark"] .icon-moon { display: block; }
 
   /* ── Main container ────────────────────────────────── */
   .container {
@@ -247,7 +246,8 @@ const base = (import.meta as any).env.BASE_URL || '/';
   /* ── Footer ────────────────────────────────────────── */
   .site-footer {
     border-top: 1px solid var(--border);
-    padding: 24px;
+    padding: 24px 0;
+    margin-top: auto;
   }
 
   .footer-inner {
@@ -278,31 +278,10 @@ const base = (import.meta as any).env.BASE_URL || '/';
   /* ── Prose (blog posts) ────────────────────────────── */
   .prose {
     max-width: 680px;
+    margin: 0 auto;
   }
 
-  .prose h1, .prose h2, .prose h3 {
-    color: var(--text);
-    font-weight: 600;
-    line-height: 1.3;
-    margin-top: 2em;
-    margin-bottom: .5em;
-  }
-
-  .prose p { color: var(--text-2); margin: 0 0 1.25em; }
-  .prose a { color: var(--accent); }
-  .prose code {
-    font-size: .875em;
-    background: var(--surface-2);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 1px 5px;
-  }
-
-  @media (max-width: 640px) {
-    .nav { padding: 0 16px; gap: 16px; }
-    .nav-links { gap: 0; }
-    .nav-links a { padding: 6px 8px; font-size: 13px; }
-    .container { padding: 32px 16px 64px; }
-    .footer-inner { flex-direction: column; gap: 12px; text-align: center; }
-  }
+  .prose h1 { font-size: 2.25rem; margin-bottom: 1rem; color: var(--text); }
+  .prose h2 { font-size: 1.5rem; margin-top: 2rem; margin-bottom: 0.75rem; color: var(--text); }
+  .prose p { margin-bottom: 1.25rem; color: var(--text-2); line-height: 1.7; }
 </style>
