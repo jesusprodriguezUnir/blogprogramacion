@@ -5,216 +5,70 @@ import BlogLayout from '../layouts/BlogLayout.astro';
 const promptCategories: any[] = [
 	{
 		category: ".NET Core",
-		description: "Skills para desarrollar APIs, servicios y aplicaciones robustas con .NET 8 y herramientas relacionadas.",
+		description: "Skills para desarrollar APIs, servicios y aplicaciones robustas con .NET 8.",
 		icon: "🧩",
 		prompts: [
 			{
 				title: "Crear API REST con ASP.NET Core",
-				prompt: "Genera una API REST completa con ASP.NET Core 8 que exponga endpoints CRUD para una entidad 'Product' con validación de datos, manejo de errores centralizado, logging con Serilog y documentación Swagger. Incluye DTOs, mapeo con AutoMapper y tests unitarios con xUnit.",
+				prompt: "Genera una API REST completa con ASP.NET Core 8 que exponga endpoints CRUD para una entidad 'Product'...",
 				tags: ["dotnet", "webapi", "rest"]
 			},
 			{
 				title: "Configurar Entity Framework Core",
-				prompt: "Genera un contexto de EF Core para SQL Server con entidades User, Order y Product. Configura relaciones uno-a-muchos y muchos-a-muchos,用了 Fluent API para mapeo, migrations con 'dotnet ef' y consultas optimizadas con AsNoTracking().",
+				prompt: "Genera un contexto de EF Core para SQL Server con entidades User, Order y Product...",
 				tags: ["efcore", "database", "sql"]
 			},
-			{
-				title: "Implementar autenticación JWT",
-				prompt: "Añade autenticación JWT a un proyecto ASP.NET Core: configura Identity, genera tokens con JwtBearer, crea endpoint de login/refresh, implementa authorization policies y guarda claves en appsettings.json.",
-				tags: ["jwt", "security", "identity"]
-			},
-			{
-				title: "Crear Minimal API",
-				prompt: "Desarrolla una Minimal API con .NET 6+ que exponga endpoints para gestión de tareas: GET /tasks, POST /tasks, PUT /tasks/{id}, DELETE /tasks/{id}. Usa registros para DTOs, validaciones con FluentValidation y OpenAPI.",
-				tags: ["minimal-api", "endpoint", "openapi"]
-			},
-			{
-				title: "Inyección de dependencias y servicios",
-				prompt: "Configura un sistema de DI en .NET Core con scoped services para repositorios, transient para servicios de aplicación y singleton para configuración. Implementa el patrón Repository con Unit of Work.",
-				tags: ["di", "ioc", "patterns"]
-			},
-			{
-				title: "Tests unitarios con xUnit y Moq",
-				prompt: "Escribe tests unitarios para un servicio de órdenes usando xUnit y Moq. Crea mocks de repositorio, verifica llamadas a DB, testa casos de éxito y error, usa teoría para casos de borde y configura coverage.",
-				tags: ["testing", "xunit", "moq"]
-			}
 		]
 	},
 	{
 		category: "Python",
-		description: "Skills para scripting, automatización, análisis de datos y desarrollo de APIs con Python.",
+		description: "Skills para scripting, automatización y desarrollo de APIs con Python.",
 		icon: "🐍",
 		prompts: [
 			{
-				title: "Script de automatización",
-				prompt: "Crea un script en Python que automatice la organización de archivos en una carpeta: mueve archivos por extensión a subcarpetas, renombra con timestamp, genera log de operaciones y maneja errores con try-except.",
-				tags: ["automation", "script", "files"]
-			},
-			{
 				title: "API REST con FastAPI",
-				prompt: "Desarrolla una API REST con FastAPI que exponga endpoints CRUD para una entidad 'Task' usando Pydantic para validación, SQLAlchemy para DB, PostgreSQL, JWT auth, documentación automática Swagger y tests con pytest.",
+				prompt: "Desarrolla una API REST con FastAPI que exponga endpoints CRUD para una entidad 'Task'...",
 				tags: ["fastapi", "rest", "api"]
 			},
-			{
-				title: "Análisis de datos con Pandas",
-				prompt: "Crea un script de análisis de datos: carga CSV/Excel con Pandas, limpia datos (nulls, duplicados), calcula estadísticas descriptivas, agrupa por categorías, genera gráficos con matplotlib y exporta resultados a Excel.",
-				tags: ["pandas", "analytics", "data"]
-			},
-			{
-				title: "Configurar entorno virtual",
-				prompt: "Explica cómo crear y gestionar entornos virtuales con venv y poetry. Incluye: crear entorno, instalar dependencias desde requirements.txt o pyproject.toml, activar/desactivar, freeze y mejores prácticas para proyectos.",
-				tags: ["venv", "poetry", "environment"]
-			},
-			{
-				title: "API con Flask",
-				prompt: "Desarrolla una API REST básica con Flask: endpoints GET/POST/PUT/DELETE, validación con Marshmallow, SQLite con SQLAlchemy, autenticación básica, logging y deployment con Gunicorn.",
-				tags: ["flask", "rest", "api"]
-			},
-			{
-				title: "Testing con pytest",
-				prompt: "Configura pytest para un proyecto Python: crea tests para funciones, mocking con unittest.mock, fixtures, parametrized tests, coverage con pytest-cov y configura pytest.ini.",
-				tags: ["pytest", "testing", "coverage"]
-			}
 		]
 	},
-	{
-		category: "Buenas Prácticas",
-		description: "Skills para escribir código limpio, mantenible y de calidad siguiendo principios fundamentales.",
-		icon: "📘",
-		prompts: [
-			{
-				title: "Aplicar principios SOLID",
-				prompt: "Analiza este código y refactorízalo aplicando los 5 principios SOLID: Single Responsibility (una clase = una responsabilidad), Open/Closed (extensible sin modificar), Liskov Substitution (sustitutible por herencia), Interface Segregation (interfaces pequeñas) y Dependency Inversion (depender de abstracciones).",
-				tags: ["solid", "refactoring", "patterns"]
-			},
-			{
-				title: "Refactoring de código spaghetti",
-				prompt: "Toma este método largo y aplica refactoring: extrae métodos small, identificaY renombra variables confusas, elimina código duplicado, aplica DRY, reduce complejidad ciclomática y mejora nombres de funciones.",
-				tags: ["refactoring", "clean-code", "maintenance"]
-			},
-			{
-				title: "Code Review efectivo",
-				prompt: "Realiza una code review de este código: identifica code smells, sugiere mejoras de diseño, verifica manejo de errores, evalúa naming, revisa tests y proporciona feedback constructivo con ejemplos específicos.",
-				tags: ["code-review", "quality", "feedback"]
-			},
-			{
-				title: "Patrones de diseño",
-				prompt: "Implementa el patrón de diseño adecuado (Factory, Strategy, Observer, Decorator, Singleton) para este escenario: [describir caso]. Incluye diagrama UML, código con ejemplo práctico y explica cuándo usarlo y cuándo evitarlo.",
-				tags: ["patterns", "design", "architecture"]
-			},
-			{
-				title: "Clean Code en funciones",
-				prompt: "Refactoriza estas funciones aplicando clean code: máximo 20 líneas por función, nombres descriptivos (verb + sustantivo), parámetros mínimos (máximo 3), sin efectos secundarios, comentarios solo cuando aportan 'por qué' no 'qué'.",
-				tags: ["clean-code", "functions", "readability"]
-			},
-			{
-				title: "Documentación y comentarios",
-				prompt: "Genera documentación para este código: docstrings en formato Google/Sphinx para clases y funciones, comentarios en bloque para decisiones complejas, API docs con OpenAPI/Swagger, README con setup y ejemplos de uso.",
-				tags: ["documentation", "docs", "api"]
-			}
-		]
-	},
-	{
-		category: "Jira",
-		description: "Skills para trabajar eficientemente con Jira: creación de tickets, automatización y búsquedas avanzadas.",
-		icon: "📋",
-		prompts: [
-			{
-				title: "Crear ticket de historia de usuario",
-				prompt: "Genera una historia de usuario en formato Jira: título claro, descripción con template 'Como... quiero... para...', criterios de aceptación en Gherkin (Given-When-Then), estimación en story points, labels y componentes.",
-				tags: ["jira", "user-story", "agile"]
-			},
-			{
-				title: "Crear ticket de tarea técnica",
-				prompt: "Crea una tarea técnica para Jira con: título descriptivo, descripción detallada incluyendo contexto técnico, pasos de implementación, dependencias con otros tickets, criterios de aceptación y checklist de testing.",
-				tags: ["jira", "technical", "task"]
-			},
-			{
-				title: "Queries JQL avanzadas",
-				prompt: "Escribe queries JQL para: 1) tickets asignados a mí con prioridad High sin resolver hace +7 días, 2) todos los bugs del sprint actual con label 'regression', 3) tickets por componente y status, 4) backlog priorizado sin asignar.",
-				tags: ["jql", "queries", "search"]
-			},
-			{
-				title: "Configurar workflow",
-				prompt: "Diseña un workflow para Jira: estados (To Do, In Progress, In Review, Done), transiciones con condiciones (solo el assignee puede mover a In Progress), validaciones y automatizaciones (notificaciones, sincronización de campos).",
-				tags: ["workflow", "automation", "transitions"]
-			},
-			{
-				title: "Automatizaciones con Jira Automation",
-				prompt: "Crea reglas de automatización en Jira: 1) auto-asignar tickets según label a un equipo, 2) enviar notificación cuando se cambia a Done, 3) crear tarea de review al mergear PR, 4) actualizar estado hijo cuando padre cambia.",
-				tags: ["automation", "rules", "workflow"]
-			},
-			{
-				title: "Gestión de sprints y backlog",
-				prompt: "Explica proceso de grooming: cómo priorizar backlog con WSJF, estimar con planning poker, criar tareas daughters, definir Definition of Ready y Definition of Done, y gestionar impedimentos.",
-				tags: ["sprint", "backlog", "agile"]
-			}
-		]
-	}
 ];
 
 ---
 
-<BlogLayout title="Resumen del informe: Skills para Desarrollo" description="Colección de skills curados para usar con modelos de IA: .NET Core, Python, Buenas prácticas y Jira.">
+<BlogLayout title="jesus_rodriguez // skills" description="Colección de prompts y skills curados para desarrollo e IA.">
 	<div class="page-header">
-		<h1 class="page-title">Skills</h1>
+		<h1 class="page-title mono"><span class="accent">/</span>skills</h1>
 		<p class="page-subtitle">
-			Colección de skills curados para usar con modelos de IA: .NET Core, Python, Buenas prácticas y Jira.
-			Aporta los tuyos y compártelos con la comunidad.
+			Repositorio de fragmentos de código, prompts y configuraciones técnicas optimizadas.
 		</p>
 	</div>
 
-	
-
-	   <section class="resources-section">
-		   <div class="resources-card">
-			   <h2>Recursos destacados</h2>
-			   <ul>
-				   <li>
-					   <strong>Documentación de Anthropic Claude:</strong> <a href="https://docs.anthropic.com/en/docs/claude-code/overview" target="_blank" rel="noopener">Guía oficial de Claude para developers</a>
-				   </li>
-				   <li>
-					   <strong>Documentación de .NET:</strong> <a href="https://learn.microsoft.com/es-es/dotnet/" target="_blank" rel="noopener">Microsoft Learn - .NET</a>
-				   </li>
-				   <li>
-					   <strong>Python Docs:</strong> <a href="https://docs.python.org/3/" target="_blank" rel="noopener">Documentación oficial de Python</a>
-				   </li>
-			   </ul>
-		   </div>
-	   </section>
-
-	<div class="page-top-actions" style="display:flex; justify-content:center; margin-bottom:20px;">
-		<div class="cta-banner">
-			<span>¿Tienes skills útiles para compartir?</span>
-			<a class="cta-btn" href="mailto:contacto@deviablog.com">Enviar skill</a>
-		</div>
-	</div>
-
-	<div class="links-container">
-		{promptCategories.map((category) => (
+	<div class="categories-stack">
+		{promptCategories.map((category, idx) => (
 			<section class="category-section">
 				<div class="category-header">
-					<div class="category-icon">{category.icon}</div>
-					<div class="category-info">
-						<h2 class="category-title">{category.category}</h2>
-						<p class="category-description">{category.description}</p>
-					</div>
+					<span class="index mono">0{idx + 1}</span>
+					<h2 class="category-title mono">{category.category}</h2>
+					<p class="category-description">{category.description}</p>
 				</div>
 
-				<div class="links-grid">
+				<div class="skills-grid">
 					{category.prompts?.map((p: any) => {
 						const skillSlug = p.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
 						return (
-						<a href={`/skills/${skillSlug}`} class="link-card">
-							<div class="link-icon">📝</div>
-							<div class="link-content">
-								<div class="link-header">
-									<h3 class="link-title">{p.title}</h3>
-									<span class="link-type">{(p.tags || []).join(', ')}</span>
+						<a href={`/skills/${skillSlug}`} class="skill-item glass glow-on-hover">
+							<div class="skill-header">
+								<h3 class="skill-title mono">{p.title}</h3>
+								<div class="tags">
+									{p.tags.map((t: string) => <span class="tag mono">{t}</span>)}
 								</div>
-								<p class="link-description">{p.prompt}</p>
 							</div>
-							<div class="link-arrow">→</div>
+							<p class="skill-preview">{p.prompt.substring(0, 100)}...</p>
+							<div class="skill-footer mono">
+								<span>Read more</span>
+								<span>-></span>
+							</div>
 						</a>
 					)})}
 				</div>
@@ -222,269 +76,135 @@ const promptCategories: any[] = [
 		))}
 	</div>
 
+	<div class="cta-section glass">
+		<p class="mono">¿Tienes un skill que quieras compartir?</p>
+		<a href="mailto:contacto@deviablog.com" class="btn btn-secondary mono">submit_skill --new</a>
+	</div>
 </BlogLayout>
 
 <style>
 	.page-header {
-		text-align: center;
-		margin-bottom: 64px;
+		margin-bottom: 4rem;
 	}
 
 	.page-title {
-		font-size: 48px;
-		font-weight: 800;
-		color: var(--color-text-primary);
-		margin-bottom: 16px;
+		font-size: 2.5rem;
+		margin-bottom: 1rem;
 	}
 
 	.page-subtitle {
-		font-size: 20px;
-		color: var(--color-text-secondary);
-		line-height: 1.6;
-		max-width: 800px;
-		margin: 0 auto;
+		color: var(--text-muted);
+		font-size: 1.1rem;
 	}
 
-	.links-container {
+	.categories-stack {
 		display: flex;
 		flex-direction: column;
-		gap: 64px;
-		margin-bottom: 80px;
-	}
-
-	.category-section {
-		background: var(--color-surface);
-		border-radius: 24px;
-		padding: 48px;
-		box-shadow: 0 4px 6px -1px var(--color-shadow), 0 2px 4px -1px var(--color-shadow);
-		border: 1px solid var(--color-border-subtle);
-		transition: background-color 0.3s ease;
+		gap: 5rem;
 	}
 
 	.category-header {
-		display: flex;
-		align-items: center;
-		gap: 24px;
-		margin-bottom: 32px;
+		margin-bottom: 2rem;
+		border-left: 3px solid var(--accent);
+		padding-left: 1.5rem;
 	}
 
-	.category-icon {
-		font-size: 48px;
-		background: linear-gradient(135deg, var(--color-surface-2), var(--color-border));
-		width: 80px;
-		height: 80px;
-		border-radius: 20px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
+	.index {
+		color: var(--accent);
+		font-size: 0.8rem;
+		display: block;
+		margin-bottom: 0.5rem;
 	}
 
 	.category-title {
-		font-size: 28px;
-		font-weight: 700;
-		color: var(--color-text-primary);
-		margin-bottom: 8px;
+		font-size: 1.5rem;
+		margin-bottom: 0.5rem;
 	}
 
 	.category-description {
-		font-size: 16px;
-		color: var(--color-text-secondary);
-		line-height: 1.5;
+		color: var(--text-dim);
+		font-size: 0.95rem;
 	}
 
-	.links-grid {
+	.skills-grid {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-		gap: 24px;
+		grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+		gap: 1.5rem;
 	}
 
-	.link-card {
+	.skill-item {
+		padding: 1.5rem;
 		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		padding: 28px;
-		background: var(--color-bg-alt);
-		border: 1px solid var(--color-border);
-		border-radius: 18px;
-		text-decoration: none;
-		transition: transform 0.28s cubic-bezier(.2,.9,.3,1), box-shadow 0.28s, background-color 0.3s;
-		position: relative;
-		overflow: hidden;
+		flex-direction: column;
+		height: 100%;
 	}
 
-	.link-icon {
-		flex: 0 0 64px;
-		height: 64px;
+	.skill-header {
+		margin-bottom: 1rem;
+	}
+
+	.skill-title {
+		font-size: 1.1rem;
+		margin-bottom: 0.75rem;
+		color: var(--text);
+	}
+
+	.tags {
 		display: flex;
-		align-items: center;
-		justify-content: center;
-		font-size: 28px;
-		background: linear-gradient(135deg, var(--color-surface), var(--color-surface-2));
-		border-radius: 12px;
-		margin-right: 16px;
+		flex-wrap: wrap;
+		gap: 0.5rem;
 	}
 
-	.link-card::before {
-		content: '';
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		height: 3px;
-		background: linear-gradient(90deg, #3b82f6, #10b981);
-		transform: scaleX(0);
-		transition: transform 0.3s ease;
+	.tag {
+		font-size: 0.7rem;
+		background: var(--bg-soft);
+		color: var(--accent);
+		padding: 0.2rem 0.5rem;
+		border-radius: 4px;
 	}
 
-	.link-card:hover {
-		background: var(--color-surface);
-		transform: translateY(-6px) scale(1.01);
-		box-shadow: 0 18px 40px -12px var(--color-shadow);
-		border-color: var(--color-border);
-	}
-
-	.link-card:hover::before {
-		transform: scaleX(1);
-	}
-
-	.link-content {
-		flex: 1;
-	}
-
-	.link-header {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		margin-bottom: 8px;
-	}
-
-	.link-title {
-		font-size: 18px;
-		font-weight: 600;
-		color: var(--color-text-primary);
-		margin: 0;
-	}
-
-	.link-type {
-		background: var(--color-link-type-bg);
-		color: var(--color-link-type-text);
-		padding: 4px 8px;
-		border-radius: 6px;
-		font-size: 12px;
-		font-weight: 500;
-		text-transform: uppercase;
-		letter-spacing: 0.5px;
-	}
-
-	.link-description {
-		color: var(--color-text-tertiary);
-		font-size: 14px;
+	.skill-preview {
+		font-size: 0.9rem;
+		color: var(--text-muted);
 		line-height: 1.5;
-		margin: 0 0 8px 0;
+		margin-bottom: 1.5rem;
+		flex-grow: 1;
 	}
 
-	.link-url {
-		color: var(--color-text-secondary);
-		font-size: 12px;
-		font-family: monospace;
+	.skill-footer {
+		display: flex;
+		justify-content: space-between;
+		font-size: 0.8rem;
+		color: var(--text-dim);
+		border-top: 1px solid var(--border);
+		padding-top: 1rem;
 	}
 
-	.link-arrow {
-		font-size: 20px;
-		color: var(--color-text-secondary);
-		transition: all 0.3s ease;
-		margin-left: 16px;
+	.skill-item:hover .skill-footer {
+		color: var(--accent);
 	}
 
-	.link-card:hover .link-arrow {
-		color: var(--color-accent);
-		transform: translateX(4px);
-	}
-
-	.suggest-section {
-		margin-bottom: 80px;
-	}
-
-	.cta-banner {
-		position: sticky;
-		top: 80px;
-		background: linear-gradient(90deg, #06b6d4, #3b82f6);
-		color: white;
-		padding: 14px 20px;
-		border-radius: 12px;
-		display: inline-flex;
-		align-items: center;
-		gap: 12px;
-		box-shadow: 0 8px 30px rgba(59, 130, 246, 0.12);
-		font-weight: 600;
-	}
-
-	.cta-btn { background: white; color: #0f172a; padding: 10px 16px; border-radius: 10px; text-decoration: none; font-weight: 700; }
-
-	.suggest-card {
-		background: linear-gradient(135deg, #fbbf24, #f59e0b);
-		border-radius: 20px;
-		padding: 48px;
+	.cta-section {
+		margin-top: 6rem;
+		padding: 3rem;
 		text-align: center;
-		color: white;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 1.5rem;
 	}
 
-	.suggest-title {
-		font-size: 32px;
-		font-weight: 700;
-		margin-bottom: 16px;
+	.btn {
+		padding: 0.75rem 1.5rem;
+		border-radius: 8px;
+		border: 1px solid var(--border);
+		background: var(--surface);
+		transition: all 0.2s ease;
 	}
 
-	.suggest-description {
-		font-size: 18px;
-		line-height: 1.6;
-		margin-bottom: 32px;
-		opacity: 0.9;
-		max-width: 600px;
-		margin-left: auto;
-		margin-right: auto;
-	}
-
-	.suggest-btn {
-		display: inline-block;
-		background: white;
-		color: #f59e0b;
-		text-decoration: none;
-		padding: 16px 32px;
-		border-radius: 12px;
-		font-weight: 600;
-		font-size: 16px;
-		transition: all 0.3s ease;
-	}
-
-	.suggest-btn:hover {
-		transform: translateY(-2px);
-		box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-	}
-
-	.empty-section { margin-bottom: 80px; }
-	.empty-card { background: var(--color-surface); padding: 48px; border-radius: 20px; text-align: center; border: 1px solid var(--color-border-subtle); }
-	.empty-title { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
-	.empty-desc { color: var(--color-text-secondary); }
-
-	.resources-section { margin-bottom: 80px; }
-	.resources-card { background: var(--color-surface); padding: 32px; border-radius: 20px; border: 1px solid var(--color-border-subtle); transition: background-color 0.3s ease; }
-	.resources-card .meta { color: var(--color-text-secondary); margin-bottom: 12px; }
-	.hero-wrap { margin: 16px 0 24px 0; }
-	.hero-wrap img { width: 100%; border-radius: 12px; display: block; }
-
-	@media (max-width: 768px) {
-		.page-title { font-size: 36px; }
-		.page-subtitle { font-size: 18px; }
-		.category-section { padding: 32px 24px; }
-		.category-header { flex-direction: column; text-align: center; gap: 16px; }
-		.category-icon { width: 60px; height: 60px; font-size: 32px; }
-		.category-title { font-size: 24px; }
-		.links-grid { grid-template-columns: 1fr; }
-		.link-card { padding: 20px; }
-		.link-header { flex-direction: column; align-items: flex-start; gap: 8px; }
-		.suggest-card { padding: 32px 24px; }
-		.suggest-title { font-size: 24px; }
-		.suggest-description { font-size: 16px; }
+	.btn:hover {
+		border-color: var(--accent);
+		color: var(--accent);
+		background: var(--bg-soft);
 	}
 </style>

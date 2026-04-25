@@ -20,16 +20,10 @@ const posts = files
   }))
   .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
-const featuredPosts = posts.slice(0, 3);
-const latestPosts = posts.slice(0, 5);
-
 const featuredResources = [
   { title: "Documentación Claude", desc: "Guía oficial de Anthropic: API, modelos, prompt engineering y mejores prácticas", url: "https://docs.anthropic.com/", icon: "📖", tag: "Docs" },
   { title: "Claude Code Docs", desc: "Documentación del CLI: comandos, hooks, MCP servers y configuración avanzada", url: "https://docs.anthropic.com/en/docs/claude-code/overview", icon: "💻", tag: "Docs" },
   { title: "Awesome Claude", desc: "Lista curada de las mejores herramientas, integraciones y recursos de la comunidad", url: "https://awesomeclaude.ai", icon: "⭐", tag: "Directorio" },
-  { title: "Skills.sh", desc: "91k+ skills reutilizables para Claude Code, Cursor, Copilot y más de 20 agentes", url: "https://skills.sh/", icon: "🚀", tag: "Skills" },
-  { title: "Model Context Protocol", desc: "Especificación del protocolo MCP para conectar Claude con herramientas y datos externos", url: "https://modelcontextprotocol.io/", icon: "🔌", tag: "Protocolo" },
-  { title: "Anthropic Cookbook", desc: "Ejemplos prácticos de código para las funciones más avanzadas de la API de Claude", url: "https://github.com/anthropics/anthropic-cookbook", icon: "🍳", tag: "Ejemplos" },
 ];
 
 const skillCategories = [
@@ -39,385 +33,225 @@ const skillCategories = [
   { icon: "📋", name: "Jira",             desc: "User Stories, JQL avanzado, Workflows, Sprints" },
 ];
 
-const topics = ["Claude", "IA", "MCP", ".NET", "Python", "Astro", "Web Dev", "Skills", "Open Source", "API", "DevOps", "Clean Code"];
+const topics = ["Claude", "IA", "MCP", ".NET", "Python", "Astro", "Web Dev", "Skills", "API", "Clean Code"];
 ---
 
-<BlogLayout title="DevIA Blog" description="Recursos de programación e IA para desarrolladores">
+<BlogLayout title="jesus_rodriguez // dev_blog" description="Arquitectura de software, .NET, IA y desarrollo full-stack">
   <Hero />
 
-  <!-- Featured Posts -->
-  <div class="home-section clean-section">
-    <div class="section-header-centered">
-      <h2 class="section-title-mono">Featured Posts</h2>
+  <!-- Skills -->
+  <section class="home-section">
+    <div class="section-header">
+      <h2 class="section-title mono"><span class="accent">[ 01 ]</span> tech_stack</h2>
     </div>
 
-    <div class="cards-grid clean-cards">
-      {featuredPosts.map(p => (
-        <a href={`${base}posts/${p.slug}`} class="clean-card">
-          <div class="clean-card-content">
-            <h3 class="clean-card-title">{p.title}</h3>
-            <p class="clean-card-desc">{p.excerpt}</p>
-          </div>
-        </a>
-      ))}
-    </div>
-  </div>
-
-  <!-- Skills de desarrollo -->
-  <div class="home-section clean-section">
-    <div class="section-header-centered">
-      <h2 class="section-title-mono">Skills de desarrollo</h2>
-    </div>
-
-    <div class="cards-grid clean-cards">
+    <div class="cards-grid">
       {skillCategories.map(cat => (
-        <a href={`${base}prompts`} class="clean-card">
-          <div class="clean-card-content">
-            <h3 class="clean-card-title">{cat.name}</h3>
-            <p class="clean-card-desc">{cat.desc}</p>
+        <a href={`${base}prompts`} class="skill-card glass glow-on-hover">
+          <div class="card-icon">{cat.icon}</div>
+          <div class="card-content">
+            <h3 class="card-title mono">{cat.name}</h3>
+            <p class="card-desc">{cat.desc}</p>
           </div>
         </a>
       ))}
     </div>
-
-    <div class="center-action">
-      <a href={`${base}prompts`} class="btn-pill">Ver todos los skills →</a>
-    </div>
-  </div>
-
-  <!-- Topics -->
-  <div class="home-section topics-section">
-    <h2 class="section-title-mono">Topics</h2>
-    <div class="topics">
-      {topics.map(t => <span class="topic">{t}</span>)}
-    </div>
-    <div class="center-action">
-      <a href={`${base}posts`} class="btn-pill">Ver todos los tags →</a>
-    </div>
-  </div>
+  </section>
 
   <!-- Latest Posts -->
-  <div class="home-section clean-section">
-    <div class="section-header-centered">
-      <h2 class="section-title-mono">Últimos Posts</h2>
+  <section class="home-section">
+    <div class="section-header">
+      <h2 class="section-title mono"><span class="accent">[ 02 ]</span> recent_entries</h2>
     </div>
     
-    <div class="latest-posts-list">
-      {latestPosts.map(p => (
-        <a href={`${base}posts/${p.slug}`} class="post-list-item">
-          <span class="post-list-title">{p.title}</span>
-          <span class="post-list-date">{new Date(p.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+    <div class="posts-list glass">
+      {posts.slice(0, 5).map(p => (
+        <a href={`${base}posts/${p.slug}`} class="post-item">
+          <div class="post-info">
+            <span class="post-date mono">{new Date(p.date).toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: '2-digit' }).replace(/\//g, '.')}</span>
+            <span class="post-title mono">{p.title}</span>
+          </div>
+          <span class="post-arrow mono">-></span>
         </a>
       ))}
     </div>
 
     <div class="center-action">
-      <a href={`${base}posts`} class="btn-pill">Ver todos los posts →</a>
+      <a href={`${base}posts`} class="btn-link mono">ls ./posts --all</a>
     </div>
-  </div>
+  </section>
+
+  <!-- Topics -->
+  <section class="home-section">
+    <div class="section-header">
+      <h2 class="section-title mono"><span class="accent">[ 03 ]</span> tags_cloud</h2>
+    </div>
+    <div class="topics-cloud">
+      {topics.map(t => <span class="topic-tag glass mono">{t}</span>)}
+    </div>
+  </section>
 </BlogLayout>
 
 <style>
-  /* ── Section ─────────────────────────────────────────── */
   .home-section {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 40px;
-    margin-bottom: 32px;
-    box-shadow: var(--shadow-sm);
+    margin-bottom: 6rem;
   }
 
-  .clean-section {
-    background: transparent;
-    border: none;
-    padding: 0;
-    box-shadow: none;
-    margin-bottom: 64px;
+  .section-header {
+    margin-bottom: 2rem;
   }
 
-  .section-header-centered {
-    text-align: center;
-    margin-bottom: 32px;
-  }
-
-  .section-title-mono {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 24px;
-    font-weight: 600;
+  .section-title {
+    font-size: 1.25rem;
     color: var(--text);
-    margin: 0;
-    letter-spacing: -0.5px;
   }
 
-  /* ── Clean Cards ─────────────────────────────────────── */
-  .clean-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-    margin-bottom: 32px;
-  }
-
-  .clean-card {
-    display: flex;
-    flex-direction: column;
-    padding: 24px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    text-decoration: none;
-    transition: all .2s ease;
-  }
-
-  .clean-card:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-sm);
-    border-color: var(--text-3);
-  }
-
-  .clean-card-title {
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--text);
-    margin: 0 0 8px;
-  }
-
-  .clean-card-desc {
-    font-size: 14px;
-    color: var(--text-2);
-    margin: 0;
-    line-height: 1.5;
-  }
-
-  /* ── Latest Posts ────────────────────────────────────── */
-  .latest-posts-list {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 32px;
-  }
-
-  .post-list-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    padding: 16px 0;
-    border-bottom: 1px solid var(--border);
-    text-decoration: none;
-    transition: opacity .2s;
-  }
-
-  .post-list-item:hover .post-list-title {
+  .accent {
     color: var(--accent);
   }
 
-  .post-list-title {
-    font-size: 16px;
-    font-weight: 500;
+  /* Cards Grid */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .skill-card {
+    display: flex;
+    gap: 1.25rem;
+    padding: 1.5rem;
+    transition: transform 0.2s ease;
+  }
+
+  .skill-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .card-icon {
+    font-size: 1.5rem;
+    background: var(--bg-soft);
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+  }
+
+  .card-title {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
     color: var(--text);
-    transition: color .2s;
   }
 
-  .post-list-date {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 13px;
-    color: var(--text-3);
-    flex-shrink: 0;
-    margin-left: 16px;
+  .card-desc {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.5;
   }
 
-  /* ── Center Action / Pills ───────────────────────────── */
+  /* Posts List */
+  .posts-list {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .post-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.2s ease;
+  }
+
+  .post-item:last-child {
+    border-bottom: none;
+  }
+
+  .post-item:hover {
+    background: var(--surface-hover);
+  }
+
+  .post-item:hover .post-title {
+    color: var(--accent);
+  }
+
+  .post-info {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .post-date {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    min-width: 80px;
+  }
+
+  .post-title {
+    font-size: 1rem;
+    color: var(--text-muted);
+    transition: color 0.2s ease;
+  }
+
+  .post-arrow {
+    color: var(--text-dim);
+    transition: transform 0.2s ease, color 0.2s ease;
+  }
+
+  .post-item:hover .post-arrow {
+    transform: translateX(4px);
+    color: var(--accent);
+  }
+
   .center-action {
     display: flex;
     justify-content: center;
-    margin-top: 16px;
+    margin-top: 2rem;
   }
 
-  .btn-pill {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 8px 16px;
-    background: var(--surface-2);
+  .btn-link {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    border: 1px solid transparent;
+  }
+
+  .btn-link:hover {
     color: var(--accent);
-    font-size: 13px;
-    font-weight: 600;
-    border-radius: 20px;
-    text-decoration: none;
-    transition: all .2s ease;
-  }
-
-  .btn-pill:hover {
-    background: var(--accent);
-    color: #fff;
-  }
-  .cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 16px;
-  }
-
-  /* ── Link card (matches enlaces.astro style) ─────────── */
-  .link-card {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 20px;
-    background: var(--bg-subtle);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    text-decoration: none;
-    transition: all .25s ease;
-    position: relative;
-    overflow: hidden;
-    gap: 14px;
-  }
-
-  .link-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--accent), var(--accent-green));
-    transform: scaleX(0);
-    transition: transform .25s ease;
-  }
-
-  .link-card:hover {
-    background: var(--surface);
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-md);
     border-color: var(--border);
+    background: var(--bg-soft);
   }
 
-  .link-card:hover::before { transform: scaleX(1); }
-
-  .link-icon {
-    flex: 0 0 52px;
-    height: 52px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-  }
-
-  .link-content {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .link-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-    margin-bottom: 6px;
-  }
-
-  .link-title {
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--text);
-    margin: 0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .link-type {
-    background: var(--badge-bg);
-    color: var(--badge-text);
-    padding: 2px 8px;
-    border-radius: 5px;
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: .4px;
-    flex-shrink: 0;
-  }
-
-  .link-description {
-    color: var(--text-3);
-    font-size: 12px;
-    line-height: 1.5;
-    margin: 0 0 6px;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  .link-url {
-    color: var(--text-3);
-    font-size: 11px;
-    font-family: monospace;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .link-arrow {
-    font-size: 18px;
-    color: var(--text-3);
-    transition: all .2s ease;
-    flex-shrink: 0;
-  }
-
-  .link-card:hover .link-arrow {
-    color: var(--accent);
-    transform: translateX(4px);
-  }
-
-  /* Skills don't show url row */
-  .skill-variant .link-url { display: none; }
-  .skill-variant .link-title { white-space: normal; }
-
-  /* ── Topics ──────────────────────────────────────────── */
-  .topics-section {
-    padding: 0;
-    background: transparent;
-    border: none;
-    box-shadow: none;
-    text-align: center;
-    margin-bottom: 64px;
-  }
-
-  .topics {
+  /* Topics */
+  .topics-cloud {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-    gap: 12px;
-    margin-bottom: 24px;
+    gap: 0.75rem;
   }
 
-  .topic {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--text-2);
-    background: var(--surface-2);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 5px 16px;
+  .topic-tag {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    border-radius: 8px;
     cursor: default;
-    transition: color .12s, background .12s, border-color .12s;
   }
 
-  .topic:hover {
-    color: var(--accent);
+  .topic-tag:hover {
     border-color: var(--accent);
-    background: var(--badge-bg);
+    color: var(--accent);
+    background: var(--accent-soft);
   }
 
-  /* ── Responsive ──────────────────────────────────────── */
   @media (max-width: 640px) {
-    .home-section { margin-bottom: 48px; }
-    .section-title-mono { font-size: 20px; }
-    .clean-cards { grid-template-columns: 1fr; }
-    .post-list-item { flex-direction: column; gap: 4px; padding: 12px 0; }
-    .post-list-date { margin-left: 0; }
+    .post-info { gap: 1rem; }
+    .post-date { min-width: 60px; font-size: 0.75rem; }
+    .post-title { font-size: 0.9rem; }
   }
 </style>
