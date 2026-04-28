@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>blogprogramacion · jesusprodriguezUnir</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #0a0a10;
+      color: #e2e2ef;
+      font-family: 'Inter', sans-serif;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    @media print {
+      @page { size: A4 portrait; margin: 1.2cm 1.4cm; }
+      body { background: #0a0a10 !important; color: #e2e2ef !important; }
+      .no-print { display: none !important; }
+      .page-break { break-before: page; }
+      section { break-inside: avoid; }
+      a { text-decoration: none !important; color: inherit !important; }
+    }
+  </style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+const T = {
+  bg: "#0a0a10", surface: "#11111a", surface2: "#161622",
+  border: "#1e1e2e", text: "#e2e2ef", muted: "#6868aa", dim: "#2e2e4a",
+};
+const accent = { a1: "oklch(0.72 0.18 200)", a2: "oklch(0.55 0.18 200)", glow: "oklch(0.72 0.18 200 / 0.12)" };
+
+const REPO = {
+  name:        "blogprogramacion",
+  tagline:     "Blog técnico sobre programación y buenas prácticas",
+  description: "Repositorio del blog personal donde documento aprendizajes, patrones de diseño, arquitectura DDD y reflexiones sobre tecnología moderna. Orientado a equipos que buscan mejorar su calidad de código con experiencia real de producción.",
+  url:         "https://github.com/jesusprodriguezUnir/blogprogramacion",
+  lang:        "Web",
+  version:     "1.0.0",
+  status:      "active",
+  stack: [
+    { cat: "Frontend",  items: ["HTML5", "CSS3", "JavaScript"] },
+    { cat: "Backend",   items: [".NET Core", "C#"] },
+    { cat: "DevOps",    items: ["Azure DevOps", "GitFlow"] },
+  ],
+  features: [
+    { title: "Artículos técnicos",   desc: "Contenido sobre .NET Core, Angular, DDD y metodologías ágiles basado en experiencia real." },
+    { title: "Buenas prácticas",     desc: "Patrones probados en producción con más de 20 años liderando equipos de desarrollo." },
+    { title: "Código de ejemplo",    desc: "Snippets reales y repositorios complementarios para cada artículo del blog." },
+    { title: "Arquitectura DDD",     desc: "Guías prácticas sobre Domain Driven Design aplicado a proyectos empresariales." },
+  ],
+  install: [
+    { step: "Clonar repositorio",    cmd: "git clone https://github.com/jesusprodriguezUnir/blogprogramacion" },
+    { step: "Entrar al directorio",  cmd: "cd blogprogramacion" },
+    { step: "Instalar dependencias", cmd: "dotnet restore" },
+    { step: "Ejecutar",              cmd: "dotnet run" },
+  ],
+  structure: [
+    { path: "src/",            desc: "Código fuente principal" },
+    { path: "src/posts/",      desc: "Artículos en Markdown" },
+    { path: "src/components/", desc: "Componentes reutilizables" },
+    { path: "public/",         desc: "Assets estáticos" },
+    { path: "README.md",       desc: "Documentación del proyecto" },
+  ],
+};
+
+function Tag({ children }) {
+  return (
+    <span style={{
+      fontFamily: "'JetBrains Mono', monospace", fontSize: 11, fontWeight: 500,
+      letterSpacing: "0.04em", padding: "3px 9px", borderRadius: 3,
+      background: accent.glow, color: accent.a1, border: `1px solid ${accent.a2}44`,
+    }}>{children}</span>
+  );
+}
+
+function SectionLabel({ children }) {
+  return (
+    <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: "0.12em", color: accent.a1, marginBottom: 14, display: "flex", alignItems: "center", gap: 8 }}>
+      <div style={{ width: 16, height: 1, background: accent.a1 }} />
+      {children}
+    </div>
+  );
+}
+
+function Divider() {
+  return <div style={{ height: 1, background: T.border, margin: "0 auto", maxWidth: 860 }} />;
+}
+
+function App() {
+  return (
+    <div style={{ background: T.bg, minHeight: "100vh", color: T.text, WebkitPrintColorAdjust: "exact", printColorAdjust: "exact" }}>
+
+      {/* ── HEADER ── */}
+      <section style={{ padding: "52px 48px 48px", maxWidth: 860, margin: "0 auto" }}>
+        {/* Breadcrumb */}
+        <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 12, color: T.muted, marginBottom: 32, display: "flex", alignItems: "center", gap: 8 }}>
+          <span>jesusprodriguezUnir</span>
+          <span style={{ color: T.dim }}>/</span>
+          <span style={{ color: accent.a1, fontWeight: 600 }}>{REPO.name}</span>
+        </div>
+
+        {/* Status row */}
+        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
+          <div style={{ width: 7, height: 7, borderRadius: "50%", background: "oklch(0.72 0.18 145)" }} />
+          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: "oklch(0.72 0.18 145)", letterSpacing: "0.1em" }}>ACTIVO</span>
+          <span style={{ color: T.dim }}>·</span>
+          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: T.muted }}>v{REPO.version}</span>
+          <span style={{ color: T.dim }}>·</span>
+          <Tag>{REPO.lang}</Tag>
+        </div>
+
+        {/* Title */}
+        <h1 style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 48, fontWeight: 700, lineHeight: 1.1, letterSpacing: "-0.02em", marginBottom: 16 }}>
+          <span style={{ color: T.muted, fontWeight: 300 }}>~/</span>
+          <span style={{ color: T.text }}>{REPO.name}</span>
+          <span style={{ color: accent.a1 }}>_</span>
+        </h1>
+
+        {/* Description */}
+        <p style={{ fontSize: 16, color: T.muted, lineHeight: 1.8, maxWidth: 620, marginBottom: 28 }}>
+          {REPO.description}
+        </p>
+
+        {/* URL */}
+        <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 12, color: accent.a1 }}>
+          {REPO.url}
+        </div>
+      </section>
+
+      <Divider />
+
+      {/* ── FEATURES ── */}
+      <section style={{ padding: "44px 48px", maxWidth: 860, margin: "0 auto" }}>
+        <SectionLabel>CARACTERÍSTICAS</SectionLabel>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+          {REPO.features.map((f, i) => (
+            <div key={i} style={{ background: T.surface, border: `1px solid ${T.border}`, borderRadius: 6, padding: "18px 20px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
+                <div style={{ width: 4, height: 4, borderRadius: "50%", background: accent.a1, flexShrink: 0 }} />
+                <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 12, fontWeight: 600, color: T.text }}>{f.title}</span>
+              </div>
+              <p style={{ fontSize: 13, color: T.muted, lineHeight: 1.6 }}>{f.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <Divider />
+
+      {/* ── STACK ── */}
+      <section style={{ padding: "44px 48px", maxWidth: 860, margin: "0 auto" }}>
+        <SectionLabel>TECH STACK</SectionLabel>
+        <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
+          {REPO.stack.map(({ cat, items }) => (
+            <div key={cat} style={{ background: T.surface, border: `1px solid ${T.border}`, borderRadius: 6, padding: "16px 20px", minWidth: 180 }}>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: "0.1em", color: T.muted, marginBottom: 10 }}>{cat}</div>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                {items.map(i => <Tag key={i}>{i}</Tag>)}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <Divider />
+
+      {/* ── INSTALLATION ── */}
+      <section style={{ padding: "44px 48px", maxWidth: 860, margin: "0 auto" }}>
+        <SectionLabel>INSTALACIÓN</SectionLabel>
+        <div style={{ background: T.bg, border: `1px solid ${T.border}`, borderRadius: 8, overflow: "hidden" }}>
+          {/* Window chrome */}
+          <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "10px 16px", borderBottom: `1px solid ${T.border}`, background: T.surface }}>
+            {["#ff5f57","#febc2e","#28c840"].map(c => <div key={c} style={{ width: 10, height: 10, borderRadius: "50%", background: c }} />)}
+            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: T.muted, marginLeft: 4 }}>bash</span>
+          </div>
+          <div style={{ padding: "16px 20px", display: "flex", flexDirection: "column", gap: 10 }}>
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 13, color: T.dim }}>// paso a paso</div>
+            {REPO.install.map(({ step, cmd }) => (
+              <React.Fragment key={step}>
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 13, color: T.dim }}>// {step}</div>
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 13 }}>
+                  <span style={{ color: T.muted }}>~/projects</span>
+                  <span style={{ color: accent.a1 }}> $ </span>
+                  <span style={{ color: T.text }}>{cmd}</span>
+                </div>
+              </React.Fragment>
+            ))}
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 13, color: T.muted, paddingLeft: 20 }}>✓ listo para usar</div>
+          </div>
+        </div>
+      </section>
+
+      <Divider />
+
+      {/* ── STRUCTURE ── */}
+      <section style={{ padding: "44px 48px", maxWidth: 860, margin: "0 auto" }}>
+        <SectionLabel>ESTRUCTURA</SectionLabel>
+        <div style={{ background: T.surface, border: `1px solid ${T.border}`, borderRadius: 8, overflow: "hidden" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "10px 16px", borderBottom: `1px solid ${T.border}`, background: T.bg }}>
+            {["#ff5f57","#febc2e","#28c840"].map(c => <div key={c} style={{ width: 10, height: 10, borderRadius: "50%", background: c }} />)}
+            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: T.muted, marginLeft: 4 }}>{REPO.name}/</span>
+          </div>
+          <div style={{ padding: "12px 20px", display: "flex", flexDirection: "column" }}>
+            {REPO.structure.map(({ path, desc }, i) => (
+              <div key={i} style={{ display: "flex", alignItems: "baseline", padding: "7px 0", borderBottom: i < REPO.structure.length - 1 ? `1px solid ${T.dim}22` : "none" }}>
+                <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 13, color: accent.a1, minWidth: 220 }}>{path}</span>
+                <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 12, color: T.dim, marginRight: 12 }}>·</span>
+                <span style={{ fontSize: 13, color: T.muted }}>{desc}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <Divider />
+
+      {/* ── FOOTER ── */}
+      <footer style={{ padding: "36px 48px", maxWidth: 860, margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16 }}>
+        <div>
+          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 14, fontWeight: 600, color: T.text, marginBottom: 4 }}>
+            Jesús Pedro Rodríguez Castro
+          </div>
+          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 12, color: T.muted }}>
+            Tech Lead Full Stack · Scrum Master · Madrid
+          </div>
+        </div>
+        <div style={{ display: "flex", gap: 24 }}>
+          {[
+            { label: "github",   val: "github.com/jesusprodriguezUnir" },
+            { label: "email",    val: "jesusprodriguez@gmail.com" },
+          ].map(({ label, val }) => (
+            <div key={label}>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, color: accent.a1, marginBottom: 2 }}>{label}</div>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: T.muted }}>{val}</div>
+            </div>
+          ))}
+        </div>
+        <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, color: T.dim, width: "100%", borderTop: `1px solid ${T.border}`, paddingTop: 16, marginTop: 8 }}>
+          // jesusprodriguezUnir · {new Date().getFullYear()} · MIT License
+        </div>
+      </footer>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+
+// Auto-print after fonts + Babel render
+setTimeout(() => {
+  document.fonts.ready.then(() => {
+    setTimeout(() => window.print(), 500);
+  });
+}, 300);
+</script>
+</body>
+</html>

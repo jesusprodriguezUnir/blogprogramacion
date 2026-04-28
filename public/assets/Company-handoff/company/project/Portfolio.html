@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jesús Pedro Rodríguez Castro — Tech Lead</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script type="text/babel" src="tweaks-panel.jsx"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: #0a0a10; color: #e2e2ef; font-family: 'Inter', sans-serif; min-height: 100vh; overflow-x: hidden; }
+    ::selection { background: oklch(0.55 0.22 210 / 0.4); }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #0a0a10; }
+    ::-webkit-scrollbar-thumb { background: #2a2a3a; border-radius: 3px; }
+  </style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+const { useState, useEffect, useRef } = React;
+
+// ─── BRAND TOKENS ─────────────────────────────────────────────────────────────
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "accentColor": "cyan",
+  "variant": "dark",
+  "showBio": true,
+  "compactMode": false
+}/*EDITMODE-END*/;
+
+const THEMES = {
+  dark: {
+    bg: "#0a0a10",
+    surface: "#11111a",
+    border: "#1e1e2e",
+    text: "#e2e2ef",
+    muted: "#6868aa",
+    dim: "#3a3a5a",
+  },
+  slate: {
+    bg: "#080c14",
+    surface: "#0e1520",
+    border: "#192033",
+    text: "#dde6f5",
+    muted: "#5577aa",
+    dim: "#1e3050",
+  },
+  warm: {
+    bg: "#0f0c0a",
+    surface: "#181410",
+    border: "#2a221a",
+    text: "#ede8e0",
+    muted: "#887766",
+    dim: "#3a2e22",
+  }
+};
+
+const ACCENTS = {
+  cyan:   { a1: "oklch(0.72 0.18 200)", a2: "oklch(0.55 0.18 200)", glow: "oklch(0.72 0.18 200 / 0.15)" },
+  green:  { a1: "oklch(0.72 0.18 145)", a2: "oklch(0.55 0.18 145)", glow: "oklch(0.72 0.18 145 / 0.15)" },
+  violet: { a1: "oklch(0.72 0.18 280)", a2: "oklch(0.55 0.18 280)", glow: "oklch(0.72 0.18 280 / 0.15)" },
+  amber:  { a1: "oklch(0.78 0.18 75)",  a2: "oklch(0.60 0.18 75)",  glow: "oklch(0.78 0.18 75 / 0.15)" },
+};
+
+// ─── DATA ──────────────────────────────────────────────────────────────────────
+const STACK = [
+  { cat: "Backend",  items: [".NET Core 6–8", "C#", "DDD", "Mediator Pattern", "MVC"] },
+  { cat: "Frontend", items: ["Angular 16–18", "HTML", "CSS", "JavaScript", "jQuery UI"] },
+  { cat: "DevOps",   items: ["Azure DevOps", "TeamCity", "GitFlow", "Docker", "CI/CD"] },
+  { cat: "Data",     items: ["SQL Server", "Oracle", "PL/SQL"] },
+  { cat: "Emerging", items: ["Python", "AI tooling", "Automation"] },
+];
+
+const REPOS = [
+  { name: "CV",               desc: "CV profesional interactivo construido con Astro", lang: "Astro",      url: "https://github.com/jesusprodriguezUnir/CV" },
+  { name: "blogprogramacion", desc: "Blog técnico sobre programación y buenas prácticas", lang: "Web",    url: "https://github.com/jesusprodriguezUnir/blogprogramacion" },
+  { name: "DailyTask",        desc: "Gestión de tareas diarias con Python",              lang: "Python",   url: "https://github.com/jesusprodriguezUnir/DailyTask" },
+  { name: "PersonalTaskManager", desc: "Task manager personal con interfaz moderna",    lang: "Python",   url: "https://github.com/jesusprodriguezUnir/PersonalTaskManager" },
+  { name: "ResumeJesus",      desc: "CV profesional generado con Python",                lang: "Python",   url: "https://github.com/jesusprodriguezUnir/ResumeJesus" },
+  { name: "CTCDailyHours",    desc: "Control de horas diarias en JavaScript",            lang: "JS",       url: "https://github.com/jesusprodriguezUnir/CTCDailyHours" },
+];
+
+const EXP = [
+  { period: "2020 → now",  co: "UNIR",             role: "Tech Lead · Scrum Master",   note: ".NET Core, Angular, CI/CD, ERP Académico" },
+  { period: "2010 → 2020", co: "SOTEC Consulting",  role: "Analista .NET",              note: "Banca, Oracle, migraciones .NET" },
+  { period: "2003 → 2010", co: "Siemens · ABN AMRO · Bergé", role: "Analista Programador", note: "Emergencias, logística, banca" },
+];
+
+// ─── MICRO COMPONENTS ─────────────────────────────────────────────────────────
+function Tag({ children, accent }) {
+  return (
+    <span style={{
+      fontFamily: "'JetBrains Mono', monospace",
+      fontSize: 11,
+      fontWeight: 500,
+      letterSpacing: "0.04em",
+      padding: "3px 9px",
+      borderRadius: 3,
+      background: accent.glow,
+      color: accent.a1,
+      border: `1px solid ${accent.a2}44`,
+    }}>{children}</span>
+  );
+}
+
+function Prompt({ accent }) {
+  return <span style={{ color: accent.a1, fontFamily: "'JetBrains Mono', monospace", marginRight: 6 }}>$</span>;
+}
+
+function Comment({ children, theme }) {
+  return (
+    <span style={{ color: theme.muted, fontFamily: "'JetBrains Mono', monospace", fontSize: 13 }}>
+      // {children}
+    </span>
+  );
+}
+
+function Divider({ theme }) {
+  return <div style={{ height: 1, background: theme.border, margin: "48px 0" }} />;
+}
+
+// ─── NAV ──────────────────────────────────────────────────────────────────────
+function Nav({ theme, accent, active }) {
+  const links = ["inicio", "stack", "proyectos", "experiencia", "contacto"];
+  return (
+    <nav style={{
+      position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
+      borderBottom: `1px solid ${theme.border}`,
+      background: `${theme.bg}ee`,
+      backdropFilter: "blur(12px)",
+      display: "flex", alignItems: "center", justifyContent: "space-between",
+      padding: "0 40px", height: 56,
+    }}>
+      <span style={{
+        fontFamily: "'JetBrains Mono', monospace",
+        fontSize: 13, fontWeight: 600,
+        color: accent.a1, letterSpacing: "0.08em",
+      }}>
+        jprc<span style={{ color: theme.muted }}>@dev</span>
+      </span>
+      <div style={{ display: "flex", gap: 32 }}>
+        {links.map(l => (
+          <a key={l} href={`#${l}`} style={{
+            fontFamily: "'JetBrains Mono', monospace",
+            fontSize: 12, letterSpacing: "0.06em",
+            textDecoration: "none",
+            color: active === l ? accent.a1 : theme.muted,
+            transition: "color 0.2s",
+          }}>{l}</a>
+        ))}
+      </div>
+    </nav>
+  );
+}
+
+// ─── HERO ──────────────────────────────────────────────────────────────────────
+function Hero({ theme, accent, showBio }) {
+  const [typed, setTyped] = useState("");
+  const full = "Tech Lead Full Stack";
+  useEffect(() => {
+    let i = 0;
+    const t = setInterval(() => {
+      setTyped(full.slice(0, ++i));
+      if (i >= full.length) clearInterval(t);
+    }, 60);
+    return () => clearInterval(t);
+  }, []);
+
+  return (
+    <section id="inicio" style={{ minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", padding: "120px 40px 80px" }}>
+      <div style={{ maxWidth: 860, margin: "0 auto", width: "100%" }}>
+        <Comment theme={theme}>tech_lead · madrid · .net_core · angular</Comment>
+        <h1 style={{
+          fontFamily: "'JetBrains Mono', monospace",
+          fontSize: "clamp(36px, 6vw, 72px)",
+          fontWeight: 700,
+          lineHeight: 1.1,
+          margin: "20px 0 12px",
+          letterSpacing: "-0.02em",
+          color: theme.text,
+        }}>
+          Jesús Pedro<br />
+          <span style={{ color: accent.a1 }}>Rodríguez Castro</span>
+        </h1>
+        <div style={{
+          fontFamily: "'JetBrains Mono', monospace",
+          fontSize: "clamp(16px, 2.2vw, 22px)",
+          color: theme.muted,
+          marginBottom: 32,
+          minHeight: "1.4em",
+        }}>
+          <Prompt accent={accent} />{typed}<span style={{ animation: "blink 1s step-end infinite", color: accent.a1 }}>█</span>
+        </div>
+
+        {showBio && (
+          <p style={{
+            maxWidth: 560, lineHeight: 1.8, color: theme.muted,
+            fontSize: 16, marginBottom: 40,
+          }}>
+            Scrum Master y Tech Lead especializado en .NET Core con más de 20 años de experiencia. Lidero equipos en UNIR construyendo soluciones robustas con arquitectura DDD, CI/CD y metodologías ágiles.
+          </p>
+        )}
+
+        <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
+          <a href="https://github.com/jesusprodriguezUnir" target="_blank" rel="noopener" style={{
+            fontFamily: "'JetBrains Mono', monospace",
+            fontSize: 13, fontWeight: 600,
+            padding: "10px 24px",
+            background: accent.a1,
+            color: theme.bg,
+            borderRadius: 4,
+            textDecoration: "none",
+            letterSpacing: "0.04em",
+          }}>github →</a>
+          <a href="https://www.linkedin.com/in/jesús-pedro-rodríguez-castro-b746394a/" target="_blank" rel="noopener" style={{
+            fontFamily: "'JetBrains Mono', monospace",
+            fontSize: 13,
+            padding: "10px 24px",
+            border: `1px solid ${theme.border}`,
+            color: theme.muted,
+            borderRadius: 4,
+            textDecoration: "none",
+            letterSpacing: "0.04em",
+          }}>linkedin →</a>
+          <a href="#" onClick={e => { e.preventDefault(); document.getElementById('readme-tab').click(); }} style={{
+            fontFamily: "'JetBrains Mono', monospace",
+            fontSize: 13,
+            padding: "10px 24px",
+            border: `1px solid ${theme.border}`,
+            color: theme.muted,
+            borderRadius: 4,
+            textDecoration: "none",
+            letterSpacing: "0.04em",
+          }}>readme →</a>
+        </div>
+
+        <div style={{ marginTop: 80, display: "flex", gap: 48 }}>
+          {[["20+", "años experiencia"], ["66", "repositorios"], [".NET", "especialización"]].map(([n, l]) => (
+            <div key={n}>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 28, fontWeight: 700, color: accent.a1 }}>{n}</div>
+              <div style={{ fontSize: 12, color: theme.muted, letterSpacing: "0.06em", marginTop: 4 }}>{l}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <style>{`@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }`}</style>
+    </section>
+  );
+}
+
+// ─── STACK ────────────────────────────────────────────────────────────────────
+function Stack({ theme, accent }) {
+  return (
+    <section id="stack" style={{ padding: "80px 40px", maxWidth: 860, margin: "0 auto" }}>
+      <Comment theme={theme}>tech_stack.json</Comment>
+      <h2 style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 32, fontWeight: 700, marginTop: 12, marginBottom: 40, color: theme.text }}>
+        Stack técnico
+      </h2>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 20 }}>
+        {STACK.map(({ cat, items }) => (
+          <div key={cat} style={{
+            background: theme.surface, border: `1px solid ${theme.border}`,
+            borderRadius: 6, padding: "20px 24px",
+          }}>
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: "0.1em", color: accent.a1, marginBottom: 14 }}>
+              {cat.toUpperCase()}
+            </div>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+              {items.map(i => <Tag key={i} accent={accent}>{i}</Tag>)}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+// ─── PROJECTS ─────────────────────────────────────────────────────────────────
+function Projects({ theme, accent }) {
+  const [hov, setHov] = useState(null);
+  return (
+    <section id="proyectos" style={{ padding: "80px 40px", maxWidth: 860, margin: "0 auto" }}>
+      <Comment theme={theme}>ls -la ~/repos</Comment>
+      <h2 style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 32, fontWeight: 700, marginTop: 12, marginBottom: 40, color: theme.text }}>
+        Repositorios
+      </h2>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))", gap: 16 }}>
+        {REPOS.map((r, i) => (
+          <a key={r.name} href={r.url} target="_blank" rel="noopener"
+            onMouseEnter={() => setHov(i)} onMouseLeave={() => setHov(null)}
+            style={{
+              textDecoration: "none",
+              display: "block",
+              background: hov === i ? theme.surface : "transparent",
+              border: `1px solid ${hov === i ? accent.a2 + "55" : theme.border}`,
+              borderRadius: 6, padding: "20px 24px",
+              transition: "all 0.18s",
+            }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 10 }}>
+              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 14, fontWeight: 600, color: hov === i ? accent.a1 : theme.text }}>
+                {r.name}
+              </span>
+              <Tag accent={accent}>{r.lang}</Tag>
+            </div>
+            <p style={{ fontSize: 13, color: theme.muted, lineHeight: 1.6 }}>{r.desc}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+// ─── EXPERIENCE ───────────────────────────────────────────────────────────────
+function Experience({ theme, accent }) {
+  return (
+    <section id="experiencia" style={{ padding: "80px 40px", maxWidth: 860, margin: "0 auto" }}>
+      <Comment theme={theme}>cat experience.log</Comment>
+      <h2 style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 32, fontWeight: 700, marginTop: 12, marginBottom: 40, color: theme.text }}>
+        Experiencia
+      </h2>
+      <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
+        {EXP.map((e, i) => (
+          <div key={i} style={{ display: "flex", gap: 32, paddingBottom: 40, position: "relative" }}>
+            <div style={{ width: 140, flexShrink: 0 }}>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 12, color: accent.a1 }}>{e.period}</div>
+            </div>
+            <div style={{ flex: 1, borderLeft: `1px solid ${theme.border}`, paddingLeft: 32 }}>
+              <div style={{ width: 8, height: 8, borderRadius: "50%", background: accent.a1, position: "absolute", left: 136, top: 4 }} />
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 14, fontWeight: 600, color: theme.text, marginBottom: 4 }}>{e.co}</div>
+              <div style={{ fontSize: 13, color: accent.a1, marginBottom: 8 }}>{e.role}</div>
+              <div style={{ fontSize: 13, color: theme.muted }}>{e.note}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Quote */}
+      <div style={{
+        marginTop: 20, padding: "24px 32px",
+        background: theme.surface, border: `1px solid ${theme.border}`,
+        borderLeft: `3px solid ${accent.a1}`,
+        borderRadius: "0 6px 6px 0",
+      }}>
+        <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 14, fontStyle: "italic", color: theme.muted, lineHeight: 1.7 }}>
+          "La mejor manera de predecir el futuro es construirlo"
+        </p>
+        <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: theme.dim, marginTop: 8 }}>— Alan Kay</p>
+      </div>
+    </section>
+  );
+}
+
+// ─── CONTACT ──────────────────────────────────────────────────────────────────
+function Contact({ theme, accent }) {
+  return (
+    <section id="contacto" style={{ padding: "80px 40px", maxWidth: 860, margin: "0 auto" }}>
+      <Comment theme={theme}>echo "hablemos"</Comment>
+      <h2 style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 32, fontWeight: 700, marginTop: 12, marginBottom: 16, color: theme.text }}>
+        Contacto
+      </h2>
+      <p style={{ color: theme.muted, marginBottom: 32, lineHeight: 1.7 }}>
+        ¿Tienes un proyecto interesante o quieres hablar de tecnología?
+      </p>
+      <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+        {[
+          { label: "email", val: "jesusprodriguez@gmail.com", href: "mailto:jesusprodriguez@gmail.com" },
+          { label: "github", val: "github.com/jesusprodriguezUnir", href: "https://github.com/jesusprodriguezUnir" },
+          { label: "linkedin", val: "linkedin.com/in/jesús-pedro-rodríguez-castro", href: "https://www.linkedin.com/in/jesús-pedro-rodríguez-castro-b746394a/" },
+        ].map(({ label, val, href }) => (
+          <a key={label} href={href} target="_blank" rel="noopener" style={{
+            display: "flex", alignItems: "center", gap: 16, textDecoration: "none",
+            padding: "14px 20px",
+            border: `1px solid ${theme.border}`,
+            borderRadius: 6, background: "transparent",
+            transition: "border-color 0.18s",
+          }}
+          onMouseEnter={e => e.currentTarget.style.borderColor = accent.a2}
+          onMouseLeave={e => e.currentTarget.style.borderColor = theme.border}
+          >
+            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: accent.a1, width: 60 }}>{label}</span>
+            <span style={{ fontSize: 13, color: theme.muted }}>{val}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+// ─── README TAB ───────────────────────────────────────────────────────────────
+function ReadmeView({ theme, accent }) {
+  const md = `# \`jesusprodriguezUnir\` / [repo-name]
+
+> ⚙️ [Breve descripción del repositorio en una línea]
+
+---
+
+## Descripción
+
+[Descripción detallada del proyecto. Qué problema resuelve, por qué existe, contexto.]
+
+## Stack
+
+| Capa       | Tecnología             |
+|------------|------------------------|
+| Backend    | .NET Core 8 / C#       |
+| Frontend   | Angular 18             |
+| Base datos | SQL Server / Oracle    |
+| CI/CD      | Azure DevOps / TeamCity|
+
+## Requisitos
+
+- .NET SDK 8.0+
+- Node.js 18+
+- [Otros requisitos]
+
+## Instalación
+
+\`\`\`bash
+git clone https://github.com/jesusprodriguezUnir/[repo-name]
+cd [repo-name]
+dotnet restore
+dotnet run
+\`\`\`
+
+## Estructura
+
+\`\`\`
+src/
+├── Application/     # Casos de uso (Mediator)
+├── Domain/          # Entidades y lógica de negocio (DDD)
+├── Infrastructure/  # Repositorios, BD, servicios externos
+└── WebAPI/          # Controllers, configuración
+\`\`\`
+
+## Contribuir
+
+1. Fork del repositorio
+2. Crea tu rama: \`git checkout -b feature/mi-feature\`
+3. Commit: \`git commit -m 'feat: descripción'\`
+4. Push: \`git push origin feature/mi-feature\`
+5. Abre un Pull Request
+
+---
+
+**Jesús Pedro Rodríguez Castro** · Tech Lead Full Stack  
+[GitHub](https://github.com/jesusprodriguezUnir) · [LinkedIn](https://www.linkedin.com/in/jesús-pedro-rodríguez-castro-b746394a/)`;
+
+  return (
+    <div style={{ padding: "60px 40px", maxWidth: 860, margin: "0 auto" }}>
+      <Comment theme={theme}>README.md — template</Comment>
+      <h2 style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 32, fontWeight: 700, marginTop: 12, marginBottom: 8, color: theme.text }}>
+        README Template
+      </h2>
+      <p style={{ color: theme.muted, fontSize: 13, marginBottom: 32 }}>Copia este markdown en cada repositorio y rellena los [corchetes].</p>
+      <div style={{
+        background: theme.surface, border: `1px solid ${theme.border}`,
+        borderRadius: 8, overflow: "hidden",
+      }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "12px 20px", borderBottom: `1px solid ${theme.border}`, background: theme.bg }}>
+          {["#ff5f57","#febc2e","#28c840"].map(c => <div key={c} style={{ width: 12, height: 12, borderRadius: "50%", background: c }} />)}
+          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 12, color: theme.muted, marginLeft: 8 }}>README.md</span>
+        </div>
+        <pre style={{
+          fontFamily: "'JetBrains Mono', monospace",
+          fontSize: 12, lineHeight: 1.8,
+          color: theme.text, padding: 24,
+          overflowX: "auto", whiteSpace: "pre-wrap",
+          userSelect: "all",
+        }}>{md}</pre>
+      </div>
+    </div>
+  );
+}
+
+// ─── BANNER TAB ───────────────────────────────────────────────────────────────
+function BannerView({ theme, accent }) {
+  return (
+    <div style={{ padding: "60px 40px", maxWidth: 900, margin: "0 auto" }}>
+      <Comment theme={theme}>github_banner.svg — 1500×500</Comment>
+      <h2 style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 32, fontWeight: 700, marginTop: 12, marginBottom: 8, color: theme.text }}>
+        GitHub Banner
+      </h2>
+      <p style={{ color: theme.muted, fontSize: 13, marginBottom: 32 }}>
+        Banner de perfil listo para usar. Guárdalo como imagen y súbelo a tu perfil de GitHub.
+      </p>
+
+      {/* Banner preview */}
+      <div style={{ borderRadius: 8, overflow: "hidden", border: `1px solid ${theme.border}` }}>
+        <svg viewBox="0 0 1500 500" xmlns="http://www.w3.org/2000/svg" style={{ width: "100%", display: "block" }}>
+          <defs>
+            <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#0a0a10" />
+              <stop offset="100%" stopColor="#11111a" />
+            </linearGradient>
+            <linearGradient id="line-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="oklch(0.72 0.18 200)" stopOpacity="0" />
+              <stop offset="30%" stopColor="oklch(0.72 0.18 200)" stopOpacity="1" />
+              <stop offset="70%" stopColor="oklch(0.72 0.18 200)" stopOpacity="1" />
+              <stop offset="100%" stopColor="oklch(0.72 0.18 200)" stopOpacity="0" />
+            </linearGradient>
+            <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#ffffff" strokeWidth="0.3" strokeOpacity="0.04" />
+            </pattern>
+          </defs>
+
+          {/* Background */}
+          <rect width="1500" height="500" fill="url(#bg-grad)" />
+          <rect width="1500" height="500" fill="url(#grid)" />
+
+          {/* Accent line */}
+          <rect x="0" y="489" width="1500" height="2" fill="url(#line-grad)" opacity="0.7" />
+
+          {/* Left decorative column */}
+          <text x="60" y="120" fontFamily="JetBrains Mono, monospace" fontSize="13" fill="#6868aa" opacity="0.5">// tech_lead.init()</text>
+          <text x="60" y="148" fontFamily="JetBrains Mono, monospace" fontSize="13" fill="#6868aa" opacity="0.3">const stack = {`{`}</text>
+          <text x="60" y="172" fontFamily="JetBrains Mono, monospace" fontSize="13" fill="#6868aa" opacity="0.3">  lang: ".NET Core",</text>
+          <text x="60" y="196" fontFamily="JetBrains Mono, monospace" fontSize="13" fill="#6868aa" opacity="0.3">  fe: "Angular",</text>
+          <text x="60" y="220" fontFamily="JetBrains Mono, monospace" fontSize="13" fill="#6868aa" opacity="0.3">  db: "SQL Server",</text>
+          <text x="60" y="244" fontFamily="JetBrains Mono, monospace" fontSize="13" fill="#6868aa" opacity="0.3">{`}`}</text>
+
+          {/* Main name */}
+          <text x="750" y="195" textAnchor="middle" fontFamily="JetBrains Mono, monospace" fontSize="62" fontWeight="700" fill="#e2e2ef" letterSpacing="-1">
+            Jesús Pedro Rodríguez
+          </text>
+          <text x="750" y="268" textAnchor="middle" fontFamily="JetBrains Mono, monospace" fontSize="62" fontWeight="700" fill="oklch(0.72 0.18 200)" letterSpacing="-1">
+            Castro
+          </text>
+
+          {/* Role */}
+          <text x="750" y="320" textAnchor="middle" fontFamily="JetBrains Mono, monospace" fontSize="20" fill="#6868aa" letterSpacing="4">
+            TECH LEAD FULL STACK · SCRUM MASTER · MADRID
+          </text>
+
+          {/* Divider */}
+          <rect x="550" y="345" width="400" height="1" fill="#1e1e2e" />
+
+          {/* Tags */}
+          {[".NET Core", "Angular", "Azure DevOps", "DDD", "Python"].map((t, i, arr) => {
+            const total = arr.length;
+            const spread = 600;
+            const x = 750 - spread/2 + (spread / (total - 1)) * i;
+            return (
+              <g key={t}>
+                <rect x={x - t.length * 4.2} y="360" width={t.length * 8.4} height="24" rx="3" fill="oklch(0.72 0.18 200 / 0.12)" />
+                <text x={x} y="377" textAnchor="middle" fontFamily="JetBrains Mono, monospace" fontSize="12" fill="oklch(0.72 0.18 200)">{t}</text>
+              </g>
+            );
+          })}
+
+          {/* Right decorative */}
+          <text x="1440" y="120" textAnchor="end" fontFamily="JetBrains Mono, monospace" fontSize="13" fill="#6868aa" opacity="0.5">20+ years</text>
+          <text x="1440" y="148" textAnchor="end" fontFamily="JetBrains Mono, monospace" fontSize="13" fill="#6868aa" opacity="0.3">$ git log --oneline</text>
+          <text x="1440" y="172" textAnchor="end" fontFamily="JetBrains Mono, monospace" fontSize="13" fill="#6868aa" opacity="0.2">a3f2c91 feat: new api</text>
+          <text x="1440" y="196" textAnchor="end" fontFamily="JetBrains Mono, monospace" fontSize="13" fill="#6868aa" opacity="0.2">b19de40 fix: bug #42</text>
+          <text x="1440" y="220" textAnchor="end" fontFamily="JetBrains Mono, monospace" fontSize="13" fill="#6868aa" opacity="0.2">c00ffe3 docs: readme</text>
+
+          {/* Bottom */}
+          <text x="750" y="465" textAnchor="middle" fontFamily="JetBrains Mono, monospace" fontSize="13" fill="#3a3a5a">
+            github.com/jesusprodriguezUnir
+          </text>
+        </svg>
+      </div>
+
+      <div style={{ marginTop: 16, display: "flex", gap: 12, alignItems: "center" }}>
+        <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 12, color: theme.muted }}>
+          1500 × 500 px · recomendado para perfil de GitHub
+        </div>
+        <button onClick={() => {
+          const svgEl = document.querySelector('svg[viewBox="0 0 1500 500"]');
+          const blob = new Blob([svgEl.outerHTML], { type: "image/svg+xml" });
+          const a = document.createElement("a");
+          a.href = URL.createObjectURL(blob);
+          a.download = "jprc-github-banner.svg";
+          a.click();
+        }} style={{
+          fontFamily: "'JetBrains Mono', monospace",
+          fontSize: 12, padding: "6px 16px",
+          background: accent.a1, color: "#0a0a10",
+          border: "none", borderRadius: 4, cursor: "pointer",
+        }}>
+          descargar SVG
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ─── DESIGN SYSTEM TAB ────────────────────────────────────────────────────────
+function DesignSystemView({ theme, accent }) {
+  const colors = [
+    { name: "bg", val: theme.bg, label: "Background" },
+    { name: "surface", val: theme.surface, label: "Surface" },
+    { name: "border", val: theme.border, label: "Border" },
+    { name: "text", val: theme.text, label: "Text" },
+    { name: "muted", val: theme.muted, label: "Muted" },
+    { name: "accent", val: accent.a1, label: "Accent" },
+    { name: "accent2", val: accent.a2, label: "Accent dim" },
+  ];
+
+  return (
+    <div style={{ padding: "60px 40px", maxWidth: 860, margin: "0 auto" }}>
+      <Comment theme={theme}>design_system.tokens</Comment>
+      <h2 style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 32, fontWeight: 700, marginTop: 12, marginBottom: 40, color: theme.text }}>
+        Sistema de diseño
+      </h2>
+
+      {/* Colors */}
+      <div style={{ marginBottom: 48 }}>
+        <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: "0.1em", color: accent.a1, marginBottom: 20 }}>COLORES</div>
+        <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+          {colors.map(({ name, val, label }) => (
+            <div key={name} style={{ textAlign: "center" }}>
+              <div style={{ width: 64, height: 64, borderRadius: 6, background: val, border: `1px solid ${theme.border}`, marginBottom: 8 }} />
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, color: theme.muted }}>{label}</div>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, color: theme.dim, marginTop: 2 }}>{val}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Typography */}
+      <div style={{ marginBottom: 48 }}>
+        <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: "0.1em", color: accent.a1, marginBottom: 20 }}>TIPOGRAFÍA</div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 20, background: theme.surface, border: `1px solid ${theme.border}`, borderRadius: 8, padding: 28 }}>
+          {[
+            { label: "Display / Mono 72px", style: { fontFamily: "'JetBrains Mono', monospace", fontSize: 48, fontWeight: 700, color: theme.text } },
+            { label: "Heading / Mono 32px", style: { fontFamily: "'JetBrains Mono', monospace", fontSize: 28, fontWeight: 600, color: theme.text } },
+            { label: "Code / Mono 14px", style: { fontFamily: "'JetBrains Mono', monospace", fontSize: 14, color: accent.a1 } },
+            { label: "Body / Inter 16px", style: { fontFamily: "'Inter', sans-serif", fontSize: 16, color: theme.muted, lineHeight: 1.7 } },
+            { label: "Caption / Inter 12px", style: { fontFamily: "'Inter', sans-serif", fontSize: 12, color: theme.dim } },
+          ].map(({ label, style }) => (
+            <div key={label} style={{ borderBottom: `1px solid ${theme.border}`, paddingBottom: 16 }}>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, color: theme.dim, marginBottom: 8 }}>{label}</div>
+              <div style={style}>Jesús Pedro Rodríguez Castro</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Components */}
+      <div>
+        <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: "0.1em", color: accent.a1, marginBottom: 20 }}>COMPONENTES</div>
+        <div style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "center", background: theme.surface, border: `1px solid ${theme.border}`, borderRadius: 8, padding: 28 }}>
+          <button style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 13, fontWeight: 600, padding: "10px 24px", background: accent.a1, color: theme.bg, borderRadius: 4, border: "none", cursor: "pointer" }}>primary →</button>
+          <button style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 13, padding: "10px 24px", border: `1px solid ${theme.border}`, color: theme.muted, borderRadius: 4, background: "transparent", cursor: "pointer" }}>secondary →</button>
+          <Tag accent={accent}>.NET Core</Tag>
+          <Tag accent={accent}>Angular</Tag>
+          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 13, color: theme.muted }}>// comentario</div>
+          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 13 }}><span style={{ color: accent.a1 }}>$ </span><span style={{ color: theme.text }}>comando</span></div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── APP ──────────────────────────────────────────────────────────────────────
+function App() {
+  const { tweaks: rawTweaks, setTweak } = useTweaks(TWEAK_DEFAULTS);
+  const tweaks = rawTweaks || TWEAK_DEFAULTS;
+  const [activeTab, setActiveTab] = useState("portfolio");
+
+  const theme = THEMES[tweaks.variant] || THEMES.dark;
+  const accent = ACCENTS[tweaks.accentColor] || ACCENTS.cyan;
+
+  // Scroll tracking for nav
+  const [activeSection, setActiveSection] = useState("inicio");
+  useEffect(() => {
+    const handler = () => {
+      const ids = ["inicio", "stack", "proyectos", "experiencia", "contacto"];
+      for (const id of [...ids].reverse()) {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top <= 80) { setActiveSection(id); break; }
+      }
+    };
+    window.addEventListener("scroll", handler);
+    return () => window.removeEventListener("scroll", handler);
+  }, []);
+
+  const tabStyle = (t) => ({
+    fontFamily: "'JetBrains Mono', monospace",
+    fontSize: 12, padding: "6px 16px",
+    borderRadius: "4px 4px 0 0",
+    border: `1px solid ${activeTab === t ? theme.border : "transparent"}`,
+    borderBottom: activeTab === t ? `1px solid ${theme.bg}` : `1px solid ${theme.border}`,
+    background: activeTab === t ? theme.bg : "transparent",
+    color: activeTab === t ? theme.text : theme.muted,
+    cursor: "pointer", transition: "color 0.18s",
+    marginBottom: -1,
+  });
+
+  return (
+    <div style={{ background: theme.bg, minHeight: "100vh", color: theme.text, transition: "background 0.3s, color 0.3s" }}>
+      {/* Tabs header */}
+      <div style={{
+        position: "fixed", top: 0, left: 0, right: 0, zIndex: 200,
+        background: `${theme.bg}ee`, backdropFilter: "blur(12px)",
+      }}>
+        {/* Tab bar */}
+        <div style={{ display: "flex", alignItems: "flex-end", padding: "8px 40px 0", borderBottom: `1px solid ${theme.border}`, gap: 4 }}>
+          <button id="portfolio-tab" style={tabStyle("portfolio")} onClick={() => setActiveTab("portfolio")}>portfolio</button>
+          <button id="readme-tab"    style={tabStyle("readme")}    onClick={() => setActiveTab("readme")}>readme.md</button>
+          <button style={tabStyle("banner")}    onClick={() => setActiveTab("banner")}>banner</button>
+          <button style={tabStyle("tokens")}    onClick={() => setActiveTab("tokens")}>design_system</button>
+        </div>
+        {/* Nav (only in portfolio tab) */}
+        {activeTab === "portfolio" && (
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 40px", height: 44 }}>
+            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 13, fontWeight: 600, color: accent.a1, letterSpacing: "0.08em" }}>
+              jprc<span style={{ color: theme.muted }}>@dev</span>
+            </span>
+            <div style={{ display: "flex", gap: 28 }}>
+              {["inicio","stack","proyectos","experiencia","contacto"].map(l => (
+                <a key={l} href={`#${l}`} style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: "0.06em", textDecoration: "none", color: activeSection === l ? accent.a1 : theme.muted, transition: "color 0.18s" }}>{l}</a>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      <div style={{ paddingTop: activeTab === "portfolio" ? 100 : 52 }}>
+        {activeTab === "portfolio" && (
+          <>
+            <Hero theme={theme} accent={accent} showBio={tweaks.showBio} />
+            <div style={{ height: 1, background: theme.border, maxWidth: 860, margin: "0 auto" }} />
+            <Stack theme={theme} accent={accent} />
+            <div style={{ height: 1, background: theme.border, maxWidth: 860, margin: "0 auto" }} />
+            <Projects theme={theme} accent={accent} />
+            <div style={{ height: 1, background: theme.border, maxWidth: 860, margin: "0 auto" }} />
+            <Experience theme={theme} accent={accent} />
+            <div style={{ height: 1, background: theme.border, maxWidth: 860, margin: "0 auto" }} />
+            <Contact theme={theme} accent={accent} />
+            <div style={{ textAlign: "center", padding: "40px 0", fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: theme.dim }}>
+              // jesusprodriguezUnir · {new Date().getFullYear()}
+            </div>
+          </>
+        )}
+        {activeTab === "readme" && <ReadmeView theme={theme} accent={accent} />}
+        {activeTab === "banner" && <BannerView theme={theme} accent={accent} />}
+        {activeTab === "tokens" && <DesignSystemView theme={theme} accent={accent} />}
+      </div>
+
+      {/* Tweaks Panel */}
+      <TweaksPanel>
+        <TweakSection title="Acento">
+          <TweakRadio id="accentColor" label="Color" options={["cyan","green","violet","amber"]} />
+        </TweakSection>
+        <TweakSection title="Fondo">
+          <TweakRadio id="variant" label="Tema" options={["dark","slate","warm"]} />
+        </TweakSection>
+        <TweakSection title="Contenido">
+          <TweakToggle id="showBio" label="Mostrar bio" />
+        </TweakSection>
+      </TweaksPanel>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+</body>
+</html>

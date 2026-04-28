@@ -39,12 +39,12 @@ const categoryColor = getCategoryColor(category);
 
 <style>
 	.post-card {
-		background: var(--color-surface);
+		background: var(--surface);
 		border-radius: 16px;
 		padding: 32px;
-		box-shadow: 0 4px 6px -1px var(--color-shadow), 0 2px 4px -1px var(--color-shadow);
-		transition: all 0.3s ease;
-		border: 1px solid var(--color-border-subtle);
+		box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+		transition: all 0.3s var(--ease);
+		border: 1px solid var(--border);
 		position: relative;
 		overflow: hidden;
 	}
@@ -56,14 +56,15 @@ const categoryColor = getCategoryColor(category);
 		left: 0;
 		right: 0;
 		height: 4px;
-		background: linear-gradient(90deg, #3b82f6, #10b981, #8b5cf6);
-		opacity: 0;
-		transition: opacity 0.3s ease;
+		background: linear-gradient(90deg, var(--accent), var(--secondary), var(--success));
+		opacity: 0.2;
+		transition: opacity 0.3s var(--ease);
 	}
 
 	.post-card:hover {
 		transform: translateY(-4px);
-		box-shadow: 0 20px 25px -5px var(--color-shadow), 0 10px 10px -5px var(--color-shadow);
+		box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+		border-color: var(--accent-soft);
 	}
 
 	.post-card:hover::before {
@@ -80,47 +81,50 @@ const categoryColor = getCategoryColor(category);
 	.category-tag {
 		display: inline-block;
 		padding: 4px 12px;
-		border-radius: 20px;
-		font-size: 12px;
-		font-weight: 600;
+		border-radius: 6px;
+		font-size: 11px;
+		font-weight: 700;
 		text-transform: uppercase;
-		letter-spacing: 0.5px;
-		color: white;
+		letter-spacing: 0.05em;
+		font-family: var(--font-mono);
+		color: var(--bg);
 	}
 
-	.bg-green-500 { background-color: #10b981; }
-	.bg-blue-500 { background-color: #3b82f6; }
-	.bg-purple-500 { background-color: #8b5cf6; }
-	.bg-orange-500 { background-color: #f59e0b; }
-	.bg-gray-500 { background-color: #6b7280; }
+	.bg-green-500 { background-color: var(--success); }
+	.bg-blue-500 { background-color: var(--accent); }
+	.bg-purple-500 { background-color: var(--secondary); }
+	.bg-orange-500 { background-color: var(--amber); }
+	.bg-gray-500 { background-color: var(--text-muted); }
 
 	.post-date {
-		font-size: 14px;
-		color: var(--color-text-secondary);
+		font-size: 13px;
+		color: var(--text-dim);
+		font-family: var(--font-mono);
 		font-weight: 500;
 	}
 
 	.post-title {
-		font-size: 24px;
+		font-size: 22px;
 		font-weight: 700;
 		line-height: 1.3;
 		margin-bottom: 16px;
+		letter-spacing: -0.01em;
 	}
 
 	.post-link {
-		color: var(--color-text-primary);
+		color: var(--text);
 		text-decoration: none;
-		transition: color 0.2s ease;
+		transition: color 0.2s var(--ease);
 	}
 
-	.post-link:hover {
-		color: var(--color-accent);
+	.post-card:hover .post-link {
+		color: var(--accent);
 	}
 
 	.post-excerpt {
-		color: var(--color-text-tertiary);
-		font-size: 16px;
-		line-height: 1.6;
+		color: var(--text-muted);
+		font-size: 15px;
+		line-height: 1.7;
 		margin-bottom: 24px;
 	}
 
@@ -129,30 +133,33 @@ const categoryColor = getCategoryColor(category);
 		align-items: center;
 		justify-content: space-between;
 		padding-top: 16px;
-		border-top: 1px solid var(--color-border-subtle);
+		border-top: 1px solid var(--border);
 	}
 
 	.read-time {
-		font-size: 14px;
-		color: var(--color-text-secondary);
+		font-size: 13px;
+		color: var(--text-dim);
 		display: flex;
 		align-items: center;
 		gap: 8px;
+		font-family: var(--font-mono);
 	}
 
 	.read-more {
-		color: var(--color-accent);
+		color: var(--accent);
 		font-weight: 600;
 		text-decoration: none;
-		font-size: 14px;
-		transition: all 0.2s ease;
-		padding: 8px 16px;
-		border-radius: 8px;
-		background: rgba(37, 99, 235, 0.1);
+		font-size: 13px;
+		font-family: var(--font-mono);
+		transition: all 0.2s var(--ease);
+		padding: 6px 12px;
+		border-radius: 6px;
+		background: var(--accent-soft);
 	}
 
 	.read-more:hover {
-		background: rgba(37, 99, 235, 0.2);
+		background: var(--accent-glow);
+		color: var(--bg);
 		transform: translateX(4px);
 	}
 
@@ -171,4 +178,4 @@ const categoryColor = getCategoryColor(category);
 			gap: 12px;
 		}
 	}
-</style>
+</style>

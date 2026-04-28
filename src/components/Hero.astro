@@ -51,7 +51,7 @@ const base = (import.meta as any).env.BASE_URL || '/';
     padding: 0.75rem 1rem;
     display: flex;
     align-items: center;
-    background: rgba(13, 13, 13, 0.8);
+    background: #11111a; /* Navy surface */
   }
 
   .dots {
@@ -63,6 +63,7 @@ const base = (import.meta as any).env.BASE_URL || '/';
     width: 12px;
     height: 12px;
     border-radius: 50%;
+    border: 1px solid rgba(0,0,0,0.1);
   }
 
   .red { background: #ff5f56; }
@@ -73,20 +74,34 @@ const base = (import.meta as any).env.BASE_URL || '/';
     margin-left: auto;
     margin-right: auto;
     font-size: 0.8rem;
-    color: var(--text-dim);
+    color: var(--text-muted);
+    opacity: 0.8;
   }
 
   .terminal-body {
     border-top: 1px solid var(--border);
     border-radius: 0 0 12px 12px;
     padding: 2rem;
-    background: rgba(5, 5, 5, 0.6);
+    background: #0a0a10; /* Dark navy bg */
+    position: relative;
+    overflow: hidden;
+  }
+
+  .terminal-body::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(circle at 50% 0%, var(--accent-soft), transparent 70%);
+    pointer-events: none;
+    opacity: 0.3;
   }
 
   .command-line {
     margin-bottom: 2rem;
     display: flex;
     gap: 0.75rem;
+    position: relative;
+    z-index: 1;
   }
 
   .prompt {
@@ -99,21 +114,24 @@ const base = (import.meta as any).env.BASE_URL || '/';
     white-space: nowrap;
     overflow: hidden;
     width: 0;
-    animation: typing 2s steps(6, end) forwards, blink 1s infinite;
+    animation: typing 2s steps(6, end) forwards, blink 1.2s infinite;
   }
 
   @keyframes typing {
     from { width: 0; }
-    to { width: 5.5ch; }
+    to { width: 6.5ch; }
   }
 
   @keyframes blink {
+    0%, 100% { border-color: var(--accent); }
     50% { border-color: transparent; }
   }
 
   .response {
     opacity: 0;
     animation: fadeIn 0.5s ease forwards 2.5s;
+    position: relative;
+    z-index: 1;
   }
 
   @keyframes fadeIn {
@@ -125,15 +143,19 @@ const base = (import.meta as any).env.BASE_URL || '/';
     font-size: 2.5rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
-    background: linear-gradient(to right, var(--text), var(--accent));
+    background: linear-gradient(135deg, var(--text) 0%, var(--accent) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    letter-spacing: -0.03em;
   }
 
   .role {
     font-size: 1.1rem;
     color: var(--accent);
     margin-bottom: 1.5rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-weight: 600;
   }
 
   .description {
@@ -141,6 +163,7 @@ const base = (import.meta as any).env.BASE_URL || '/';
     color: var(--text-muted);
     margin-bottom: 2.5rem;
     font-size: 1.05rem;
+    line-height: 1.8;
   }
 
   .hero-actions {
@@ -149,6 +172,8 @@ const base = (import.meta as any).env.BASE_URL || '/';
     flex-wrap: wrap;
     opacity: 0;
     animation: fadeIn 0.5s ease forwards 3s;
+    position: relative;
+    z-index: 1;
   }
 
   .btn {
@@ -158,18 +183,20 @@ const base = (import.meta as any).env.BASE_URL || '/';
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    transition: all 0.2s ease;
+    transition: all 0.3s var(--ease);
+    font-weight: 500;
   }
 
   .btn-primary {
     background: var(--accent);
-    color: white;
-    box-shadow: 0 4px 15px var(--accent-soft);
+    color: #0a0a10;
+    box-shadow: 0 4px 20px var(--accent-soft);
   }
 
   .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px var(--accent-glow);
+    box-shadow: 0 8px 25px var(--accent-glow);
+    filter: brightness(1.1);
   }
 
   .btn-secondary {
@@ -181,6 +208,7 @@ const base = (import.meta as any).env.BASE_URL || '/';
   .btn-secondary:hover {
     border-color: var(--accent);
     background: var(--surface-hover);
+    color: var(--accent);
   }
 
   @media (max-width: 640px) {

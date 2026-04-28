@@ -143,14 +143,14 @@ const base = (import.meta as any).env.BASE_URL || '/';
     height: 8px;
     border-radius: 50%;
     background: var(--success);
-    box-shadow: 0 0 0 rgba(16, 185, 129, 0.4);
+    box-shadow: 0 0 0 rgba(103, 232, 249, 0.4); /* Cyan/Green shadow */
     animation: pulse 2s infinite;
   }
 
   @keyframes pulse {
-    0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-    70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    0% { box-shadow: 0 0 0 0 oklch(0.72 0.18 145 / 0.7); }
+    70% { box-shadow: 0 0 0 10px oklch(0.72 0.18 145 / 0); }
+    100% { box-shadow: 0 0 0 0 oklch(0.72 0.18 145 / 0); }
   }
 
   .about-section {

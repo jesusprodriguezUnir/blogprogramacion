@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DailyTask · jesusprodriguezUnir</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script type="text/babel" src="tweaks-panel.jsx"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: #0a0a10; color: #e2e2ef; font-family: 'Inter', sans-serif; min-height: 100vh; }
+    ::selection { background: oklch(0.55 0.22 200 / 0.4); }
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: #0a0a10; }
+    ::-webkit-scrollbar-thumb { background: #1e1e2e; border-radius: 3px; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+  </style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+const { useState, useEffect, useRef } = React;
+
+// ─── REPO CONFIG — edit these per repository ──────────────────────────────────
+const REPO = {
+  name:        "DailyTask",
+  tagline:     "Gestión de tareas diarias con Python",
+  description: "Aplicación de gestión de tareas diarias construida en Python. Permite organizar, priorizar y hacer seguimiento de las tareas del día a día con una interfaz simple y eficiente desde la terminal o con interfaz gráfica.",
+  url:         "https://github.com/jesusprodriguezUnir/DailyTask",
+  lang:        "Python",
+  version:     "1.0.0",
+  status:      "active",  // active | wip | archived
+  stack: [
+  {
+    "cat": "Lenguaje",
+    "items": [
+      "Python 3.11+"
+    ]
+  },
+  {
+    "cat": "Librerías",
+    "items": [
+      "Click",
+      "Rich",
+      "SQLite3"
+    ]
+  },
+  {
+    "cat": "Testing",
+    "items": [
+      "pytest",
+      "unittest"
+    ]
+  }
+],
+  features: [
+  {
+    "title": "CLI moderna",
+    "desc": "Interfaz de línea de comandos con Rich para una visualización clara y colorida de las tareas."
+  },
+  {
+    "title": "Persistencia local",
+    "desc": "Base de datos SQLite local, sin necesidad de servidor ni configuración externa."
+  },
+  {
+    "title": "Prioridades",
+    "desc": "Sistema de priorización con etiquetas, fechas y estados: pendiente, en curso, hecho."
+  },
+  {
+    "title": "Exportar tareas",
+    "desc": "Exporta el listado a CSV o Markdown para integrarlo con otras herramientas."
+  }
+],
+  install: [
+  {
+    "step": "Clonar repositorio",
+    "cmd": "git clone https://github.com/jesusprodriguezUnir/DailyTask"
+  },
+  {
+    "step": "Entrar al directorio",
+    "cmd": "cd DailyTask"
+  },
+  {
+    "step": "Crear entorno virtual",
+    "cmd": "python -m venv venv && source venv/bin/activate"
+  },
+  {
+    "step": "Instalar dependencias",
+    "cmd": "pip install -r requirements.txt"
+  },
+  {
+    "step": "Ejecutar",
+    "cmd": "python main.py"
+  }
+],
+  structure: [
+  {
+    "path": "main.py",
+    "desc": "Punto de entrada principal"
+  },
+  {
+    "path": "tasks/",
+    "desc": "Módulo de gestión de tareas"
+  },
+  {
+    "path": "db/",
+    "desc": "Capa de base de datos SQLite"
+  },
+  {
+    "path": "tests/",
+    "desc": "Tests unitarios con pytest"
+  },
+  {
+    "path": "requirements.txt",
+    "desc": "Dependencias del proyecto"
+  }
+],
+};
+
+// ─── BRAND TOKENS ─────────────────────────────────────────────────────────────
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "repoName": "DailyTask",
+  "accentColor": "cyan",
+  "showInstall": true,
+  "showStructure": true
+}/*EDITMODE-END*/;
+
+const T = {
+  bg: "#0a0a10", surface: "#11111a", surface2: "#161622",
+  border: "#1e1e2e", text: "#e2e2ef", muted: "#6868aa", dim: "#2e2e4a",
+};
+const A = {
+  cyan:   { a1: "oklch(0.72 0.18 200)", a2: "oklch(0.55 0.18 200)", glow: "oklch(0.72 0.18 200 / 0.12)" },
+  green:  { a1: "oklch(0.72 0.18 145)", a2: "oklch(0.55 0.18 145)", glow: "oklch(0.72 0.18 145 / 0.12)" },
+  violet: { a1: "oklch(0.72 0.18 280)", a2: "oklch(0.55 0.18 280)", glow: "oklch(0.72 0.18 280 / 0.12)" },
+  amber:  { a1: "oklch(0.78 0.18 75)",  a2: "oklch(0.60 0.18 75)",  glow: "oklch(0.78 0.18 75 / 0.12)" },
+};
+
+const STATUS_COLORS = { active: "oklch(0.72 0.18 145)", wip: "oklch(0.78 0.18 75)", archived: "oklch(0.65 0.10 220)" };
+const STATUS_LABELS = { active: "activo", wip: "en desarrollo", archived: "archivado" };
+
+// ─── MICRO COMPONENTS ─────────────────────────────────────────────────────────
+function Tag({ children, accent }) {
+  return (
+    <span style={{
+      fontFamily: "'JetBrains Mono', monospace", fontSize: 11, fontWeight: 500,
+      letterSpacing: "0.04em", padding: "3px 9px", borderRadius: 3,
+      background: accent.glow, color: accent.a1, border: `1px solid ${accent.a2}44`,
+    }}>{children}</span>
+  );
+}
+
+function Mono({ children, color }) {
+  return <span style={{ fontFamily: "'JetBrains Mono', monospace", color: color || T.muted }}>{children}</span>;
+}
+
+function SectionLabel({ children, accent }) {
+  return (
+    <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: "0.12em", color: accent.a1, marginBottom: 16, display: "flex", alignItems: "center", gap: 8 }}>
+      <div style={{ width: 16, height: 1, background: accent.a1 }} />
+      {children}
+    </div>
+  );
+}
+
+// ─── TERMINAL BLOCK ───────────────────────────────────────────────────────────
+function Terminal({ lines, accent }) {
+  return (
+    <div style={{ background: T.bg, border: `1px solid ${T.border}`, borderRadius: 8, overflow: "hidden" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "10px 16px", borderBottom: `1px solid ${T.border}`, background: T.surface }}>
+        {["#ff5f57","#febc2e","#28c840"].map(c => <div key={c} style={{ width: 10, height: 10, borderRadius: "50%", background: c }} />)}
+        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: T.muted, marginLeft: 4 }}>bash</span>
+      </div>
+      <div style={{ padding: "16px 20px", display: "flex", flexDirection: "column", gap: 10 }}>
+        {lines.map((l, i) => (
+          <div key={i} style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 13, lineHeight: 1.5 }}>
+            {l.cmd && <><span style={{ color: T.muted }}>~/projects</span><span style={{ color: accent.a1 }}> $ </span><span style={{ color: T.text }}>{l.cmd}</span></>}
+            {l.out && <span style={{ color: T.muted, paddingLeft: 20 }}>{l.out}</span>}
+            {l.comment && <span style={{ color: T.dim }}>// {l.comment}</span>}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ─── BREADCRUMB / NAV ─────────────────────────────────────────────────────────
+function TopBar({ accent, repoName }) {
+  return (
+    <div style={{
+      position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
+      borderBottom: `1px solid ${T.border}`,
+      background: `${T.bg}ee`, backdropFilter: "blur(12px)",
+      display: "flex", alignItems: "center", justifyContent: "space-between",
+      padding: "0 40px", height: 52,
+    }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 8, fontFamily: "'JetBrains Mono', monospace", fontSize: 13 }}>
+        <a href="https://github.com/jesusprodriguezUnir" target="_blank" rel="noopener" style={{ color: T.muted, textDecoration: "none" }}>jesusprodriguezUnir</a>
+        <span style={{ color: T.dim }}>/</span>
+        <span style={{ color: accent.a1, fontWeight: 600 }}>{repoName}</span>
+      </div>
+      <div style={{ display: "flex", gap: 20, alignItems: "center" }}>
+        {["descripción","stack","instalación","estructura"].map(s => (
+          <a key={s} href={`#${s}`} style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: "0.06em", textDecoration: "none", color: T.muted }}>
+            {s}
+          </a>
+        ))}
+        <a href={REPO.url} target="_blank" rel="noopener" style={{
+          fontFamily: "'JetBrains Mono', monospace", fontSize: 11, fontWeight: 600,
+          padding: "5px 14px", background: accent.a1, color: T.bg,
+          borderRadius: 4, textDecoration: "none",
+        }}>github →</a>
+      </div>
+    </div>
+  );
+}
+
+// ─── HERO ──────────────────────────────────────────────────────────────────────
+function Hero({ accent, repoName }) {
+  const statusColor = STATUS_COLORS[REPO.status];
+  return (
+    <section style={{ padding: "110px 40px 72px", maxWidth: 900, margin: "0 auto" }}>
+      <div style={{ animation: "fadeUp 0.5s ease both" }}>
+        {/* Status badge */}
+        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 24 }}>
+          <div style={{ width: 7, height: 7, borderRadius: "50%", background: statusColor, boxShadow: `0 0 8px ${statusColor}` }} />
+          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: statusColor, letterSpacing: "0.1em" }}>
+            {STATUS_LABELS[REPO.status].toUpperCase()}
+          </span>
+          <span style={{ color: T.dim, fontSize: 12 }}>·</span>
+          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: T.muted }}>v{REPO.version}</span>
+          <span style={{ color: T.dim, fontSize: 12 }}>·</span>
+          <Tag accent={accent}>{REPO.lang}</Tag>
+        </div>
+
+        {/* Repo name */}
+        <h1 style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "clamp(32px, 5vw, 56px)", fontWeight: 700, lineHeight: 1.1, letterSpacing: "-0.02em", marginBottom: 20 }}>
+          <span style={{ color: T.muted, fontWeight: 300 }}>~/</span>
+          <span style={{ color: T.text }}>{repoName}</span>
+          <span style={{ color: accent.a1, animation: "blink 1.2s step-end infinite" }}>_</span>
+        </h1>
+
+        <p style={{ fontSize: 18, color: T.muted, lineHeight: 1.7, maxWidth: 600, marginBottom: 40 }}>
+          {REPO.description}
+        </p>
+
+        {/* CTA row */}
+        <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+          <a href={REPO.url} target="_blank" rel="noopener" style={{
+            fontFamily: "'JetBrains Mono', monospace", fontSize: 13, fontWeight: 600,
+            padding: "10px 24px", background: accent.a1, color: T.bg,
+            borderRadius: 4, textDecoration: "none",
+          }}>ver en github →</a>
+          <a href={`${REPO.url}/archive/refs/heads/main.zip`} target="_blank" rel="noopener" style={{
+            fontFamily: "'JetBrains Mono', monospace", fontSize: 13,
+            padding: "10px 24px", border: `1px solid ${T.border}`,
+            color: T.muted, borderRadius: 4, textDecoration: "none",
+          }}>descargar .zip</a>
+          <a href="#instalación" style={{
+            fontFamily: "'JetBrains Mono', monospace", fontSize: 13,
+            padding: "10px 24px", border: `1px solid ${T.border}`,
+            color: T.muted, borderRadius: 4, textDecoration: "none",
+          }}>instalación →</a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── DESCRIPTION / FEATURES ───────────────────────────────────────────────────
+function Features({ accent }) {
+  return (
+    <section id="descripción" style={{ padding: "64px 40px", maxWidth: 900, margin: "0 auto" }}>
+      <SectionLabel accent={accent}>CARACTERÍSTICAS</SectionLabel>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))", gap: 16 }}>
+        {REPO.features.map((f, i) => (
+          <div key={i} style={{
+            background: T.surface, border: `1px solid ${T.border}`,
+            borderRadius: 6, padding: "24px",
+            animation: `fadeUp 0.4s ease ${i * 0.08}s both`,
+          }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
+              <div style={{ width: 4, height: 4, borderRadius: "50%", background: accent.a1, flexShrink: 0 }} />
+              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 13, fontWeight: 600, color: T.text }}>{f.title}</span>
+            </div>
+            <p style={{ fontSize: 14, color: T.muted, lineHeight: 1.7 }}>{f.desc}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+// ─── STACK ────────────────────────────────────────────────────────────────────
+function Stack({ accent }) {
+  return (
+    <section id="stack" style={{ padding: "64px 40px", maxWidth: 900, margin: "0 auto" }}>
+      <SectionLabel accent={accent}>TECH STACK</SectionLabel>
+      <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
+        {REPO.stack.map(({ cat, items }) => (
+          <div key={cat} style={{
+            background: T.surface, border: `1px solid ${T.border}`,
+            borderRadius: 6, padding: "18px 22px", minWidth: 200,
+          }}>
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: "0.1em", color: T.muted, marginBottom: 12 }}>{cat}</div>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+              {items.map(i => <Tag key={i} accent={accent}>{i}</Tag>)}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+// ─── INSTALLATION ─────────────────────────────────────────────────────────────
+function Installation({ accent, show }) {
+  if (!show) return null;
+  const lines = [
+    { comment: "paso a paso" },
+    ...REPO.install.flatMap(({ step, cmd }) => [
+      { comment: step },
+      { cmd },
+    ]),
+    { out: "✓ listo para usar" },
+  ];
+  return (
+    <section id="instalación" style={{ padding: "64px 40px", maxWidth: 900, margin: "0 auto" }}>
+      <SectionLabel accent={accent}>INSTALACIÓN</SectionLabel>
+      <Terminal lines={lines} accent={accent} />
+    </section>
+  );
+}
+
+// ─── STRUCTURE ────────────────────────────────────────────────────────────────
+function Structure({ accent, show }) {
+  if (!show) return null;
+  return (
+    <section id="estructura" style={{ padding: "64px 40px", maxWidth: 900, margin: "0 auto" }}>
+      <SectionLabel accent={accent}>ESTRUCTURA</SectionLabel>
+      <div style={{ background: T.surface, border: `1px solid ${T.border}`, borderRadius: 8, overflow: "hidden" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "10px 16px", borderBottom: `1px solid ${T.border}`, background: T.bg }}>
+          {["#ff5f57","#febc2e","#28c840"].map(c => <div key={c} style={{ width: 10, height: 10, borderRadius: "50%", background: c }} />)}
+          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: T.muted, marginLeft: 4 }}>{REPO.name}/</span>
+        </div>
+        <div style={{ padding: "16px 20px", display: "flex", flexDirection: "column", gap: 2 }}>
+          {REPO.structure.map(({ path, desc }, i) => (
+            <div key={i} style={{ display: "flex", alignItems: "baseline", gap: 0, padding: "6px 0", borderBottom: i < REPO.structure.length - 1 ? `1px solid ${T.dim}22` : "none" }}>
+              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 13, color: accent.a1, minWidth: 220 }}>{path}</span>
+              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 12, color: T.dim, marginRight: 12 }}>·</span>
+              <span style={{ fontSize: 13, color: T.muted }}>{desc}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── AUTHOR FOOTER ────────────────────────────────────────────────────────────
+function Footer({ accent }) {
+  return (
+    <footer style={{ borderTop: `1px solid ${T.border}`, padding: "40px", maxWidth: 900, margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 20 }}>
+      <div>
+        <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 14, fontWeight: 600, color: T.text, marginBottom: 4 }}>
+          Jesús Pedro Rodríguez Castro
+        </div>
+        <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 12, color: T.muted }}>
+          Tech Lead Full Stack · Scrum Master · Madrid
+        </div>
+      </div>
+      <div style={{ display: "flex", gap: 20 }}>
+        {[
+          { label: "github", href: "https://github.com/jesusprodriguezUnir" },
+          { label: "linkedin", href: "https://www.linkedin.com/in/jesús-pedro-rodríguez-castro-b746394a/" },
+          { label: "email", href: "mailto:jesusprodriguez@gmail.com" },
+        ].map(({ label, href }) => (
+          <a key={label} href={href} target="_blank" rel="noopener" style={{
+            fontFamily: "'JetBrains Mono', monospace", fontSize: 12,
+            color: T.muted, textDecoration: "none",
+          }}
+          onMouseEnter={e => e.currentTarget.style.color = accent.a1}
+          onMouseLeave={e => e.currentTarget.style.color = T.muted}
+          >{label} →</a>
+        ))}
+      </div>
+      <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, color: T.dim, width: "100%" }}>
+        // jesusprodriguezUnir · {new Date().getFullYear()} · MIT License
+      </div>
+    </footer>
+  );
+}
+
+// ─── SIDEBAR NAV (desktop) ────────────────────────────────────────────────────
+function SideNav({ accent }) {
+  const sections = ["descripción", "stack", "instalación", "estructura"];
+  const [active, setActive] = useState("descripción");
+  useEffect(() => {
+    const handler = () => {
+      for (const id of [...sections].reverse()) {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top <= 120) { setActive(id); break; }
+      }
+    };
+    window.addEventListener("scroll", handler);
+    return () => window.removeEventListener("scroll", handler);
+  }, []);
+
+  return (
+    <div style={{ position: "fixed", right: 32, top: "50%", transform: "translateY(-50%)", display: "flex", flexDirection: "column", gap: 12, zIndex: 50 }}>
+      {sections.map(s => (
+        <a key={s} href={`#${s}`} title={s} style={{ display: "flex", alignItems: "center", gap: 8, textDecoration: "none" }}>
+          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, color: active === s ? accent.a1 : T.dim, textAlign: "right", transition: "color 0.2s" }}>
+            {active === s ? s : ""}
+          </span>
+          <div style={{ width: active === s ? 24 : 8, height: 2, borderRadius: 1, background: active === s ? accent.a1 : T.dim, transition: "all 0.2s" }} />
+        </a>
+      ))}
+    </div>
+  );
+}
+
+// ─── APP ──────────────────────────────────────────────────────────────────────
+function App() {
+  const { tweaks: rawTweaks, setTweak } = useTweaks(TWEAK_DEFAULTS);
+  const tweaks = rawTweaks || TWEAK_DEFAULTS;
+  const accent = A[tweaks.accentColor] || A.cyan;
+  const repoName = tweaks.repoName || REPO.name;
+
+  return (
+    <div style={{ background: T.bg, minHeight: "100vh", color: T.text }}>
+      <TopBar accent={accent} repoName={repoName} />
+      <SideNav accent={accent} />
+
+      <Hero accent={accent} repoName={repoName} />
+
+      {/* Divider */}
+      <div style={{ height: 1, background: T.border, maxWidth: 900, margin: "0 auto" }} />
+      <Features accent={accent} />
+      <div style={{ height: 1, background: T.border, maxWidth: 900, margin: "0 auto" }} />
+      <Stack accent={accent} />
+
+      {tweaks.showInstall && (
+        <>
+          <div style={{ height: 1, background: T.border, maxWidth: 900, margin: "0 auto" }} />
+          <Installation accent={accent} show={tweaks.showInstall} />
+        </>
+      )}
+
+      {tweaks.showStructure && (
+        <>
+          <div style={{ height: 1, background: T.border, maxWidth: 900, margin: "0 auto" }} />
+          <Structure accent={accent} show={tweaks.showStructure} />
+        </>
+      )}
+
+      <div style={{ height: 1, background: T.border, maxWidth: 900, margin: "0 auto" }} />
+      <Footer accent={accent} />
+
+      <TweaksPanel>
+        <TweakSection title="Repositorio">
+          <TweakText id="repoName" label="Nombre del repo" />
+        </TweakSection>
+        <TweakSection title="Acento">
+          <TweakRadio id="accentColor" label="Color" options={["cyan","green","violet","amber"]} />
+        </TweakSection>
+        <TweakSection title="Secciones">
+          <TweakToggle id="showInstall"   label="Instalación" />
+          <TweakToggle id="showStructure" label="Estructura" />
+        </TweakSection>
+      </TweaksPanel>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+</body>
+</html>

@@ -104,10 +104,14 @@ const topics = ["Claude", "IA", "MCP", ".NET", "Python", "Astro", "Web Dev", "Sk
   .section-title {
     font-size: 1.25rem;
     color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
   }
 
   .accent {
     color: var(--accent);
+    font-weight: 700;
   }
 
   /* Cards Grid */
@@ -121,11 +125,14 @@ const topics = ["Claude", "IA", "MCP", ".NET", "Python", "Astro", "Web Dev", "Sk
     display: flex;
     gap: 1.25rem;
     padding: 1.5rem;
-    transition: transform 0.2s ease;
+    transition: all 0.3s var(--ease);
+    border: 1px solid var(--border);
   }
 
   .skill-card:hover {
     transform: translateY(-4px);
+    border-color: var(--accent);
+    box-shadow: 0 8px 25px var(--accent-soft);
   }
 
   .card-icon {
@@ -138,12 +145,24 @@ const topics = ["Claude", "IA", "MCP", ".NET", "Python", "Astro", "Web Dev", "Sk
     justify-content: center;
     border-radius: 10px;
     border: 1px solid var(--border);
+    transition: all 0.3s var(--ease);
+  }
+
+  .skill-card:hover .card-icon {
+    background: var(--accent-soft);
+    border-color: var(--accent);
+    transform: scale(1.1);
   }
 
   .card-title {
     font-size: 1rem;
     margin-bottom: 0.5rem;
     color: var(--text);
+    transition: color 0.3s var(--ease);
+  }
+
+  .skill-card:hover .card-title {
+    color: var(--accent);
   }
 
   .card-desc {
@@ -157,6 +176,7 @@ const topics = ["Claude", "IA", "MCP", ".NET", "Python", "Astro", "Web Dev", "Sk
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    border: 1px solid var(--border);
   }
 
   .post-item {
@@ -165,7 +185,7 @@ const topics = ["Claude", "IA", "MCP", ".NET", "Python", "Astro", "Web Dev", "Sk
     align-items: center;
     padding: 1.25rem 1.5rem;
     border-bottom: 1px solid var(--border);
-    transition: background 0.2s ease;
+    transition: all 0.3s var(--ease);
   }
 
   .post-item:last-child {
@@ -174,6 +194,7 @@ const topics = ["Claude", "IA", "MCP", ".NET", "Python", "Astro", "Web Dev", "Sk
 
   .post-item:hover {
     background: var(--surface-hover);
+    padding-left: 1.75rem;
   }
 
   .post-item:hover .post-title {
@@ -190,17 +211,19 @@ const topics = ["Claude", "IA", "MCP", ".NET", "Python", "Astro", "Web Dev", "Sk
     font-size: 0.85rem;
     color: var(--text-dim);
     min-width: 80px;
+    font-family: var(--font-mono);
   }
 
   .post-title {
     font-size: 1rem;
     color: var(--text-muted);
-    transition: color 0.2s ease;
+    transition: color 0.3s var(--ease);
+    font-weight: 500;
   }
 
   .post-arrow {
     color: var(--text-dim);
-    transition: transform 0.2s ease, color 0.2s ease;
+    transition: all 0.3s var(--ease);
   }
 
   .post-item:hover .post-arrow {
@@ -218,14 +241,17 @@ const topics = ["Claude", "IA", "MCP", ".NET", "Python", "Astro", "Web Dev", "Sk
     color: var(--text-dim);
     font-size: 0.9rem;
     padding: 0.5rem 1rem;
-    border-radius: 6px;
-    border: 1px solid transparent;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    transition: all 0.3s var(--ease);
+    background: var(--surface);
   }
 
   .btn-link:hover {
     color: var(--accent);
-    border-color: var(--border);
-    background: var(--bg-soft);
+    border-color: var(--accent);
+    background: var(--accent-soft);
+    box-shadow: 0 0 15px var(--accent-soft);
   }
 
   /* Topics */
@@ -237,16 +263,20 @@ const topics = ["Claude", "IA", "MCP", ".NET", "Python", "Astro", "Web Dev", "Sk
 
   .topic-tag {
     padding: 0.5rem 1rem;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     color: var(--text-muted);
     border-radius: 8px;
-    cursor: default;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    transition: all 0.3s var(--ease);
   }
 
   .topic-tag:hover {
     border-color: var(--accent);
     color: var(--accent);
     background: var(--accent-soft);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px var(--accent-soft);
   }
 
   @media (max-width: 640px) {

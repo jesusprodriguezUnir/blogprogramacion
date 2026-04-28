@@ -16,45 +16,94 @@ const linkCategories = [
 			},
 			{
 				title: "Claude Code Docs",
-				description: "Documentación de Claude Code CLI: comandos, hooks, MCP servers y configuración",
+				description: "Documentación oficial de Claude Code: instalación, hooks, slash commands y MCP",
 				url: "https://docs.anthropic.com/en/docs/claude-code/overview",
 				type: "Docs",
 				icon: "💻"
 			},
 			{
+				title: "Claude Agent SDK",
+				description: "Librerías oficiales (TypeScript/Python) para construir agentes personalizados",
+				url: "https://github.com/anthropics/claude-agent-sdk-typescript",
+				type: "SDK",
+				icon: "🤖"
+			},
+			{
+				title: "Build with Claude",
+				description: "Guías de integración, desarrollo y casos de uso para aplicaciones con Claude",
+				url: "https://docs.anthropic.com/en/docs/build-with-claude/overview",
+				type: "Guía",
+				icon: "🏗️"
+			},
+			{
+				title: "Prompt Engineering Guide",
+				description: "Estrategias avanzadas y mejores prácticas de prompting oficiales de Anthropic",
+				url: "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview",
+				type: "Prompts",
+				icon: "💡"
+			},
+			{
 				title: "Model Context Protocol",
-				description: "Especificación del protocolo MCP para conectar Claude con herramientas y datos externos",
+				description: "Especificación y guía de MCP para conectar Claude con herramientas externas",
 				url: "https://modelcontextprotocol.io/",
 				type: "Protocolo",
 				icon: "🔌"
 			},
 			{
-				title: "Awesome Claude",
-				description: "Lista curada de las mejores herramientas, integraciones y recursos de la comunidad para Claude",
-				url: "https://awesomeclaude.ai",
+				title: "MCP Registry",
+				description: "Directorio oficial de servidores MCP para extender las capacidades de Claude",
+				url: "https://mcp-registry.org/",
 				type: "Directorio",
-				icon: "⭐"
+				icon: "🗂️"
 			},
 			{
-				title: "Anthropic Cookbook",
-				description: "Ejemplos prácticos de código para las funciones más avanzadas de la API de Claude",
-				url: "https://github.com/anthropics/anthropic-cookbook",
-				type: "Ejemplos",
-				icon: "🍳"
-			},
-			{
-				title: "Claude Prompt Library",
-				description: "Biblioteca oficial de prompts de Anthropic para distintos casos de uso",
-				url: "https://docs.anthropic.com/en/prompt-library/library",
-				type: "Prompts",
-				icon: "💡"
+				title: "IDE Integration Guide",
+				description: "Guía de integración de Claude con VS Code, JetBrains y otros entornos",
+				url: "https://docs.anthropic.com/en/docs/ide-integrations",
+				type: "Docs",
+				icon: "⚙️"
 			},
 			{
 				title: "Anthropic API Console",
-				description: "Consola interactiva para probar la API de Claude directamente desde el navegador",
+				description: "Playground interactivo para probar modelos y gestionar claves de API",
 				url: "https://console.anthropic.com/",
 				type: "Herramienta",
 				icon: "🛠️"
+			},
+			{
+				title: "Claude Platform (claude.ai)",
+				description: "Interfaz web principal para interactuar con Claude de forma directa",
+				url: "https://claude.ai",
+				type: "Herramienta",
+				icon: "💬"
+			},
+			{
+				title: "Claude in Chrome",
+				description: "Agente de navegación para automatización web integrado en el navegador",
+				url: "https://chromewebstore.google.com/detail/claude/jbmhoafdbghndcdolianaiaolibeidbe",
+				type: "Extensión",
+				icon: "🌐"
+			},
+			{
+				title: "Claude Cowork",
+				description: "Herramienta de escritorio para automatización de tareas y archivos locales",
+				url: "https://cowork.dev/",
+				type: "Herramienta",
+				icon: "📂"
+			},
+			{
+				title: "Awesome Claude",
+				description: "Lista curada de las mejores herramientas y recursos de la comunidad",
+				url: "https://awesomeclaude.ai",
+				type: "Comunidad",
+				icon: "⭐"
+			},
+			{
+				title: "Pedro Valera - AI Blog",
+				description: "Blog con recursos, guías prácticas y artículos profundos sobre Claude en español",
+				url: "https://pedrovalera.ai/blog",
+				type: "Blog",
+				icon: "✍️"
 			}
 		]
 	},
@@ -111,13 +160,6 @@ const linkCategories = [
 				url: "https://huggingface.co",
 				type: "Plataforma",
 				icon: "🐻"
-			},
-			{
-				title: "Anthropic Claude",
-				description: "Asistente de IA conversacional avanzado",
-				url: "https://claude.ai",
-				type: "Herramienta",
-				icon: "🤖"
 			},
 			{
 				title: "Grok",
@@ -376,7 +418,7 @@ const linkCategories = [
 	}
 
 	.page-title {
-		font-family: 'IBM Plex Mono', monospace;
+		font-family: var(--font-mono);
 		font-size: 42px;
 		font-weight: 700;
 		color: var(--text);
@@ -386,7 +428,7 @@ const linkCategories = [
 
 	.page-subtitle {
 		font-size: 20px;
-		color: var(--color-text-secondary);
+		color: var(--text-muted);
 		line-height: 1.6;
 		max-width: 800px;
 		margin: 0 auto;
@@ -418,7 +460,7 @@ const linkCategories = [
 	}
 
 	.category-title {
-		font-family: 'IBM Plex Mono', monospace;
+		font-family: var(--font-mono);
 		font-size: 24px;
 		font-weight: 600;
 		color: var(--text);
@@ -427,7 +469,7 @@ const linkCategories = [
 
 	.category-description {
 		font-size: 15px;
-		color: var(--text-2);
+		color: var(--text-muted);
 		line-height: 1.5;
 		margin: 0;
 	}
@@ -447,7 +489,7 @@ const linkCategories = [
 		border: 1px solid var(--border);
 		border-radius: 12px;
 		text-decoration: none;
-		transition: all 0.2s ease;
+		transition: all 0.3s var(--ease);
 	}
 
 	.link-icon {
@@ -457,15 +499,16 @@ const linkCategories = [
 		align-items: center;
 		justify-content: center;
 		font-size: 24px;
-		background: var(--surface-2);
+		background: var(--bg-soft);
+		border: 1px solid var(--border);
 		border-radius: 10px;
 		margin-right: 16px;
 	}
 
 	.link-card:hover {
 		transform: translateY(-2px);
-		box-shadow: var(--shadow-sm);
-		border-color: var(--text-3);
+		box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+		border-color: var(--accent);
 	}
 
 	.link-content {
@@ -482,43 +525,43 @@ const linkCategories = [
 	.link-title {
 		font-size: 18px;
 		font-weight: 600;
-		color: var(--color-text-primary);
+		color: var(--text);
 		margin: 0;
 	}
 
 	.link-type {
-		background: var(--color-link-type-bg);
-		color: var(--color-link-type-text);
+		background: var(--accent-soft);
+		color: var(--accent);
 		padding: 4px 8px;
 		border-radius: 6px;
 		font-size: 12px;
-		font-weight: 500;
+		font-weight: 600;
 		text-transform: uppercase;
 		letter-spacing: 0.5px;
 	}
 
 	.link-description {
-		color: var(--color-text-tertiary);
+		color: var(--text-muted);
 		font-size: 14px;
 		line-height: 1.5;
 		margin: 0 0 8px 0;
 	}
 
 	.link-url {
-		color: var(--color-text-secondary);
+		color: var(--text-dim);
 		font-size: 12px;
-		font-family: monospace;
+		font-family: var(--font-mono);
 	}
 
 	.link-arrow {
 		font-size: 20px;
-		color: var(--text-secondary);
-		transition: all 0.3s ease;
+		color: var(--text-dim);
+		transition: all 0.3s var(--ease);
 		margin-left: 16px;
 	}
 
 	.link-card:hover .link-arrow {
-		color: var(--color-accent);
+		color: var(--accent);
 		transform: translateX(4px);
 	}
 
@@ -527,11 +570,11 @@ const linkCategories = [
 	}
 
 	.suggest-card {
-		background: linear-gradient(135deg, #fbbf24, #f59e0b);
+		background: linear-gradient(135deg, var(--amber), oklch(0.7 0.18 75));
 		border-radius: 20px;
 		padding: 48px;
 		text-align: center;
-		color: white;
+		color: var(--bg);
 	}
 
 	.suggest-title {
@@ -552,14 +595,14 @@ const linkCategories = [
 
 	.suggest-btn {
 		display: inline-block;
-		background: white;
-		color: #f59e0b;
+		background: var(--bg);
+		color: var(--amber);
 		text-decoration: none;
 		padding: 16px 32px;
 		border-radius: 12px;
-		font-weight: 600;
+		font-weight: 700;
 		font-size: 16px;
-		transition: all 0.3s ease;
+		transition: all 0.3s var(--ease);
 	}
 
 	.suggest-btn:hover {

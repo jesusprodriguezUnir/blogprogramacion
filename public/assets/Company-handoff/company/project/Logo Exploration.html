@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Logo · Jesús Pedro Rodríguez Castro</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script type="text/babel" src="design-canvas.jsx"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0a0a10; font-family: 'Inter', sans-serif; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes dash { to { stroke-dashoffset: 0; } }
+    @keyframes pulse { 0%,100%{opacity:0.6} 50%{opacity:1} }
+  </style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState } = React;
+
+// ─── SHARED BRAND TOKENS ──────────────────────────────────────────────────────
+const C = {
+  bg:      "#0a0a10",
+  surface: "#11111a",
+  border:  "#1e1e2e",
+  text:    "#e2e2ef",
+  muted:   "#6868aa",
+  dim:     "#2e2e4a",
+  cyan:    "oklch(0.72 0.18 200)",
+  cyan2:   "oklch(0.55 0.18 200)",
+  green:   "oklch(0.72 0.18 145)",
+  violet:  "oklch(0.72 0.18 280)",
+  amber:   "oklch(0.78 0.18 75)",
+};
+
+// ─── LOGO PROMPT MARK (parametric) ───────────────────────────────────────────
+function LogoPrompt({ bg = "#0a0a10", accent = "oklch(0.72 0.18 200)", text = "#e2e2ef", muted = "#6868aa" }) {
+  return (
+    <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" style={{ width: "100%", height: "100%" }}>
+      <rect width="400" height="400" fill={bg} />
+      {/* Subtle grid */}
+      <pattern id={`grid-${accent.slice(0,6)}`} width="40" height="40" patternUnits="userSpaceOnUse">
+        <path d="M 40 0 L 0 0 0 40" fill="none" stroke={text} strokeWidth="0.3" strokeOpacity="0.04" />
+      </pattern>
+      <rect width="400" height="400" fill={`url(#grid-${accent.slice(0,6)})`} />
+      {/* Prompt symbol */}
+      <text x="200" y="230" textAnchor="middle"
+        fontFamily="JetBrains Mono, monospace" fontSize="155" fontWeight="700"
+        fill={accent} letterSpacing="-8">
+        &gt;_
+      </text>
+      {/* Cursor blink */}
+      <rect x="283" y="180" width="52" height="11" rx="2" fill={accent} opacity="0.9">
+        <animate attributeName="opacity" values="1;0;1" dur="1.2s" repeatCount="indefinite" />
+      </rect>
+      {/* Wordmark */}
+      <text x="200" y="308" textAnchor="middle"
+        fontFamily="JetBrains Mono, monospace" fontSize="22" fontWeight="600"
+        fill={text} letterSpacing="10">
+        JPRC
+      </text>
+      {/* Rule */}
+      <line x1="120" y1="320" x2="280" y2="320" stroke={muted} strokeWidth="0.8" strokeOpacity="0.4" />
+      <text x="200" y="342" textAnchor="middle"
+        fontFamily="JetBrains Mono, monospace" fontSize="11" fontWeight="400"
+        fill={muted} letterSpacing="4">
+        TECH LEAD
+      </text>
+    </svg>
+  );
+}
+
+// ─── WORDMARK HORIZONTAL ──────────────────────────────────────────────────────
+function LogoWordmark() {
+  return (
+    <svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg" style={{ width: "100%", height: "100%" }}>
+      <rect width="700" height="220" fill={C.bg} />
+      {/* Icon */}
+      <text x="50" y="148" fontFamily="JetBrains Mono, monospace" fontSize="100" fontWeight="700" fill={C.cyan}>&gt;_</text>
+      <rect x="193" y="98" width="38" height="9" rx="2" fill={C.cyan}>
+        <animate attributeName="opacity" values="1;0;1" dur="1.2s" repeatCount="indefinite" />
+      </rect>
+      {/* Divider */}
+      <line x1="250" y1="60" x2="250" y2="160" stroke={C.border} strokeWidth="1.5" />
+      {/* Name */}
+      <text x="278" y="118" fontFamily="JetBrains Mono, monospace" fontSize="42" fontWeight="700" fill={C.text} letterSpacing="-1">
+        jprc
+      </text>
+      <text x="278" y="156" fontFamily="JetBrains Mono, monospace" fontSize="13" fill={C.muted} letterSpacing="5">
+        TECH LEAD · FULL STACK
+      </text>
+    </svg>
+  );
+}
+
+// ─── FAVICON / AVATAR ─────────────────────────────────────────────────────────
+function LogoFavicon() {
+  return (
+    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style={{ width: "100%", height: "100%" }}>
+      <rect width="200" height="200" fill={C.bg} rx="32" />
+      <text x="100" y="128" textAnchor="middle" fontFamily="JetBrains Mono, monospace" fontSize="90" fontWeight="700" fill={C.cyan}>&gt;</text>
+      <rect x="131" y="82" width="22" height="7" rx="2" fill={C.cyan}>
+        <animate attributeName="opacity" values="1;0;1" dur="1.2s" repeatCount="indefinite" />
+      </rect>
+    </svg>
+  );
+}
+
+// ─── BADGE ────────────────────────────────────────────────────────────────────
+function LogoBadge() {
+  return (
+    <svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg" style={{ width: "100%", height: "100%" }}>
+      <rect width="400" height="160" fill={C.bg} />
+      <rect x="20" y="20" width="360" height="120" rx="10" fill={C.surface} stroke={C.border} strokeWidth="1" />
+      {/* Icon small */}
+      <text x="56" y="100" fontFamily="JetBrains Mono, monospace" fontSize="56" fontWeight="700" fill={C.cyan}>&gt;_</text>
+      <line x1="130" y1="38" x2="130" y2="122" stroke={C.border} strokeWidth="1" />
+      {/* Text */}
+      <text x="150" y="72" fontFamily="JetBrains Mono, monospace" fontSize="20" fontWeight="700" fill={C.text}>Jesús Pedro R. Castro</text>
+      <text x="150" y="98" fontFamily="JetBrains Mono, monospace" fontSize="12" fill={C.muted} letterSpacing="3">TECH LEAD · MADRID</text>
+      {/* Status */}
+      <circle cx="352" cy="48" r="6" fill={C.green}>
+        <animate attributeName="opacity" values="1;0.4;1" dur="2s" repeatCount="indefinite" />
+      </circle>
+    </svg>
+  );
+}
+
+// ─── LOGO 1 · Legacy (kept for reference) ─────────────────────────────────────
+function Logo1() {
+  return <LogoPrompt />;
+}
+
+// ─── LOGO 2 · Monogram Grid ───────────────────────────────────────────────────
+// J and P interlocked in a code-bracket frame
+function Logo2() {
+  return (
+    <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" style={{ width: "100%", height: "100%" }}>
+      <defs>
+        <linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor={C.cyan} />
+          <stop offset="100%" stopColor={C.violet} />
+        </linearGradient>
+      </defs>
+      <rect width="400" height="400" fill={C.bg} />
+
+      {/* Bracket frame */}
+      <path d="M 90 80 L 60 80 L 60 320 L 90 320" stroke={C.cyan2} strokeWidth="4" fill="none" strokeLinecap="round" />
+      <path d="M 310 80 L 340 80 L 340 320 L 310 320" stroke={C.cyan2} strokeWidth="4" fill="none" strokeLinecap="round" />
+
+      {/* Monogram JPRC */}
+      <text x="200" y="238" textAnchor="middle"
+        fontFamily="JetBrains Mono, monospace" fontSize="110" fontWeight="700"
+        fill="url(#g2)" letterSpacing="-4">
+        JP
+      </text>
+
+      {/* Bottom line */}
+      <line x1="100" y1="274" x2="300" y2="274" stroke={C.border} strokeWidth="1" />
+      <text x="200" y="300" textAnchor="middle"
+        fontFamily="JetBrains Mono, monospace" fontSize="13" fontWeight="500"
+        fill={C.muted} letterSpacing="8">
+        RC
+      </text>
+
+      {/* Corner dots */}
+      {[[60,80],[340,80],[60,320],[340,320]].map(([x,y],i) => (
+        <circle key={i} cx={x} cy={y} r="4" fill={C.cyan} />
+      ))}
+    </svg>
+  );
+}
+
+// ─── LOGO 3 · Terminal Window ─────────────────────────────────────────────────
+// Minimal macOS-style terminal window as icon
+function Logo3() {
+  return (
+    <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" style={{ width: "100%", height: "100%" }}>
+      <rect width="400" height="400" fill={C.bg} />
+
+      {/* Terminal card */}
+      <rect x="60" y="90" width="280" height="200" rx="12"
+        fill={C.surface} stroke={C.border} strokeWidth="1.5" />
+
+      {/* Title bar */}
+      <rect x="60" y="90" width="280" height="36" rx="12" fill={C.dim} />
+      <rect x="60" y="108" width="280" height="18" fill={C.dim} />
+
+      {/* Traffic lights */}
+      <circle cx="92"  cy="108" r="7" fill="#ff5f57" />
+      <circle cx="114" cy="108" r="7" fill="#febc2e" />
+      <circle cx="136" cy="108" r="7" fill="#28c840" />
+
+      {/* Code lines */}
+      <text x="84" y="162" fontFamily="JetBrains Mono, monospace" fontSize="16" fill={C.muted}>
+        <tspan fill={C.cyan}>$</tspan> whoami
+      </text>
+      <text x="84" y="189" fontFamily="JetBrains Mono, monospace" fontSize="14" fill={C.green}>
+        jesusprodriguezUnir
+      </text>
+      <text x="84" y="216" fontFamily="JetBrains Mono, monospace" fontSize="16" fill={C.muted}>
+        <tspan fill={C.cyan}>$</tspan> role<tspan fill={C.text}>█</tspan>
+      </text>
+
+      {/* Wordmark below */}
+      <text x="200" y="340" textAnchor="middle"
+        fontFamily="JetBrains Mono, monospace" fontSize="18" fontWeight="600"
+        fill={C.text} letterSpacing="8">
+        JPRC
+      </text>
+      <text x="200" y="362" textAnchor="middle"
+        fontFamily="JetBrains Mono, monospace" fontSize="10"
+        fill={C.muted} letterSpacing="4">
+        TECH LEAD · MADRID
+      </text>
+    </svg>
+  );
+}
+
+// ─── LOGO 4 · Circuit Monogram ────────────────────────────────────────────────
+// J letter built from circuit-board lines
+function Logo4() {
+  return (
+    <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" style={{ width: "100%", height: "100%" }}>
+      <defs>
+        <linearGradient id="g4" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor={C.cyan} />
+          <stop offset="100%" stopColor={C.green} />
+        </linearGradient>
+      </defs>
+      <rect width="400" height="400" fill={C.bg} />
+
+      {/* Hex grid background (subtle) */}
+      {[...Array(6)].map((_, row) =>
+        [...Array(7)].map((_, col) => {
+          const x = col * 56 + (row % 2 === 0 ? 0 : 28);
+          const y = row * 48 + 10;
+          return <circle key={`${row}-${col}`} cx={x} cy={y} r="1.5" fill={C.dim} opacity="0.6" />;
+        })
+      )}
+
+      {/* Circuit lines forming "J" */}
+      {/* Vertical stem */}
+      <line x1="220" y1="90" x2="220" y2="270" stroke="url(#g4)" strokeWidth="6" strokeLinecap="round" />
+      {/* Top horizontal */}
+      <line x1="160" y1="90" x2="270" y2="90" stroke="url(#g4)" strokeWidth="6" strokeLinecap="round" />
+      {/* Bottom curve via lines */}
+      <path d="M 220 270 Q 220 310 180 310 Q 140 310 140 270" stroke="url(#g4)" strokeWidth="6" fill="none" strokeLinecap="round" />
+
+      {/* Circuit nodes */}
+      {[[220,90],[160,90],[270,90],[140,270],[180,310]].map(([x,y],i) => (
+        <g key={i}>
+          <circle cx={x} cy={y} r="8" fill={C.bg} stroke={C.cyan} strokeWidth="2.5" />
+          <circle cx={x} cy={y} r="3" fill={C.cyan} />
+        </g>
+      ))}
+
+      {/* Branch lines */}
+      <line x1="220" y1="160" x2="265" y2="160" stroke={C.cyan2} strokeWidth="3" strokeLinecap="round" />
+      <circle cx="270" cy="160" r="5" fill={C.cyan2} opacity="0.6" />
+      <line x1="220" y1="210" x2="255" y2="210" stroke={C.cyan2} strokeWidth="3" strokeLinecap="round" />
+      <circle cx="260" cy="210" r="5" fill={C.cyan2} opacity="0.6" />
+
+      {/* Wordmark */}
+      <text x="200" y="370" textAnchor="middle"
+        fontFamily="JetBrains Mono, monospace" fontSize="14" fontWeight="500"
+        fill={C.muted} letterSpacing="10">
+        JPRC.DEV
+      </text>
+    </svg>
+  );
+}
+
+// ─── LOGO 5 · Compact Badge ───────────────────────────────────────────────────
+// Small avatar/badge format — good for GitHub profile picture
+function Logo5() {
+  return (
+    <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" style={{ width: "100%", height: "100%" }}>
+      <defs>
+        <linearGradient id="g5a" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#11111a" />
+          <stop offset="100%" stopColor="#1a1a2e" />
+        </linearGradient>
+        <linearGradient id="g5b" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor={C.cyan} />
+          <stop offset="100%" stopColor={C.violet} />
+        </linearGradient>
+      </defs>
+      <rect width="400" height="400" fill={C.bg} />
+
+      {/* Outer ring */}
+      <circle cx="200" cy="200" r="160" fill="none" stroke={C.border} strokeWidth="1" />
+      {/* Inner card */}
+      <circle cx="200" cy="200" r="145" fill="url(#g5a)" />
+      {/* Accent arc */}
+      <circle cx="200" cy="200" r="160" fill="none"
+        stroke="url(#g5b)" strokeWidth="3"
+        strokeDasharray="600" strokeDashoffset="200"
+        strokeLinecap="round" />
+
+      {/* Corner marks */}
+      {[0, 90, 180, 270].map((deg, i) => {
+        const rad = (deg * Math.PI) / 180;
+        const x = 200 + 158 * Math.cos(rad);
+        const y = 200 + 158 * Math.sin(rad);
+        return <circle key={i} cx={x} cy={y} r="4" fill={C.cyan} />;
+      })}
+
+      {/* Main monogram */}
+      <text x="200" y="185" textAnchor="middle"
+        fontFamily="JetBrains Mono, monospace" fontSize="80" fontWeight="700"
+        fill="url(#g5b)" letterSpacing="-4">
+        JP
+      </text>
+      <text x="200" y="240" textAnchor="middle"
+        fontFamily="JetBrains Mono, monospace" fontSize="80" fontWeight="300"
+        fill={C.muted} letterSpacing="-4">
+        RC
+      </text>
+
+      {/* Status dot */}
+      <circle cx="314" cy="116" r="12" fill={C.bg} />
+      <circle cx="314" cy="116" r="8" fill={C.green}>
+        <animate attributeName="r" values="8;10;8" dur="2s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="1;0.7;1" dur="2s" repeatCount="indefinite" />
+      </circle>
+    </svg>
+  );
+}
+
+// ─── LOGO 6 · ASCII Typographic ───────────────────────────────────────────────
+// Word-as-code: initials spelled in ASCII-art style with decorative operators
+function Logo6() {
+  return (
+    <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" style={{ width: "100%", height: "100%" }}>
+      <rect width="400" height="400" fill={C.bg} />
+
+      {/* Background code (decorative) */}
+      {[
+        [30, 60, "function init() {"],
+        [30, 84, "  const dev = new TechLead();"],
+        [30, 108, "  dev.stack = ['.NET', 'Angular'];"],
+        [30, 132, "  return dev.build();"],
+        [30, 156, "}"],
+      ].map(([x, y, txt]) => (
+        <text key={y} x={x} y={y} fontFamily="JetBrains Mono, monospace" fontSize="11" fill={C.dim} opacity="0.5">{txt}</text>
+      ))}
+
+      {/* Big styled initials */}
+      <text x="42" y="280" fontFamily="JetBrains Mono, monospace" fontSize="130" fontWeight="700" fill={C.surface}>
+        JP
+      </text>
+      {/* Outline version on top */}
+      <text x="42" y="280" fontFamily="JetBrains Mono, monospace" fontSize="130" fontWeight="700"
+        fill="none" stroke={C.cyan} strokeWidth="1.5" opacity="0.8">
+        JP
+      </text>
+
+      {/* RC accent */}
+      <text x="196" y="280" fontFamily="JetBrains Mono, monospace" fontSize="130" fontWeight="700" fill={C.cyan} opacity="0.15">
+        RC
+      </text>
+      <text x="196" y="280" fontFamily="JetBrains Mono, monospace" fontSize="130" fontWeight="300"
+        fill="none" stroke={C.cyan2} strokeWidth="1">
+        RC
+      </text>
+
+      {/* Horizontal rule */}
+      <line x1="42" y1="304" x2="360" y2="304" stroke={C.border} strokeWidth="1" />
+
+      {/* Tagline */}
+      <text x="42" y="330" fontFamily="JetBrains Mono, monospace" fontSize="11" fill={C.muted} letterSpacing="4">
+        TECH LEAD · FULL STACK · MADRID
+      </text>
+
+      {/* Version tag */}
+      <rect x="298" y="316" width="62" height="20" rx="3" fill={C.cyan} opacity="0.1" />
+      <text x="329" y="330" textAnchor="middle" fontFamily="JetBrains Mono, monospace" fontSize="10" fill={C.cyan}>v20.0.0</text>
+    </svg>
+  );
+}
+
+// ─── LOGO 7 · Bracket Stack (horizontal wordmark) ────────────────────────────
+function Logo7() {
+  return (
+    <svg viewBox="0 0 800 240" xmlns="http://www.w3.org/2000/svg" style={{ width: "100%", height: "100%" }}>
+      <defs>
+        <linearGradient id="g7" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stopColor={C.cyan} />
+          <stop offset="100%" stopColor={C.violet} />
+        </linearGradient>
+      </defs>
+      <rect width="800" height="240" fill={C.bg} />
+
+      {/* Opening bracket */}
+      <path d="M 60 50 L 30 50 L 30 190 L 60 190" stroke={C.cyan} strokeWidth="5" fill="none" strokeLinecap="round" />
+
+      {/* Name */}
+      <text x="100" y="148" fontFamily="JetBrains Mono, monospace" fontSize="88" fontWeight="700"
+        fill={C.text} letterSpacing="-2">
+        jprc
+      </text>
+
+      {/* Closing bracket */}
+      <text x="518" y="148" fontFamily="JetBrains Mono, monospace" fontSize="88" fontWeight="300"
+        fill={C.muted}>
+        .dev
+      </text>
+
+      {/* Right bracket */}
+      <path d="M 770 50 L 800 50 L 800 190 L 770 190" stroke={C.cyan} strokeWidth="5" fill="none" strokeLinecap="round" opacity="0.4" />
+
+      {/* Subtitle */}
+      <text x="100" y="200" fontFamily="JetBrains Mono, monospace" fontSize="12"
+        fill={C.muted} letterSpacing="6">
+        TECH LEAD · FULL STACK · SCRUM MASTER
+      </text>
+
+      {/* Dot accent */}
+      <circle cx="505" cy="63" r="7" fill={C.cyan}>
+        <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite" />
+      </circle>
+    </svg>
+  );
+}
+
+// ─── LOGO 8 · Minimal Icon (favicon/avatar) ──────────────────────────────────
+function Logo8() {
+  return (
+    <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" style={{ width: "100%", height: "100%" }}>
+      <defs>
+        <linearGradient id="g8" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor={C.cyan} />
+          <stop offset="100%" stopColor={C.green} />
+        </linearGradient>
+      </defs>
+      <rect width="400" height="400" fill={C.bg} />
+
+      {/* Rounded square bg */}
+      <rect x="60" y="60" width="280" height="280" rx="40"
+        fill={C.surface} stroke={C.border} strokeWidth="1.5" />
+
+      {/* Accent corner lines */}
+      <path d="M 60 140 L 60 80 Q 60 60 80 60 L 140 60" stroke={C.cyan} strokeWidth="3" fill="none" strokeLinecap="round" />
+      <path d="M 260 340 L 320 340 Q 340 340 340 320 L 340 260" stroke={C.cyan2} strokeWidth="3" fill="none" strokeLinecap="round" opacity="0.6" />
+
+      {/* Prompt symbol */}
+      <text x="200" y="248" textAnchor="middle"
+        fontFamily="JetBrains Mono, monospace" fontSize="130" fontWeight="700"
+        fill="url(#g8)">
+        &gt;
+      </text>
+
+      {/* Underscore cursor */}
+      <rect x="232" y="195" width="54" height="10" rx="2" fill={C.cyan} opacity="0.9">
+        <animate attributeName="opacity" values="1;0;1" dur="1s" repeatCount="indefinite" />
+      </rect>
+    </svg>
+  );
+}
+
+// ─── CANVAS APP ──────────────────────────────────────────────────────────────
+function App() {
+  return (
+    <DesignCanvas>
+
+      <DCSection id="s1" title="★ Seleccionado — Prompt Mark · variantes de color">
+        <DCArtboard id="a1" label="01 · Dark · cyan (principal)" width={400} height={400}>
+          <LogoPrompt bg="#0a0a10" accent="oklch(0.72 0.18 200)" text="#e2e2ef" muted="#6868aa" />
+        </DCArtboard>
+        <DCArtboard id="a2" label="02 · Dark · verde" width={400} height={400}>
+          <LogoPrompt bg="#0a0a10" accent="oklch(0.72 0.18 145)" text="#e2e2ef" muted="#6868aa" />
+        </DCArtboard>
+        <DCArtboard id="a3" label="03 · Dark · violet" width={400} height={400}>
+          <LogoPrompt bg="#0a0a10" accent="oklch(0.72 0.18 280)" text="#e2e2ef" muted="#6868aa" />
+        </DCArtboard>
+        <DCArtboard id="a4" label="04 · Dark · amber" width={400} height={400}>
+          <LogoPrompt bg="#0a0a10" accent="oklch(0.78 0.18 75)" text="#e2e2ef" muted="#6868aa" />
+        </DCArtboard>
+      </DCSection>
+
+      <DCSection id="s2" title="Variantes de fondo">
+        <DCArtboard id="a5" label="05 · Light" width={400} height={400}>
+          <LogoPrompt bg="#f5f5f0" accent="oklch(0.50 0.18 200)" text="#1a1a2a" muted="#888899" />
+        </DCArtboard>
+        <DCArtboard id="a6" label="06 · Monocromático" width={400} height={400}>
+          <LogoPrompt bg="#0a0a10" accent="#ffffff" text="#ffffff" muted="#555566" />
+        </DCArtboard>
+        <DCArtboard id="a7" label="07 · Sobre blanco" width={400} height={400}>
+          <LogoPrompt bg="#ffffff" accent="#0a0a10" text="#0a0a10" muted="#888899" />
+        </DCArtboard>
+      </DCSection>
+
+      <DCSection id="s3" title="Formatos de uso">
+        <DCArtboard id="a8" label="08 · Wordmark horizontal" width={700} height={220}>
+          <LogoWordmark />
+        </DCArtboard>
+        <DCArtboard id="a9" label="09 · Avatar / favicon" width={200} height={200}>
+          <LogoFavicon />
+        </DCArtboard>
+        <DCArtboard id="a10" label="10 · Badge compacto" width={400} height={160}>
+          <LogoBadge />
+        </DCArtboard>
+      </DCSection>
+
+      <DCSection id="s4" title="Otras propuestas">
+        <DCArtboard id="b1" label="11 · Monogram JP|RC" width={400} height={400}>
+          <Logo2 />
+        </DCArtboard>
+        <DCArtboard id="b2" label="12 · Terminal Window" width={400} height={400}>
+          <Logo3 />
+        </DCArtboard>
+        <DCArtboard id="b3" label="13 · Badge circular" width={400} height={400}>
+          <Logo5 />
+        </DCArtboard>
+      </DCSection>
+
+    </DesignCanvas>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+</body>
+</html>
