@@ -51,7 +51,7 @@ const base = (import.meta as any).env.BASE_URL || '/';
     padding: 0.75rem 1rem;
     display: flex;
     align-items: center;
-    background: #11111a; /* Navy surface */
+    background: var(--surface);
   }
 
   .dots {
@@ -82,7 +82,7 @@ const base = (import.meta as any).env.BASE_URL || '/';
     border-top: 1px solid var(--border);
     border-radius: 0 0 12px 12px;
     padding: 2rem;
-    background: #0a0a10; /* Dark navy bg */
+    background: var(--bg);
     position: relative;
     overflow: hidden;
   }

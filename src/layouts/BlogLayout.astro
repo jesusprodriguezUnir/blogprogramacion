@@ -29,14 +29,13 @@ const currentPath = pathname.replace(base, "") || "";
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
     <script is:inline>
-      const theme = (() => {
-        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
-          return localStorage.getItem('theme');
+const theme = (() => {
+        const saved = localStorage.getItem('theme');
+        if (saved) return saved;
+        if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+          return 'light';
         }
-        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-          return 'dark';
-        }
-        return 'light';
+        return 'dark';
       })();
       document.documentElement.setAttribute('data-theme', theme);
     </script>
@@ -101,7 +100,7 @@ const currentPath = pathname.replace(base, "") || "";
     z-index: 100;
     margin-top: 1rem;
     border-radius: 16px;
-    background: rgba(17, 17, 26, 0.8) !important; /* Forces navy background */
+    background: var(--surface) !important;
   }
 
   .nav {

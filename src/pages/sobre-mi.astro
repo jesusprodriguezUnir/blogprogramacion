@@ -36,17 +36,27 @@ const base = (import.meta as any).env.BASE_URL || '/';
         <h2 class="section-title mono"><span class="accent">></span> experience.log</h2>
         <div class="experience-list">
           <div class="exp-item">
-            <span class="exp-date mono">2021 - Present</span>
+            <span class="exp-date mono">2022 - Present</span>
             <div class="exp-info">
-              <h3 class="exp-title mono">Software Architect</h3>
-              <p class="exp-company">Plain Concepts</p>
+              <h3 class="exp-title mono">Tech Lead</h3>
+              <p class="exp-company">UNIR - La Universidad en Internet</p>
+              <p class="exp-tech mono">Angular 18, .NET 8, Python, Docker, DDD, CI/CD</p>
             </div>
           </div>
           <div class="exp-item">
-            <span class="exp-date mono">2018 - 2021</span>
+            <span class="exp-date mono">2020 - 2022</span>
             <div class="exp-info">
-              <h3 class="exp-title mono">Tech Lead Full Stack</h3>
-              <p class="exp-company">UNIR</p>
+              <h3 class="exp-title mono">Analista de programación</h3>
+              <p class="exp-company">UNIR - La Universidad en Internet</p>
+              <p class="exp-tech mono">Full Stack .NET, Angular, Scrum Master</p>
+            </div>
+          </div>
+          <div class="exp-item">
+            <span class="exp-date mono">2018 - 2020</span>
+            <div class="exp-info">
+              <h3 class="exp-title mono">Analista .NET</h3>
+              <p class="exp-company">SOTEC Consulting</p>
+              <p class="exp-tech mono">C#, Oracle, Visual Studio</p>
             </div>
           </div>
         </div>
@@ -55,20 +65,22 @@ const base = (import.meta as any).env.BASE_URL || '/';
       <section class="about-section glass">
         <h2 class="section-title mono"><span class="accent">></span> core_skills</h2>
         <div class="skills-tags">
-          <span class="skill-tag glass mono">.NET Core</span>
+          <span class="skill-tag glass mono">.NET 8</span>
           <span class="skill-tag glass mono">C#</span>
-          <span class="skill-tag glass mono">Azure</span>
-          <span class="skill-tag glass mono">React / Angular</span>
-          <span class="skill-tag glass mono">Scrum</span>
-          <span class="skill-tag glass mono">Architecture</span>
-          <span class="skill-tag glass mono">Clean Code</span>
-          <span class="skill-tag glass mono">CI/CD</span>
+          <span class="skill-tag glass mono">Angular 18</span>
+          <span class="skill-tag glass mono">Python</span>
+          <span class="skill-tag glass mono">Docker</span>
+          <span class="skill-tag glass mono">DDD</span>
+          <span class="skill-tag glass mono">Azure DevOps</span>
+          <span class="skill-tag glass mono">TeamCity</span>
+          <span class="skill-tag glass mono">SonarQube</span>
+          <span class="skill-tag glass mono">Scrum Master</span>
         </div>
       </section>
     </div>
 
     <div class="center-action">
-      <a href="https://linkedin.com/" target="_blank" rel="noopener" class="btn btn-primary mono">
+      <a href="https://www.linkedin.com/in/jesusprodriguezunir/" target="_blank" rel="noopener" class="btn btn-primary mono">
         connect --network linkedin
       </a>
     </div>
@@ -207,6 +219,13 @@ const base = (import.meta as any).env.BASE_URL || '/';
   .exp-company {
     font-size: 0.9rem;
     color: var(--text-muted);
+  }
+
+  .exp-tech {
+    font-size: 0.75rem;
+    color: var(--accent);
+    margin-top: 0.25rem;
+    opacity: 0.8;
   }
 
   .skills-tags {
