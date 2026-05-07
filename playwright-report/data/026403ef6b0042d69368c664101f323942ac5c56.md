@@ -1,0 +1,56 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - navigation [ref=e3]:
+      - link ">_ JPRC _" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e5] [cursor=pointer]: ">_"
+        - text: JPRC
+        - generic [ref=e6] [cursor=pointer]: _
+      - generic [ref=e7]:
+        - link "~/home" [ref=e8] [cursor=pointer]:
+          - /url: /
+        - link "/recursos" [ref=e9] [cursor=pointer]:
+          - /url: /enlaces
+        - link "/skills" [ref=e10] [cursor=pointer]:
+          - /url: /prompts
+        - link "/about" [ref=e11] [cursor=pointer]:
+          - /url: /sobre-mi
+      - button "Cambiar tema" [ref=e12] [cursor=pointer]:
+        - img [ref=e13] [cursor=pointer]
+  - main [ref=e19]:
+    - heading "Claude Code y el auge de los Subagentes Forked" [level=1] [ref=e20]
+    - paragraph [ref=e21]:
+      - text: El desarrollo asistido por IA ha dado un salto cualitativo con la introducción de los
+      - strong [ref=e22]: forked subagents
+      - text: en Claude Code. Esta arquitectura permite que un agente principal delegue tareas pesadas a “trabajadores” especializados.
+    - heading "¿Por qué subagentes?" [level=2] [ref=e23]
+    - paragraph [ref=e24]: "En proyectos grandes, el contexto del chat puede llenarse rápidamente de logs de errores, búsquedas de archivos y trazas de ejecución. Esto degrada la calidad de las respuestas del modelo. Los subagentes resuelven esto:"
+    - list [ref=e25]:
+      - listitem [ref=e26]:
+        - strong [ref=e27]: Aislamiento
+        - text: ": El subagente investiga un bug o genera documentación en un contexto limpio."
+      - listitem [ref=e28]:
+        - strong [ref=e29]: Paralelismo
+        - text: ": Puedes tener varios subagentes trabajando en diferentes partes del código simultáneamente."
+      - listitem [ref=e30]:
+        - strong [ref=e31]: Resumen
+        - text: ": Una vez terminada la tarea, el subagente devuelve solo la información relevante al agente principal."
+    - heading "Impacto en la Productividad" [level=2] [ref=e32]
+    - paragraph [ref=e33]: Como Tech Leads, esta capacidad nos permite orquestar cambios complejos (como una refactorización de base de datos que afecta a 20 archivos) de manera mucho más controlada. El agente principal actúa como un arquitecto, mientras los subagentes ejecutan los cambios tácticos.
+    - heading "Conclusión" [level=2] [ref=e34]
+    - paragraph [ref=e35]: Estamos pasando de la “IA que completa código” a la “IA que actúa como un equipo de ingeniería”. Dominar la orquestación de estos subagentes será la skill clave para los desarrolladores en 2026.
+  - contentinfo [ref=e36]:
+    - generic [ref=e37]:
+      - generic [ref=e38]:
+        - generic [ref=e39]: ">_"
+        - text: 2026 JPRC
+        - generic [ref=e40]: "::"
+        - link "CC BY 4.0" [ref=e41] [cursor=pointer]:
+          - /url: https://creativecommons.org/licenses/by/4.0/
+      - link "GitHub" [ref=e43] [cursor=pointer]:
+        - /url: https://github.com/jesusprodriguezUnir
+        - img [ref=e44] [cursor=pointer]
+```

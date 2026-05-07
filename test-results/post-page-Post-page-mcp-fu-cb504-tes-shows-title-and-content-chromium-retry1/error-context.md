@@ -1,0 +1,66 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - navigation [ref=e3]:
+      - link ">_ JPRC _" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e5] [cursor=pointer]: ">_"
+        - text: JPRC
+        - generic [ref=e6] [cursor=pointer]: _
+      - generic [ref=e7]:
+        - link "~/home" [ref=e8] [cursor=pointer]:
+          - /url: /
+        - link "/recursos" [ref=e9] [cursor=pointer]:
+          - /url: /enlaces
+        - link "/skills" [ref=e10] [cursor=pointer]:
+          - /url: /prompts
+        - link "/about" [ref=e11] [cursor=pointer]:
+          - /url: /sobre-mi
+      - button "Cambiar tema" [ref=e12] [cursor=pointer]:
+        - img [ref=e13] [cursor=pointer]
+  - main [ref=e19]:
+    - heading "Explorando el Model Context Protocol (MCP)" [level=1] [ref=e20]
+    - paragraph [ref=e21]:
+      - text: El
+      - strong [ref=e22]: Model Context Protocol (MCP)
+      - text: se ha consolidado como el estándar de facto para la interoperabilidad entre modelos de IA y herramientas externas. En este artículo, profundizamos en su arquitectura y por qué es vital para el desarrollo de agentes autónomos.
+    - heading "¿Qué es MCP?" [level=2] [ref=e23]
+    - paragraph [ref=e24]: "MCP es un protocolo abierto diseñado por Anthropic que permite a los modelos de lenguaje (LLMs) interactuar de forma segura y estandarizada con:"
+    - list [ref=e25]:
+      - listitem [ref=e26]: Bases de datos locales y remotas.
+      - listitem [ref=e27]: APIs de terceros (GitHub, Slack, Google Drive).
+      - listitem [ref=e28]: Sistemas de archivos locales.
+    - list [ref=e29]:
+      - listitem [ref=e30]: Herramientas de ejecución de código.
+    - heading "Beneficios para el Desarrollador" [level=2] [ref=e31]
+    - list [ref=e32]:
+      - listitem [ref=e33]:
+        - strong [ref=e34]: Estandarización
+        - text: ": No más integraciones ad-hoc para cada herramienta."
+      - listitem [ref=e35]:
+        - strong [ref=e36]: Seguridad
+        - text: ": Control granular sobre qué datos y herramientas puede acceder el agente."
+      - listitem [ref=e37]:
+        - strong [ref=e38]: Ecosistema
+        - text: ": Una comunidad creciente de servidores MCP listos para usar."
+    - blockquote [ref=e39]:
+      - paragraph [ref=e40]: "“El protocolo MCP es a los agentes de IA lo que el HTTP fue a la web: la capa de comunicación que lo cambia todo.”"
+    - heading "Próximos pasos" [level=2] [ref=e41]
+    - paragraph [ref=e42]:
+      - text: En el siguiente post, veremos cómo construir un servidor MCP personalizado en
+      - strong [ref=e43]: .NET 9
+      - text: para consultar telemetría de Azure en tiempo real.
+  - contentinfo [ref=e44]:
+    - generic [ref=e45]:
+      - generic [ref=e46]:
+        - generic [ref=e47]: ">_"
+        - text: 2026 JPRC
+        - generic [ref=e48]: "::"
+        - link "CC BY 4.0" [ref=e49] [cursor=pointer]:
+          - /url: https://creativecommons.org/licenses/by/4.0/
+      - link "GitHub" [ref=e51] [cursor=pointer]:
+        - /url: https://github.com/jesusprodriguezUnir
+        - img [ref=e52] [cursor=pointer]
+```

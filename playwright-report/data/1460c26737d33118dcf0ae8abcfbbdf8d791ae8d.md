@@ -1,0 +1,114 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - navigation [ref=e3]:
+      - link ">_ JPRC _" [ref=e4]:
+        - /url: /
+        - generic [ref=e5]: ">_"
+        - text: JPRC
+        - generic [ref=e6]: _
+      - generic [ref=e7]:
+        - link "~/home" [ref=e8]:
+          - /url: /
+        - link "/recursos" [ref=e9]:
+          - /url: /enlaces
+        - link "/skills" [ref=e10]:
+          - /url: /prompts
+        - link "/about" [ref=e11]:
+          - /url: /sobre-mi
+      - button "Cambiar tema" [ref=e12] [cursor=pointer]:
+        - img [ref=e13] [cursor=pointer]
+  - main [ref=e19]:
+    - 'heading "Novedades en .NET 9: Rendimiento al Límite" [level=1] [ref=e20]'
+    - paragraph [ref=e21]: .NET 9 no es solo una actualización incremental; es una apuesta firme por el rendimiento en la nube y la eficiencia de recursos.
+    - heading "Dynamic GC Adaptation" [level=2] [ref=e22]
+    - paragraph [ref=e23]:
+      - text: Una de las características más innovadoras es la adaptación dinámica del
+      - strong [ref=e24]: Garbage Collector
+      - text: . Ahora, el GC puede ajustar su comportamiento basándose en el tamaño de la aplicación y la memoria disponible en el contenedor, reduciendo drásticamente el “memory footprint” en microservicios pequeños.
+    - heading "Native AOT para ASP.NET Core" [level=2] [ref=e25]
+    - paragraph [ref=e26]:
+      - text: El soporte de
+      - strong [ref=e27]: Native AOT
+      - text: "(Ahead-of-Time) ha madurado significativamente. Al compilar directamente a código máquina:"
+    - list [ref=e28]:
+      - listitem [ref=e29]:
+        - strong [ref=e30]: Startup casi instantáneo
+        - text: ": Ideal para Azure Functions o AWS Lambda."
+      - listitem [ref=e31]:
+        - strong [ref=e32]: Menor consumo de RAM
+        - text: ": Al no necesitar el JIT compiler en tiempo de ejecución."
+      - listitem [ref=e33]:
+        - strong [ref=e34]: Binarios más pequeños
+        - text: ": Facilitando la distribución de imágenes Docker."
+    - heading "C# 13 y LINQ" [level=2] [ref=e35]
+    - paragraph [ref=e36]:
+      - text: No podemos olvidar las mejoras en el lenguaje. C# 13 introduce
+      - code [ref=e37]: params
+      - text: para colecciones más allá de arrays, y LINQ ahora incluye métodos como
+      - code [ref=e38]: CountBy
+      - text: "y"
+      - code [ref=e39]: AggregateBy
+      - text: ", que simplifican enormemente el procesamiento de datos en memoria."
+    - code [ref=e41]:
+      - generic [ref=e43]: // Ejemplo de CountBy en .NET 9
+      - generic [ref=e44]:
+        - generic [ref=e45]: var
+        - generic [ref=e46]: counts
+        - generic [ref=e47]: =
+        - generic [ref=e48]: users.
+        - generic [ref=e49]: CountBy
+        - generic [ref=e50]: (
+        - generic [ref=e51]: u
+        - generic [ref=e52]: =>
+        - generic [ref=e53]: u.Role);
+      - generic [ref=e54]:
+        - generic [ref=e55]: foreach
+        - generic [ref=e56]: (
+        - generic [ref=e57]: var
+        - generic [ref=e58]: (
+        - generic [ref=e59]: role
+        - generic [ref=e60]: ","
+        - generic [ref=e61]: count
+        - generic [ref=e62]: )
+        - generic [ref=e63]: in
+        - generic [ref=e64]: "counts) {"
+      - generic [ref=e65]:
+        - generic [ref=e66]: Console.
+        - generic [ref=e67]: WriteLine
+        - generic [ref=e68]: (
+        - generic [ref=e69]: "$\"{"
+        - generic [ref=e70]: role
+        - generic [ref=e71]: "}: {"
+        - generic [ref=e72]: count
+        - generic [ref=e73]: "}\""
+        - generic [ref=e74]: );
+      - generic [ref=e76]: "}"
+    - paragraph [ref=e77]: .NET 9 demuestra que Microsoft sigue liderando la innovación en plataformas de desarrollo empresarial.
+  - contentinfo [ref=e78]:
+    - generic [ref=e79]:
+      - generic [ref=e80]:
+        - generic [ref=e81]: ">_"
+        - text: 2026 JPRC
+        - generic [ref=e82]: "::"
+        - link "CC BY 4.0" [ref=e83]:
+          - /url: https://creativecommons.org/licenses/by/4.0/
+      - link "GitHub" [ref=e85]:
+        - /url: https://github.com/jesusprodriguezUnir
+        - img [ref=e86]
+  - generic [ref=e90]:
+    - button "Menu" [ref=e91]:
+      - img [ref=e93]
+      - generic: Menu
+    - button "Inspect" [ref=e97]:
+      - img [ref=e99]
+      - generic: Inspect
+    - button "Audit" [ref=e101]:
+      - img [ref=e103]
+      - generic: Audit
+    - button "Settings" [ref=e106]:
+      - img [ref=e108]
+      - generic: Settings
+```

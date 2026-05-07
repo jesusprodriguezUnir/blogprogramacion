@@ -1,6 +1,8 @@
 ---
 import BlogLayout from '../../layouts/BlogLayout.astro';
 
+const base = (import.meta as any).env.BASE_URL || '/';
+
 // Carga todos los archivos .md y .mdx en este directorio (excepto index.astro)
 const postFilesMD = import.meta.glob('./*.md', { eager: true });
 const postFilesMDX = import.meta.glob('./*.mdx', { eager: true });

@@ -1,11 +1,211 @@
 ---
-// Placeholder: la plataforma ahora sirve posts desde archivos Markdown en `src/pages/posts/*.md`
-const note = true;
-export const prerender = true;
-export const getStaticPaths = async () => [];
+import BlogLayout from '../../layouts/BlogLayout.astro';
+
+const base = (import.meta as any).env.BASE_URL || '/';
+
+export function getStaticPaths() {
+  const postFilesMD = import.meta.glob('./*.md', { eager: true });
+  const postFilesMDX = import.meta.glob('./*.mdx', { eager: true });
+
+  const allPosts = [
+    ...Object.values(postFilesMD),
+    ...Object.values(postFilesMDX)
+  ] as any[];
+
+  const posts = allPosts
+    .filter(post => post?.frontmatter?.slug)
+    .map(post => ({
+      slug: post.frontmatter.slug,
+      frontmatter: post.frontmatter,
+      Content: post.Content
+    }));
+
+  return posts.map(post => ({
+    params: { slug: post.slug },
+    props: { post, allPosts: posts }
+  }));
+}
+
+const { post, allPosts } = Astro.props;
+const { frontmatter, Content } = post;
+
+const allPostsSorted = [...allPosts]
+  .sort((a, b) => new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime());
+
+const currentIndex = allPostsSorted.findIndex(p => p.slug === post.slug);
+const prevPost = currentIndex < allPostsSorted.length - 1 ? allPostsSorted[currentIndex + 1] : null;
+const nextPost = currentIndex > 0 ? allPostsSorted[currentIndex - 1] : null;
 ---
 
-<div class="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg my-8">
-	<h1 class="text-2xl font-semibold">Nota</h1>
-	<p class="text-gray-600 mt-2">Los posts ahora se sirven desde archivos Markdown en <code>src/pages/posts/</code>.</p>
-</div>
+<BlogLayout title={frontmatter.title} description={frontmatter.excerpt}>
+  <article class="post-page">
+    <a href={`${base}posts`} class="back-link mono">
+      <span class="arrow">←</span> cd ..
+    </a>
+
+    <header class="post-header">
+      <div class="post-meta">
+        <span class="post-category">{frontmatter.category || 'Blog'}</span>
+        <time datetime={frontmatter.date}>
+          {new Date(frontmatter.date).toLocaleDateString('es-ES', { 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+          })}
+        </time>
+      </div>
+      <h1 class="post-title">{frontmatter.title}</h1>
+      {frontmatter.excerpt && <p class="post-excerpt">{frontmatter.excerpt}</p>}
+    </header>
+
+    <div class="post-content">
+      <Content />
+    </div>
+
+    <nav class="post-nav">
+      {prevPost && (
+        <a href={`${base}posts/${prevPost.slug}`} class="nav-link nav-prev">
+          <span class="nav-label mono">← anterior</span>
+          <span class="nav-title">{prevPost.frontmatter.title}</span>
+        </a>
+      )}
+      {nextPost && (
+        <a href={`${base}posts/${nextPost.slug}`} class="nav-link nav-next">
+          <span class="nav-label mono">siguiente →</span>
+          <span class="nav-title">{nextPost.frontmatter.title}</span>
+        </a>
+      )}
+    </nav>
+  </article>
+</BlogLayout>
+
+<style>
+  .post-page {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+    transition: all 0.3s var(--ease);
+  }
+
+  .back-link:hover {
+    color: var(--accent);
+    transform: translateX(-4px);
+  }
+
+  .arrow {
+    font-weight: 600;
+  }
+
+  .post-header {
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .post-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .post-category {
+    background: var(--accent-soft);
+    color: var(--accent);
+    padding: 0.35rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  time {
+    color: var(--text-dim);
+    font-size: 0.85rem;
+  }
+
+  .post-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1.2;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+  }
+
+  .post-excerpt {
+    font-size: 1.15rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    max-width: 640px;
+  }
+
+  .post-content {
+    margin-bottom: 4rem;
+  }
+
+  .post-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .nav-link {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: 1.25rem;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--surface);
+    max-width: 45%;
+    transition: all 0.3s var(--ease);
+  }
+
+  .nav-link:hover {
+    border-color: var(--accent);
+    background: var(--surface-hover);
+    transform: translateY(-2px);
+  }
+
+  .nav-label {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+  }
+
+  .nav-title {
+    font-size: 0.95rem;
+    color: var(--text);
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  .nav-link:hover .nav-title {
+    color: var(--accent);
+  }
+
+  @media (max-width: 640px) {
+    .post-title {
+      font-size: 1.75rem;
+    }
+    
+    .post-nav {
+      flex-direction: column;
+    }
+    
+    .nav-link {
+      max-width: 100%;
+    }
+  }
+</style>

@@ -2,11 +2,11 @@ import { describe, it, expect } from 'vitest';
 import fs from 'fs';
 import path from 'path';
 
-// Utilidad para obtener los slugs de los posts markdown
 function getBlogSlugs() {
   const postsDir = path.resolve(__dirname, '../');
   const files = fs.readdirSync(postsDir);
-  return files.filter(f => f.endsWith('.md') || f.endsWith('.mdx'))
+  return files
+    .filter(f => !f.startsWith('_') && (f.endsWith('.md') || f.endsWith('.mdx')))
     .map(f => f.replace(/\.(md|mdx)$/i, ''));
 }
 
@@ -16,13 +16,16 @@ describe('Listado de blogs', () => {
     expect(slugs.length).toBeGreaterThan(0);
   });
 
-  it('debería incluir el post "made-by-google-2025-resumen"', () => {
+  it('debería incluir posts publicados', () => {
     const slugs = getBlogSlugs();
-    expect(slugs).toContain('made-by-google-2025-resumen');
+    const publishedSlugs = ['claude-code-subagents', 'mcp-futuro-agentes', 'novedades-dotnet-9'];
+    publishedSlugs.forEach(slug => {
+      expect(slugs).toContain(slug);
+    });
   });
 
-  it('debería incluir el post "notebook-lm"', () => {
+  it('debería excluir archivos de archive', () => {
     const slugs = getBlogSlugs();
-    expect(slugs).toContain('notebook-lm');
+    expect(slugs).not.toContain('made-by-google-2025-resumen');
   });
 });

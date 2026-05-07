@@ -22,8 +22,10 @@ const currentPath = pathname.replace(base, "") || "";
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="prefetch" href={base} />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={`https://jesusprodriguezUnir.github.io/blogprogramacion${Astro.url.pathname}`} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
@@ -87,6 +89,19 @@ const theme = (() => {
         const nextTheme = currentTheme === 'light' ? 'dark' : 'light';
         document.documentElement.setAttribute('data-theme', nextTheme);
         localStorage.setItem('theme', nextTheme);
+      });
+    </script>
+    <script is:inline>
+      document.querySelectorAll('a[href^="/blogprogramacion/"], a[href^="/"]').forEach(link => {
+        link.addEventListener('mouseenter', () => {
+          const url = link.getAttribute('href');
+          if (url && url !== window.location.href) {
+            const prefetch = document.createElement('link');
+            prefetch.rel = 'prefetch';
+            prefetch.href = url;
+            document.head.appendChild(prefetch);
+          }
+        });
       });
     </script>
   </body>
