@@ -12,13 +12,16 @@
     "astro": "astro",
     "test:e2e": "playwright test",
     "test:e2e:headed": "playwright test --headed",
-    "test:e2e:debug": "playwright test --debug"
+    "test:e2e:debug": "playwright test --debug",
+    "generate:weekly": "node scripts/generate-weekly-post.js"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.5",
     "@astrojs/rss": "^4.0.18",
     "@astrojs/sitemap": "^3.7.2",
-    "astro": "^5.2.5"
+    "@google/generative-ai": "^0.24.1",
+    "astro": "^5.2.5",
+    "openai": "^6.36.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.37.0",
