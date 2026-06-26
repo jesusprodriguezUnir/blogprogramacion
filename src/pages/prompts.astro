@@ -1,229 +1,205 @@
 ---
 import BlogLayout from '../layouts/BlogLayout.astro';
+import { skillCategories, skillSlug } from '../data/skills';
+import { normalizeBase } from '../utils/url';
 
-// Skills organizados por categoría tecnológica
-const promptCategories: any[] = [
-	{
-		category: ".NET Core",
-		description: "Skills para desarrollar APIs, servicios y aplicaciones robustas con .NET 8.",
-		icon: "🧩",
-		prompts: [
-			{
-				title: "Crear API REST con ASP.NET Core",
-				prompt: "Genera una API REST completa con ASP.NET Core 8 que exponga endpoints CRUD para una entidad 'Product'...",
-				tags: ["dotnet", "webapi", "rest"]
-			},
-			{
-				title: "Configurar Entity Framework Core",
-				prompt: "Genera un contexto de EF Core para SQL Server con entidades User, Order y Product...",
-				tags: ["efcore", "database", "sql"]
-			},
-		]
-	},
-	{
-		category: "Python",
-		description: "Skills para scripting, automatización y desarrollo de APIs con Python.",
-		icon: "🐍",
-		prompts: [
-			{
-				title: "API REST con FastAPI",
-				prompt: "Desarrolla una API REST con FastAPI que exponga endpoints CRUD para una entidad 'Task'...",
-				tags: ["fastapi", "rest", "api"]
-			},
-		]
-	},
-];
-
+const rawBase = (import.meta as any).env.BASE_URL as string | undefined;
+const base = normalizeBase(rawBase);
 ---
 
 <BlogLayout title="jesus_rodriguez // skills" description="Colección de prompts y skills curados para desarrollo e IA.">
-	<div class="page-header">
-		<h1 class="page-title mono"><span class="accent">/</span>skills</h1>
-		<p class="page-subtitle">
-			Repositorio de fragmentos de código, prompts y configuraciones técnicas optimizadas.
-		</p>
-	</div>
+  <div class="page-header">
+    <h1 class="page-title mono"><span class="accent">/</span>skills</h1>
+    <p class="page-subtitle">
+      Repositorio de fragmentos de código, prompts y configuraciones técnicas optimizadas.
+    </p>
+  </div>
 
-	<div class="categories-stack">
-		{promptCategories.map((category, idx) => (
-			<section class="category-section">
-				<div class="category-header">
-					<span class="index mono">0{idx + 1}</span>
-					<h2 class="category-title mono">{category.category}</h2>
-					<p class="category-description">{category.description}</p>
-				</div>
+  <div class="categories-stack">
+    {skillCategories.map((category, idx) => (
+      <section class="category-section">
+        <div class="category-header">
+          <span class="index mono">0{idx + 1}</span>
+          <h2 class="category-title mono">{category.icon} {category.category}</h2>
+          <p class="category-description">{category.description}</p>
+        </div>
 
-				<div class="skills-grid">
-					{category.prompts?.map((p: any) => {
-						const skillSlug = p.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
-						return (
-						<a href={`/skills/${skillSlug}`} class="skill-item glass glow-on-hover">
-							<div class="skill-header">
-								<h3 class="skill-title mono">{p.title}</h3>
-								<div class="tags">
-									{p.tags.map((t: string) => <span class="tag mono">{t}</span>)}
-								</div>
-							</div>
-							<p class="skill-preview">{p.prompt.substring(0, 100)}...</p>
-							<div class="skill-footer mono">
-								<span>Read more</span>
-								<span>-></span>
-							</div>
-						</a>
-					)})}
-				</div>
-			</section>
-		))}
-	</div>
+        <div class="skills-grid">
+          {category.prompts.map((p) => (
+            <a href={`${base}/skills/${skillSlug(p.title)}`} class="skill-item glass glow-on-hover">
+              <div class="skill-header">
+                <h3 class="skill-title mono">{p.title}</h3>
+                <div class="tags">
+                  {p.tags.map((t) => <span class="tag mono">{t}</span>)}
+                </div>
+              </div>
+              <p class="skill-preview">{p.prompt.substring(0, 125)}...</p>
+              <div class="skill-footer mono">
+                <span>Read more</span>
+                <span>-&gt;</span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+    ))}
+  </div>
 
-	<div class="cta-section glass">
-		<p class="mono">¿Tienes un skill que quieras compartir?</p>
-		<a href="mailto:contacto@deviablog.com" class="btn btn-secondary mono">submit_skill --new</a>
-	</div>
+  <div class="cta-section glass">
+    <p class="mono">¿Tienes un skill que quieras compartir?</p>
+    <a href="mailto:contacto@deviablog.com" class="btn btn-secondary mono">submit_skill --new</a>
+  </div>
 </BlogLayout>
 
 <style>
-	.page-header {
-		margin-bottom: 4rem;
-	}
+  .page-header {
+    margin-bottom: 4rem;
+  }
 
-	.page-title {
-		font-size: 2.5rem;
-		margin-bottom: 1rem;
-	}
+  .page-title {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
 
-	.page-subtitle {
-		color: var(--text-muted);
-		font-size: 1.1rem;
-	}
+  .page-subtitle {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    max-width: 760px;
+  }
 
-	.categories-stack {
-		display: flex;
-		flex-direction: column;
-		gap: 5rem;
-	}
+  .categories-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+  }
 
-	.category-header {
-		margin-bottom: 2rem;
-		border-left: 3px solid var(--accent);
-		padding-left: 1.5rem;
-	}
+  .category-header {
+    margin-bottom: 1.5rem;
+    border-left: 3px solid var(--accent);
+    padding-left: 1.25rem;
+  }
 
-	.index {
-		color: var(--accent);
-		font-size: 0.8rem;
-		display: block;
-		margin-bottom: 0.5rem;
-	}
+  .index {
+    color: var(--accent);
+    font-size: 0.8rem;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
 
-	.category-title {
-		font-size: 1.5rem;
-		margin-bottom: 0.5rem;
-	}
+  .category-title {
+    font-size: 1.35rem;
+    margin-bottom: 0.5rem;
+  }
 
-	.category-description {
-		color: var(--text-dim);
-		font-size: 0.95rem;
-	}
+  .category-description {
+    color: var(--text-dim);
+    font-size: 0.95rem;
+    max-width: 760px;
+  }
 
-	.skills-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-		gap: 1.5rem;
-	}
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1rem;
+  }
 
-	.skill-item {
-		padding: 1.5rem;
-		display: flex;
-		flex-direction: column;
-		height: 100%;
-		transition: all 0.3s var(--ease);
-	}
+  .skill-item {
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    min-height: 230px;
+    transition: all 0.3s var(--ease);
+  }
 
-	.skill-item:hover {
-		border-color: var(--accent);
-		box-shadow: 0 0 20px var(--accent-soft);
-		transform: translateY(-2px);
-	}
+  .skill-item:hover {
+    border-color: var(--accent);
+    box-shadow: 0 0 20px var(--accent-soft);
+    transform: translateY(-2px);
+  }
 
-	.skill-header {
-		margin-bottom: 1rem;
-	}
+  .skill-item:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
 
-	.skill-title {
-		font-size: 1.1rem;
-		margin-bottom: 0.75rem;
-		color: var(--text);
-		transition: color 0.3s var(--ease);
-	}
+  .skill-header {
+    margin-bottom: 0.85rem;
+  }
 
-	.skill-item:hover .skill-title {
-		color: var(--accent);
-	}
+  .skill-title {
+    font-size: 1.05rem;
+    margin-bottom: 0.65rem;
+    color: var(--text);
+    transition: color 0.3s var(--ease);
+  }
 
-	.tags {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.5rem;
-	}
+  .skill-item:hover .skill-title {
+    color: var(--accent);
+  }
 
-	.tag {
-		font-size: 0.7rem;
-		background: var(--bg-soft);
-		color: var(--accent);
-		padding: 0.2rem 0.5rem;
-		border-radius: 4px;
-		border: 1px solid var(--border);
-	}
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
 
-	.skill-preview {
-		font-size: 0.9rem;
-		color: var(--text-muted);
-		line-height: 1.5;
-		margin-bottom: 1.5rem;
-		flex-grow: 1;
-	}
+  .tag {
+    font-size: 0.68rem;
+    background: var(--bg-soft);
+    color: var(--accent);
+    padding: 0.18rem 0.45rem;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+  }
 
-	.skill-footer {
-		display: flex;
-		justify-content: space-between;
-		font-size: 0.8rem;
-		color: var(--text-dim);
-		border-top: 1px solid var(--border);
-		padding-top: 1rem;
-		transition: all 0.3s var(--ease);
-	}
+  .skill-preview {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+    margin-bottom: 1.25rem;
+    flex-grow: 1;
+  }
 
-	.skill-item:hover .skill-footer {
-		color: var(--accent);
-		border-color: var(--accent-soft);
-	}
+  .skill-footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    border-top: 1px solid var(--border);
+    padding-top: 0.85rem;
+    transition: all 0.3s var(--ease);
+  }
 
-	.cta-section {
-		margin-top: 6rem;
-		padding: 3rem;
-		text-align: center;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 1.5rem;
-		background: linear-gradient(to bottom, var(--bg), var(--bg-soft));
-		border: 1px solid var(--border);
-	}
+  .skill-item:hover .skill-footer {
+    color: var(--accent);
+    border-color: var(--accent-soft);
+  }
 
-	.btn {
-		padding: 0.75rem 1.5rem;
-		border-radius: 8px;
-		border: 1px solid var(--border);
-		background: var(--surface);
-		transition: all 0.3s var(--ease);
-		font-weight: 600;
-	}
+  .cta-section {
+    margin-top: 5rem;
+    padding: 2.5rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+    background: linear-gradient(to bottom, var(--bg), var(--bg-soft));
+    border: 1px solid var(--border);
+  }
 
-	.btn:hover {
-		border-color: var(--accent);
-		color: var(--accent);
-		background: var(--bg-soft);
-		box-shadow: 0 0 15px var(--accent-soft);
-	}
+  .btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    transition: all 0.3s var(--ease);
+    font-weight: 600;
+  }
+
+  .btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--bg-soft);
+    box-shadow: 0 0 15px var(--accent-soft);
+  }
 </style>

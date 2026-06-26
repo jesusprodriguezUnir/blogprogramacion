@@ -40,9 +40,8 @@ const categoryColor = getCategoryColor(category);
 <style>
 	.post-card {
 		background: var(--surface);
-		border-radius: 16px;
-		padding: 32px;
-		box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+		border-radius: 20px;
+		padding: 24px;
 		transition: all 0.3s var(--ease);
 		border: 1px solid var(--border);
 		position: relative;
@@ -55,16 +54,16 @@ const categoryColor = getCategoryColor(category);
 		top: 0;
 		left: 0;
 		right: 0;
-		height: 4px;
-		background: linear-gradient(90deg, var(--accent), var(--secondary), var(--success));
-		opacity: 0.2;
+		height: 2px;
+		background: linear-gradient(90deg, var(--accent), transparent);
+		opacity: 0.4;
 		transition: opacity 0.3s var(--ease);
 	}
 
 	.post-card:hover {
-		transform: translateY(-4px);
-		box-shadow: 0 12px 30px rgba(0,0,0,0.4);
-		border-color: var(--accent-soft);
+		transform: translateY(-2px);
+		box-shadow: 0 18px 45px -30px color-mix(in srgb, var(--text) 55%, transparent);
+		border-color: var(--accent);
 	}
 
 	.post-card:hover::before {
@@ -80,12 +79,12 @@ const categoryColor = getCategoryColor(category);
 
 	.category-tag {
 		display: inline-block;
-		padding: 4px 12px;
-		border-radius: 6px;
-		font-size: 11px;
-		font-weight: 700;
+		padding: 3px 10px;
+		border-radius: 999px;
+		font-size: 10px;
+		font-weight: 600;
 		text-transform: uppercase;
-		letter-spacing: 0.05em;
+		letter-spacing: 0.2em;
 		font-family: var(--font-mono);
 		color: var(--bg);
 	}
@@ -97,18 +96,20 @@ const categoryColor = getCategoryColor(category);
 	.bg-gray-500 { background-color: var(--text-muted); }
 
 	.post-date {
-		font-size: 13px;
+		font-size: 11px;
 		color: var(--text-dim);
 		font-family: var(--font-mono);
-		font-weight: 500;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
 	}
 
 	.post-title {
-		font-size: 22px;
-		font-weight: 700;
+		font-size: 1.35rem;
+		font-weight: 600;
 		line-height: 1.3;
-		margin-bottom: 16px;
+		margin-bottom: 12px;
 		letter-spacing: -0.01em;
+		font-family: var(--font-ui);
 	}
 
 	.post-link {
@@ -123,9 +124,9 @@ const categoryColor = getCategoryColor(category);
 
 	.post-excerpt {
 		color: var(--text-muted);
-		font-size: 15px;
+		font-size: 0.98rem;
 		line-height: 1.7;
-		margin-bottom: 24px;
+		margin-bottom: 16px;
 	}
 
 	.post-meta {
@@ -137,30 +138,36 @@ const categoryColor = getCategoryColor(category);
 	}
 
 	.read-time {
-		font-size: 13px;
+		font-size: 11px;
 		color: var(--text-dim);
 		display: flex;
 		align-items: center;
-		gap: 8px;
+		gap: 6px;
 		font-family: var(--font-mono);
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
 	}
 
 	.read-more {
 		color: var(--accent);
-		font-weight: 600;
+		font-weight: 500;
 		text-decoration: none;
-		font-size: 13px;
+		font-size: 11px;
 		font-family: var(--font-mono);
 		transition: all 0.2s var(--ease);
-		padding: 6px 12px;
-		border-radius: 6px;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+		padding: 6px 10px;
+		border-radius: 999px;
 		background: var(--accent-soft);
+		border: 1px solid var(--border);
 	}
 
 	.read-more:hover {
-		background: var(--accent-glow);
+		background: var(--accent);
 		color: var(--bg);
-		transform: translateX(4px);
+		transform: translateY(-1px);
+		border-color: var(--accent);
 	}
 
 	@media (max-width: 768px) {
